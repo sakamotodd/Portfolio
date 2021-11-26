@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useIconData } from './useIconData';
-
+//bg-gradient-to-r from-black to-gray-900 text-white
 const Third = () => {
   const [flag, setFlag] = useState(false);
   const { tableContent } = useIconData();
   return (
-    <div id="Home3" className="h-screen w-screen font-fantasy bg-gradient-to-r from-black to-gray-900 text-white">
+    <div id="Home3" className="h-screen w-screen font-fantasy text-white">
       <div className="container mx-auto">
         <div className="flex flex-col text-center mb-20">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mt-32">
@@ -17,7 +17,7 @@ const Third = () => {
             return (
               <div
                 key={data.title}
-                className="flex h-full border  border-gray-200 p-8 rounded-lg justify-center items-center shadow-3xl"
+                className="flex h-full border  border-gray-200 p-8 rounded-lg justify-center items-center shadow-3xl bg-gradient-to-r from-black to-gray-800"
               >
                 <div className="items-center ">
                   <h2 className=" title-font font-medium">{data.title}</h2>
