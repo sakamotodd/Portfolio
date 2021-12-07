@@ -1,6 +1,7 @@
-import { ReactElement, useCallback } from 'react';
+/* eslint-disable tailwindcss/no-custom-classname */
 import { gsap } from 'gsap';
 import { TextPlugin } from 'gsap/dist/TextPlugin';
+import { ReactElement, useCallback } from 'react';
 
 type Props = {
   children: React.ReactNode;
@@ -9,16 +10,10 @@ type Props = {
 
 const TextAnimation = (props: Props): ReactElement => {
   const textRef = useCallback((node) => {
-    if (node !== null) {
-      const text = node.innerHTML; //テキストを読み込む
-      const height = node.clientHeight; //高さを取得する
-      node.innerHTML = ''; //テキストを削除する
-      node.style.height = height + 'px'; //高さを設定する
-      setAnimation(text);
-    }
-  }, []);
-
-  const setAnimation = (text: string) => {
+    const text = node.innerHTML; //テキストを読み込む
+    const height = node.clientHeight; //高さを取得する
+    node.innerHTML = ''; //テキストを削除する
+    node.style.height = height + 'px'; //高さを設定する
     const numText = text.length;
     const selector = '#' + props.section;
     gsap.registerPlugin(TextPlugin);
@@ -30,13 +25,9 @@ const TextAnimation = (props: Props): ReactElement => {
       },
       ease: 'none',
     });
-  };
+  }, []);
 
-  return (
-    <h1 ref={textRef} className="animation-text">
-      {props.children}
-    </h1>
-  );
+  return <h1 ref={textRef} className="animation-text">{props.children}</h1>;
 };
 
 export default TextAnimation;
