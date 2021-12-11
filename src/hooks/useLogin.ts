@@ -1,6 +1,12 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from '@firebase/auth';
 import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { Auth } from '../firebase.config';
+import { Auth, db } from '../firebase.config';
 
 export const useLogin = () => {
   const [email, setEmail] = useState('');
@@ -56,7 +62,23 @@ export const useLogin = () => {
     },
     [isLogin, resetInput, email, password, pass],
   );
+  const loginWithGithub = useCallback(async (): Promise<void> => {
+    try {
+      const provider = new GithubAuthProvider();
+      await signInWithPopup(Auth, provider);
+    } catch (e) {
+      alert(e.message);
+    }
+  }, []);
 
+  const loginWithGoogle = useCallback(async (): Promise<void> => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(Auth, provider);
+    } catch (e) {
+      alert(e.message);
+    }
+  }, []);
   return {
     isLogin,
     email,
@@ -68,5 +90,7 @@ export const useLogin = () => {
     resetInput,
     authUser,
     toggleMode,
+    loginWithGithub,
+    loginWithGoogle
   };
 };

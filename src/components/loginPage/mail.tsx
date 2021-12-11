@@ -1,16 +1,27 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import { LockOpenIcon, MailIcon } from '@heroicons/react/solid';
-import Image from 'next/image';
+import { ChevronDoubleRightIcon, LockOpenIcon, MailIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import React, { VFC } from 'react';
 import { Auth } from '../../firebase.config';
 import { useLogin } from '../../hooks/useLogin';
 export const Mail: VFC = () => {
   const user = Auth.currentUser;
-  const { isLogin, email, password, pass, emailChange, pwChange, pwNewCreate, authUser, toggleMode } = useLogin();
+  const {
+    isLogin,
+    email,
+    password,
+    pass,
+    emailChange,
+    pwChange,
+    pwNewCreate,
+    authUser,
+    toggleMode,
+  } = useLogin();
   return (
     <div className="py-12 px-4 lg:px-20 bg-gray-100 rounded-b-lg">
-      <p className="text-sm font-light text-center text-gray-500">Or sign in with credentials</p>
+      <p className="text-sm font-light text-center text-gray-500">
+        {isLogin ? 'ログイン画面' : '新規作成画面'}
+      </p>
       <form onSubmit={authUser} className="mt-6">
         <div className="relative">
           <input
@@ -44,7 +55,6 @@ export const Mail: VFC = () => {
               onChange={pwNewCreate}
               type="password"
               placeholder="Password"
-
             />
             <div className="flex absolute inset-y-0 left-0 items-center">
               <LockOpenIcon className="p-1 ml-3 w-7 h-7 text-gray-400" />
@@ -53,6 +63,7 @@ export const Mail: VFC = () => {
         )}
         <div className="flex justify-end items-center mt-4 text-xs text-gray-500">
           <button
+            type="button"
             className=" text-indigo-500 hover:text-indigo-300 cursor-pointer"
             onClick={toggleMode}
           >
@@ -69,6 +80,14 @@ export const Mail: VFC = () => {
           </button>
         </div>
       </form>
+      {user && (
+        <Link href="/tasks" passHref>
+          <div className="flex items-center my-3 cursor-pointer">
+            <ChevronDoubleRightIcon className="mx-1 w-5 h-5 text-blue-500" />
+            <span>to tasks page</span>
+          </div>
+        </Link>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import { signOut } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { Auth } from '../firebase.config';
@@ -10,8 +10,8 @@ export const useLogout = () => {
     if (unSubMeta) {
       unSubMeta();
     }
-    Auth.signOut();
+    await signOut(Auth);
     cookie.remove('token');
   };
-  return {logout};
+  return { logout };
 };
