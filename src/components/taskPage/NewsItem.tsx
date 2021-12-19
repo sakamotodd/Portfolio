@@ -1,7 +1,7 @@
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
 import React, { memo, VFC } from 'react';
 import { useDispatch } from 'react-redux';
-import { useMutationApp } from '../../hooks/useMutationApp';
+import { useMutationApp } from '../../hooks/query/useMutationApp';
 import { News } from '../../interface/types';
 import { setEditNews } from '../../redux/uiSlice';
 

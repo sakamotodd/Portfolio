@@ -8,7 +8,7 @@ import { NewsListMemo } from '../components/taskPage/NewsList';
 import { TaskEditMemo } from '../components/taskPage/TaskEdit';
 import { TaskListMemo } from '../components/taskPage/TaskList';
 import { Auth } from '../firebase.config';
-import { useLogout } from '../hooks/useLogout';
+import { useLogout } from '../hooks/auth/useLogout';
 
 const Tasks: VFC = () => {
   const router = useRouter();
@@ -33,7 +33,7 @@ const Tasks: VFC = () => {
       <p className="mt-20 mb-5 text-xl font-bold text-blue-500">Tasks Edit</p>
       <div className="grid grid-cols-2 gap-40">
         <TaskListMemo />
-        <TaskEditMemo />
+        <TaskEditMemo/>
       </div>
       <Link href="/login" passHref>
         <div className="flex items-center mt-20 cursor-pointer">

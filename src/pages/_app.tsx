@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import { useUserChanged } from '../hooks/useUserChanged';
+import { useUserChanged } from '../hooks/query/useUserChanged';
 import { store } from '../redux/store';
 
 

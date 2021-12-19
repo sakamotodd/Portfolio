@@ -1,18 +1,32 @@
 import { VFC, memo, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutationApp } from '../../hooks/useMutationApp';
+import { Auth } from '../../firebase.config';
+import { useMutationApp } from '../../hooks/query/useMutationApp';
+import { CreateTask, UpdateTask } from '../../interface/types';
 import { selectTask, setEditTask } from '../../redux/uiSlice';
 
 const TaskEdit: VFC = () => {
   const dispatch = useDispatch();
+  const mail = Auth.currentUser?.email;
   const editedTask = useSelector(selectTask);
   const { creteTaskMutation, updateTaskMutation } = useMutationApp();
+
+  const creTask: CreateTask = {
+    title: editedTask.title,
+    mail: editedTask.mail,
+  };
+
+  const updTask: UpdateTask = {
+    id: editedTask.id,
+    title: editedTask.title,
+  };
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (editedTask.id === '') {
-      creteTaskMutation.mutate(editedTask.title);
+      creteTaskMutation.mutate(creTask);
     } else {
-      updateTaskMutation.mutate(editedTask);
+      console.log(updTask);
+      updateTaskMutation.mutate(updTask);
     }
   };
   if (creteTaskMutation.error || updateTaskMutation.error) {
@@ -26,7 +40,9 @@ const TaskEdit: VFC = () => {
           placeholder="new task ?"
           type="text"
           value={editedTask.title}
-          onChange={(e) => dispatch(setEditTask({ ...editedTask, title: e.target.value }))}
+          onChange={(e) =>
+            dispatch(setEditTask({ ...editedTask, title: e.target.value, mail: mail }))
+          }
         />
         <button
           className="py-2 px-3 my-3 mx-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded disabled:opacity-40"

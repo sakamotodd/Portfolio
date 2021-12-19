@@ -3,7 +3,7 @@ import { ChevronDoubleRightIcon, LockOpenIcon, MailIcon } from '@heroicons/react
 import Link from 'next/link';
 import React, { VFC } from 'react';
 import { Auth } from '../../firebase.config';
-import { useLogin } from '../../hooks/useLogin';
+import { useLogin } from '../../hooks/auth/useLogin';
 export const Mail: VFC = () => {
   const user = Auth.currentUser;
   const {

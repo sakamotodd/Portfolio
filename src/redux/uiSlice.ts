@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EditNews, EditTask } from '../interface/types';
+import { CreateTask, EditNews, EditTask } from '../interface/types';
 import { RootState } from './store';
 
 export interface uiState {
@@ -11,7 +11,9 @@ const initialState: uiState = {
   editTask: {
     id: '',
     title: '',
+    mail: '',
   },
+
   editNews: {
     id: '',
     content: '',
@@ -38,7 +40,6 @@ export const uiSlice = createSlice({
 });
 
 export const { setEditTask, resetEditTask, setEditNews, resetEditNews } = uiSlice.actions;
-
 export const selectTask = (state: RootState) => state.ui.editTask;
 export const selectNews = (state: RootState) => state.ui.editNews;
 

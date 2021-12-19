@@ -4,7 +4,7 @@ import { doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Cookies from 'universal-cookie';
-import { Auth, db } from '../firebase.config';
+import { Auth, db } from '../../firebase.config';
 
 export let unSubMeta: () => void;
 
@@ -18,7 +18,6 @@ export const useUserChanged = () => {
       if (user) {
         // userに対応するtoken取得
         const token = await user.getIdToken(true);
-        console.log(token);
         const idTokenResult = await user.getIdTokenResult();
         // HASURAのカスタムクレームに基づいてるか確認
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY];

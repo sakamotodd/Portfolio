@@ -1,5 +1,5 @@
 import React, { memo, VFC } from 'react';
-import { useQueryNews } from '../../hooks/useQueryNews';
+import { useQueryNews } from '../../hooks/query/useQueryNews';
 import { NewsItemMemo } from './NewsItem';
 
 const NewsList:VFC = () => {

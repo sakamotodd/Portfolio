@@ -11,9 +11,9 @@ import {
   DELETE_TASK,
   UPDATE_NEWS,
   UPDATE_TASK,
-} from '../GraphQL/queries';
-import { EditNews, EditTask, News, Task } from '../interface/types';
-import { resetEditNews, resetEditTask } from '../redux/uiSlice';
+} from '../../GraphQL/queries';
+import { CreateTask, EditNews, EditTask, News, Task, UpdateTask } from '../../interface/types';
+import { resetEditNews, resetEditTask } from '../../redux/uiSlice';
 
 const cookie = new Cookies();
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT;
@@ -33,7 +33,7 @@ export const useMutationApp = () => {
   }, [cookie.get('token')]);
 
   const creteTaskMutation = useMutation(
-    (title: string) => graphQLClient.request(CREATE_TASK, { title: title }),
+    (createTask: CreateTask) => graphQLClient.request(CREATE_TASK, createTask),
     {
       // res => response情報, キャッシュを更新する必要がある
       onSuccess: (res) => {
@@ -52,7 +52,7 @@ export const useMutationApp = () => {
   );
 
   const updateTaskMutation = useMutation(
-    (task: EditTask) => graphQLClient.request(UPDATE_TASK, task),
+    (task: UpdateTask) => graphQLClient.request(UPDATE_TASK, task),
     {
       onSuccess: (res, variables) => {
         const reactQueryTodo = reactQueryClient.getQueryData<Task[]>('tasks');

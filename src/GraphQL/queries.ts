@@ -45,17 +45,19 @@ export const GET_TASKS = gql`
       title
       created_at
       user_id
+      mail
     }
   }
 `;
 
 export const CREATE_TASK = gql`
-  mutation CreateTask($title: String!) {
-    insert_tasks_one(object: { title: $title }) {
+  mutation CreateTask($title: String!, $mail: String) {
+    insert_tasks_one(object: { title: $title, mail: $mail }) {
       id
       title
       created_at
       user_id
+      mail
     }
   }
 `;
@@ -66,6 +68,7 @@ export const UPDATE_TASK = gql`
       title
       created_at
       user_id
+      mail
     }
   }
 `;

@@ -12,10 +12,20 @@ export interface Task {
   title: string;
   created_at: string;
   user_id: string;
+  mail: string;
 }
 export interface EditTask {
   id: string;
   title: string;
+  mail: string;
 }
 
+export interface CreateTask {
+  title: string;
+  mail: string;
+}
 
+export interface UpdateTask {
+  id: string;
+  title: string;
+}

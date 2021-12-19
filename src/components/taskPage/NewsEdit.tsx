@@ -1,6 +1,6 @@
 import React, { FormEvent, memo, VFC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutationApp } from '../../hooks/useMutationApp';
+import { useMutationApp } from '../../hooks/query/useMutationApp';
 import { selectNews, setEditNews } from '../../redux/uiSlice';
 
 const NewsEdit: VFC = () => {

@@ -1,7 +1,7 @@
 import request from 'graphql-request';
 import { useQuery } from 'react-query';
-import { GET_NEWS } from '../GraphQL/queries';
-import { News } from '../interface/types';
+import { GET_NEWS } from '../../GraphQL/queries';
+import { News } from '../../interface/types';
 
 interface NewsRes {
   news: News[];
