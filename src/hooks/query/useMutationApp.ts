@@ -72,8 +72,7 @@ export const useMutationApp = () => {
     },
   );
 
-  const deleteTaskMutation = useMutation(
-    (id: string) => graphQLClient.request(DELETE_TASK, { id: id }),
+  const deleteTaskMutation = useMutation((id: string) => graphQLClient.request(DELETE_TASK, { id: id }),
     {
       onSuccess: (res, variables) => {
         const reactQueryTodo = reactQueryClient.getQueryData<Task[]>('tasks');

@@ -12,6 +12,29 @@ export const GET_NEWS = gql`
     }
   }
 `;
+
+export const GET_ORDER_NEWS = gql`
+  query GetOrderNews {
+    news {
+      id
+      content
+      created_at
+      orderNo
+    }
+  }
+`;
+
+export const GET_PRIVATE_NEWS = gql`
+query GetOrderNews($orderNo: Int!) {
+  news(where: { orderNo: { _eq: $orderNo } }) {
+    id
+    content
+    created_at
+    orderNo
+  }
+}
+`;
+
 export const CREATE_NEWS = gql`
   mutation CreateNews($content: String!) {
     insert_news_one(object: { content: $content }) {

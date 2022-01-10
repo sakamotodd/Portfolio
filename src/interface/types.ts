@@ -1,7 +1,16 @@
+import { ReactNode } from "react";
+
 export interface News {
   id: string;
   content: string;
   created_at: string;
+}
+
+export interface OrderNews {
+  id: string;
+  content: string;
+  created_at: string;
+  orderNo: number;
 }
 export interface EditNews {
   id: string;
@@ -27,5 +36,10 @@ export interface CreateTask {
 
 export interface UpdateTask {
   id: string;
+  title: string;
+}
+
+export interface Props {
+  children: ReactNode;
   title: string;
 }

@@ -21,6 +21,6 @@ export const setCustomClaims = functions.auth.user().onCreate(async (user) => {
       photo: user.photoURL,
     });
   } catch (e) {
-    console.log(e);
+    alert(e);
   }
 });

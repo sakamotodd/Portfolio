@@ -2,7 +2,7 @@ import { ChevronDoubleLeftIcon, LogoutIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { VFC } from 'react';
-import { Layout } from '../components/common/Layout';
+import { Layouts } from '../components/common/Layouts';
 import { NewsEditMemo } from '../components/taskPage/NewsEdit';
 import { NewsListMemo } from '../components/taskPage/NewsList';
 import { TaskEditMemo } from '../components/taskPage/TaskEdit';
@@ -16,7 +16,7 @@ const Tasks: VFC = () => {
   const user = Auth.currentUser;
 
   return (
-    <Layout title="tasks">
+    <Layouts title="tasks">
       <p className="my-3">{user?.email}</p>
       <LogoutIcon
         className="my-3 w-5 h-5 text-blue-500 cursor-pointer"
@@ -41,7 +41,7 @@ const Tasks: VFC = () => {
           <span>Back to main page</span>
         </div>
       </Link>
-    </Layout>
+    </Layouts>
   );
 };
 
