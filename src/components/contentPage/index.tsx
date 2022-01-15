@@ -1,77 +1,79 @@
 import { PlusSmIcon } from '@heroicons/react/solid';
-import Link from 'next/link';
-import React, { VFC } from 'react';
-
-interface LieData {
-  title: string;
-  content: string;
-}
+import { Pagination } from '@mui/material';
+import { useRouter } from 'next/router';
+import React, { ChangeEvent, useCallback, useEffect, useState, VFC } from 'react';
+import { useQueryClient } from 'react-query';
+import { OrderNews } from '../../interface/types';
 
 export const ContentPage: VFC = () => {
-  //仮データ
-  const data: LieData[] = [
-    {
-      title: 'HTML',
-      content: '主にNext.jsのJSX記法で勉強しました。',
-    },
-    {
-      title: 'TypeScript',
-      content:
-        'Javascriptを勉強する上で必須ということを知り、型の付け方について勉強しました。主にUdemyを活用し勉強しました。',
-    },
-    {
-      title: 'GraphQL',
-      content:
-        'GraphQLの勉強をするためにUdemyを活用し勉強しました。データ間のやりとりでHASURAを使用しました。',
-    },
-    {
-      title: 'CSS',
-      content: 'CSSは主にtailwindcssを活用し勉強しました。',
-    },
-    {
-      title: 'C#',
-      content: '仕事の業務ではvisual studioを用いたC#での開発をやっていました。',
-    },
-    {
-      title: 'Github',
-      content: 'ソースコードはgithubを使用し、デプロイ先はVercelを活用していました。',
-    },
-    {
-      title: 'React',
+  const queryClient = useQueryClient();
+  const data = queryClient.getQueryData<OrderNews[]>('news');
+  const [page, setPage] = useState<number>(1);
+  const [pageDataMax, setPageDataMax] = useState<number>(10);
+  const [pageDataMin, setPageDataMin] = useState<number>(0);
+  const router = useRouter();
+  const pageNumber = Math.ceil(data?.length / 10);
 
-      content:
-        'javascriptを活用するためにreactの勉強からはじめました。サーバーサイドの勉強もしたかったため、Next.jsのフレームワークを用いました。',
+  const handlePageNation = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, value: number) => {
+      setPage(value);
+      setPageDataMax(10 * value);
+      setPageDataMin(10 * (value - 1));
+      router.push(`content/?page=${value}`, undefined, { shallow: true });
     },
-    {
-      title: 'Firebase',
-      content: '認証機能、DBの操作としてfirebaseを用いました。主にUdemyの教材で勉強しました。',
+    [router],
+  );
+
+  const handlePrivatePage = useCallback(
+    (orderNo: number) => {
+      router.push(`/content/${orderNo}`);
     },
-    {
-      title: 'jest',
-      content: 'testの一環としてjestを活用しました。業務上では、NUnitでコーディングしていました。',
-    },
-  ];
+    [router],
+  );
+
+  useEffect(() => {
+    if (router.query.page) {
+      setPage(Number(router.query.page));
+    }
+  }, [router.query.page]);
+
   return (
     <>
       <div className="m-auto w-1/2">
         <h1 className="py-4 text-2xl text-gray-500">投稿一覧</h1>
-        <div className="grid grid-cols-2 grid-rows-9 h-[calc(100vh-9rem-2.5rem)] bg-white">
-          {data.map((lie) => {
+        <div className="grid grid-rows-10 h-[calc(100vh-9rem-2.5rem)] bg-white">
+          {data?.map((lie, index) => {
             return (
-              <Link key={lie.title} href={`/content/${encodeURIComponent(lie.title)}`} passHref>
-                <div className="flex items-center px-4 border-b">{lie.title}</div>
-              </Link>
+              pageDataMin <= index &&
+              index < pageDataMax && (
+                <div
+                  className="flex items-center px-4 border-b cursor-pointer"
+                  key={lie.orderNo}
+                  onClick={() => handlePrivatePage(lie.orderNo)}
+                >
+                  {lie.content}
+                </div>
+              )
             );
           })}
         </div>
         <div className="static">
-          <button className="flex absolute right-56 bottom-24 justify-center items-center w-28 h-28 leading-7 bg-indigo-600 rounded-full">
-            <Link href="/post" passHref>
-              <PlusSmIcon className="w-20 h-20" />
-            </Link>
+          <button
+            className="flex absolute right-56 bottom-24 justify-center items-center w-28 h-28 leading-7 bg-indigo-600 rounded-full"
+            onClick={() => router.push('/post')}
+          >
+            <PlusSmIcon className="w-20 h-20" />
           </button>
         </div>
-        <footer className="flex justify-center items-center w-20"></footer>
+        <div className="flex justify-center items-center h-20 ">
+          <Pagination
+            count={pageNumber}
+            variant="outlined"
+            color="primary"
+            page={page}
+            onChange={handlePageNation}
+          />
+        </div>
       </div>
     </>
   );

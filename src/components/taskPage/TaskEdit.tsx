@@ -25,7 +25,6 @@ const TaskEdit: VFC = () => {
     if (editedTask.id === '') {
       creteTaskMutation.mutate(creTask);
     } else {
-      console.log(updTask);
       updateTaskMutation.mutate(updTask);
     }
   };

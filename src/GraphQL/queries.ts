@@ -15,7 +15,7 @@ export const GET_NEWS = gql`
 
 export const GET_ORDER_NEWS = gql`
   query GetOrderNews {
-    news {
+    news(order_by: {orderNo: desc}) {
       id
       content
       created_at
@@ -34,6 +34,17 @@ query GetOrderNews($orderNo: Int!) {
   }
 }
 `;
+
+export const GET_PAGINATION_NEWS = gql`
+query MyQuery ($pageNumber: Int!) {
+  news(order_by: {orderNo: desc}, limit: 10, offset: $pageNumber) {
+    id
+    content
+    created_at
+    orderNo
+  }
+}
+`
 
 export const CREATE_NEWS = gql`
   mutation CreateNews($content: String!) {
