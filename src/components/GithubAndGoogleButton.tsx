@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { VFC } from 'react';
-import { useLogin } from '../../hooks/auth/useLogin';
+import { useLogin } from '../hooks/auth/useLogin';
 
-export const GitAndGoogle: VFC = () => {
+export const GithubAndGoogleButton: VFC = () => {
   const { loginWithGithub, loginWithGoogle } = useLogin();
   return (
     <div className="p-8 bg-white rounded-t-lg">

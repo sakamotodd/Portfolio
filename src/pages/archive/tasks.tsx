@@ -2,13 +2,13 @@ import { ChevronDoubleLeftIcon, LogoutIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { VFC } from 'react';
-import { Layouts } from '../components/common/Layouts';
-import { NewsEditMemo } from '../components/taskPage/NewsEdit';
-import { NewsListMemo } from '../components/taskPage/NewsList';
-import { TaskEditMemo } from '../components/taskPage/TaskEdit';
-import { TaskListMemo } from '../components/taskPage/TaskList';
-import { Auth } from '../firebase.config';
-import { useLogout } from '../hooks/auth/useLogout';
+import { Layouts } from '../../components/archive/Layouts';
+import { NewsEditMemo } from '../../components/archive/taskPage/NewsEdit';
+import { NewsListMemo } from '../../components/archive/taskPage/NewsList';
+import { TaskEditMemo } from '../../components/archive/taskPage/TaskEdit';
+import { TaskListMemo } from '../../components/archive/taskPage/TaskList';
+import { Auth } from '../../firebase.config';
+import { useLogout } from '../../hooks/auth/useLogout';
 
 const Tasks: VFC = () => {
   const router = useRouter();

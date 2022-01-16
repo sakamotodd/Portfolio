@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
-import { privateNews } from '../hooks/query/useOrderNews';
+import { privateNews } from '../../hooks/query/useOrderNews';
 interface Character {
   location: {
     name: string;

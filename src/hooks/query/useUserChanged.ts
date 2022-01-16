@@ -23,8 +23,8 @@ export const useUserChanged = () => {
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY];
         // Cookieに格納
         if (hasuraClaims) {
-          cookie.set('token', token, { path: '/' });
-          router.push('/tasks');
+          cookie.set('token', token, { path: '/login' });
+          router.push('/content');
         } else {
           // firestoreのコレクションの書き込み対してモニタリングする処理
           unSubMeta = onSnapshot(doc(db, 'user_meta', user.uid), async () => {
@@ -32,8 +32,8 @@ export const useUserChanged = () => {
             const idTokenResultSnap = await user.getIdTokenResult();
             const hasuraClaimsSNap = idTokenResultSnap.claims[HASURA_TOKEN_KEY];
             if (hasuraClaimsSNap) {
-              cookie.set('token', tokenSnap, { path: '/' });
-              router.push('/tasks');
+              cookie.set('token', tokenSnap, { path: '/login' });
+              router.push('/content');
             }
           });
         }

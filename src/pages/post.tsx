@@ -1,13 +1,13 @@
 import React, { VFC } from 'react';
+import { EditInput } from '../components/EditInput';
 import { Layout } from '../components/common/Layout';
-import { PostPage } from '../components/postPage';
 
-const Post: VFC = () => {
+const PostPage: VFC = () => {
   return (
     <Layout title="投稿編集">
-      <PostPage />
+      <EditInput />
     </Layout>
   );
 };
 
-export default Post;
+export default PostPage;

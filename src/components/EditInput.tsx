@@ -2,7 +2,7 @@ import { ChevronDoubleLeftIcon, PlusSmIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import React, { VFC } from 'react';
 
-export const PostPage: VFC = () => {
+export const EditInput: VFC = () => {
   return (
     <div className="m-auto w-1/2 h-full">
       <div className="flex items-center h-1/6 text-2xl text-gray-500">投稿内容</div>
