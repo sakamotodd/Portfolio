@@ -12,7 +12,7 @@ import {
   UPDATE_NEWS,
   UPDATE_TASK,
 } from '../../GraphQL/queries';
-import { CreateTask, EditNews, EditTask, News, Task, UpdateTask } from '../../interface/types';
+import { CreateTaskDTO , EditNewsDTO , EditTaskDTO , NewsDTO , TaskDTO , UpdateTaskDTO  } from '../../interface/types';
 import { resetEditNews, resetEditTask } from '../../redux/uiSlice';
 
 const cookie = new Cookies();
@@ -33,12 +33,12 @@ export const useMutationApp = () => {
   }, [cookie.get('token')]);
 
   const creteTaskMutation = useMutation(
-    (createTask: CreateTask) => graphQLClient.request(CREATE_TASK, createTask),
+    (createTask: CreateTaskDTO ) => graphQLClient.request(CREATE_TASK, createTask),
     {
       // res => response情報, キャッシュを更新する必要がある
       onSuccess: (res) => {
         // tasksのキャッシュの一覧を取得
-        const reactQueryTodo = reactQueryClient.getQueryData<Task[]>('tasks');
+        const reactQueryTodo = reactQueryClient.getQueryData<TaskDTO []>('tasks');
         if (reactQueryTodo) {
           // スプレット構文でレスポンス情報追加
           reactQueryClient.setQueryData('tasks', [...reactQueryTodo, res.insert_tasks_one]);
@@ -52,12 +52,12 @@ export const useMutationApp = () => {
   );
 
   const updateTaskMutation = useMutation(
-    (task: UpdateTask) => graphQLClient.request(UPDATE_TASK, task),
+    (task: UpdateTaskDTO ) => graphQLClient.request(UPDATE_TASK, task),
     {
       onSuccess: (res, variables) => {
-        const reactQueryTodo = reactQueryClient.getQueryData<Task[]>('tasks');
+        const reactQueryTodo = reactQueryClient.getQueryData<TaskDTO []>('tasks');
         if (reactQueryTodo) {
-          reactQueryClient.setQueryData<Task[]>(
+          reactQueryClient.setQueryData<TaskDTO[]>(
             'tasks',
             reactQueryTodo.map((task) =>
               task.id === variables.id ? res.update_tasks_by_pk : task,
@@ -75,9 +75,9 @@ export const useMutationApp = () => {
   const deleteTaskMutation = useMutation((id: string) => graphQLClient.request(DELETE_TASK, { id: id }),
     {
       onSuccess: (res, variables) => {
-        const reactQueryTodo = reactQueryClient.getQueryData<Task[]>('tasks');
+        const reactQueryTodo = reactQueryClient.getQueryData<TaskDTO []>('tasks');
         if (reactQueryTodo) {
-          reactQueryClient.setQueryData<Task[]>(
+          reactQueryClient.setQueryData<TaskDTO []>(
             'tasks',
             reactQueryTodo.filter((task) => task.id !== variables),
           );
@@ -91,7 +91,7 @@ export const useMutationApp = () => {
     (content: string) => graphQLClient.request(CREATE_NEWS, { content: content }),
     {
       onSuccess: (res) => {
-        const reactQueryTodo = reactQueryClient.getQueryData<News[]>('news');
+        const reactQueryTodo = reactQueryClient.getQueryData<NewsDTO []>('news');
         if (reactQueryTodo) {
           reactQueryClient.setQueryData('news', [...reactQueryTodo, res.insert_news_one]);
         }
@@ -104,12 +104,12 @@ export const useMutationApp = () => {
   );
 
   const updateNewsMutation = useMutation(
-    (news: EditNews) => graphQLClient.request(UPDATE_NEWS, news),
+    (news: EditNewsDTO ) => graphQLClient.request(UPDATE_NEWS, news),
     {
       onSuccess: (res, variables) => {
-        const reactQueryTodo = reactQueryClient.getQueryData<News[]>('news');
+        const reactQueryTodo = reactQueryClient.getQueryData<NewsDTO []>('news');
         if (reactQueryTodo) {
-          reactQueryClient.setQueryData<News[]>(
+          reactQueryClient.setQueryData<NewsDTO []>(
             'news',
             reactQueryTodo.map((news) => (news.id === variables.id ? res.update_news_by_pk : news)),
           );
@@ -126,9 +126,9 @@ export const useMutationApp = () => {
     (id: string) => graphQLClient.request(DELETE_NEWS, { id: id }),
     {
       onSuccess: (res, variables) => {
-        const reactQueryTodo = reactQueryClient.getQueryData<News[]>('news');
+        const reactQueryTodo = reactQueryClient.getQueryData<NewsDTO []>('news');
         if (reactQueryTodo) {
-          reactQueryClient.setQueryData<News[]>(
+          reactQueryClient.setQueryData<NewsDTO []>(
             'news',
             reactQueryTodo.filter((news) => news.id !== variables),
           );

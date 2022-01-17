@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { OrderNews } from '../interface/types';
+import { OrderNewsDTO  } from '../interface/types';
 import { useLogout } from './auth/useLogout';
 
 export const useContent = () => {
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<OrderNews[]>('news');
+  const data = queryClient.getQueryData<OrderNewsDTO []>('news');
   const [page, setPage] = useState<number>(1);
   const [pageDataMax, setPageDataMax] = useState<number>(10);
   const [pageDataMin, setPageDataMin] = useState<number>(0);

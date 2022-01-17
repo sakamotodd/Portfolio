@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import { useUserChanged } from '../hooks/query/useUserChanged';
+import { useUserChanged } from '../hooks/auth/useUserChanged';
 import { store } from '../redux/store';
 
 function MyApp({ Component, pageProps }: AppProps) {

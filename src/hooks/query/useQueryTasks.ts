@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import Cookies from 'universal-cookie';
 import { GET_TASKS } from '../../GraphQL/queries';
-import { Task } from '../../interface/types';
+import { TaskDTO  } from '../../interface/types';
 
 // HasuraのPermissionsのselectのRoleでログインしたuserのみ設定
 // ログインしたstaffの権限を持つuserのみが作成したタスクを見れるようにする。
@@ -14,7 +14,7 @@ const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT;
 let graphQLClient: GraphQLClient;
 
 interface TasksRes {
-  tasks: Task[];
+  tasks: TaskDTO [];
 }
 
 const fetchTasks = async () => {
@@ -32,7 +32,7 @@ export const useQueryTasks = () => {
       },
     });
   }, [cookie.get('token')]); // userが切り替わった時に実行するようにするため
-  return useQuery<Task[], Error>({
+  return useQuery<TaskDTO [], Error>({
     queryKey: 'tasks',
     queryFn: fetchTasks,
     staleTime: 0,

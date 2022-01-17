@@ -2,7 +2,7 @@ import { VFC, memo, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Auth } from '../../../firebase.config';
 import { useMutationApp } from '../../../hooks/query/useMutationApp';
-import { CreateTask, UpdateTask } from '../../../interface/types';
+import { CreateTaskDTO , UpdateTaskDTO  } from '../../../interface/types';
 import { selectTask, setEditTask } from '../../../redux/uiSlice';
 
 const TaskEdit: VFC = () => {
@@ -11,12 +11,12 @@ const TaskEdit: VFC = () => {
   const editedTask = useSelector(selectTask);
   const { creteTaskMutation, updateTaskMutation } = useMutationApp();
 
-  const creTask: CreateTask = {
+  const creTask: CreateTaskDTO  = {
     title: editedTask.title,
     mail: editedTask.mail,
   };
 
-  const updTask: UpdateTask = {
+  const updTask: UpdateTaskDTO  = {
     id: editedTask.id,
     title: editedTask.title,
   };

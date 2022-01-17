@@ -1,4 +1,4 @@
-import { ChevronDoubleLeftIcon, PlusSmIcon } from '@heroicons/react/solid';
+import { ChevronDoubleLeftIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import React, { VFC } from 'react';
 

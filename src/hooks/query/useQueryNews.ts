@@ -2,10 +2,10 @@ import { validate } from 'graphql';
 import request from 'graphql-request';
 import { useQuery } from 'react-query';
 import { GET_NEWS } from '../../GraphQL/queries';
-import { News } from '../../interface/types';
+import { NewsDTO  } from '../../interface/types';
 
 interface NewsRes {
-  news: News[];
+  news: NewsDTO [];
 }
 // GraphQLの結果を返す(News取得)
 export const fetchNews = async () => {
@@ -15,7 +15,7 @@ export const fetchNews = async () => {
 
 // react-queryの実行結果を返す
 export const useQueryNews = () => {
-  return useQuery<News[], Error>({
+  return useQuery<NewsDTO [], Error>({
     queryKey: 'news',
     queryFn: fetchNews,
     staleTime: Infinity,

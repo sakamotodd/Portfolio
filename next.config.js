@@ -1,6 +1,7 @@
+/** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['rickandmortyapi.com'],
+    domains: ['lh3.googleusercontent.com', 'avatars.githubusercontent.com', 'www.gravatar.com'],
   },
 };

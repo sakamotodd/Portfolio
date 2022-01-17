@@ -1,8 +1,5 @@
 import { gql } from 'graphql-request';
 
-// $ = 変数化
-// ! = 必須
-
 export const GET_NEWS = gql`
   query GetNews {
     news {

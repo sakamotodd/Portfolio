@@ -1,8 +1,7 @@
 import { signOut } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { Auth } from '../../firebase.config';
-import { unSubMeta } from '../query/useUserChanged';
+import { unSubMeta } from './useUserChanged';
 
 const cookie = new Cookies();
 export const useLogout = () => {

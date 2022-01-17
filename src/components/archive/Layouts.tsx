@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import { VFC } from 'react';
-import { Props } from '../../interface/types';
+import { LayoutDTO } from '../../interface/types';
 
-export const Layouts: VFC<Props> = ({ children, title }) => {
+export const Layouts: VFC<LayoutDTO> = ({ children, title }) => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen font-mono text-sm text-gray-600">
       <Head>
