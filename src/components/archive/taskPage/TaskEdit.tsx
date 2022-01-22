@@ -1,6 +1,6 @@
 import { VFC, memo, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Auth } from '../../../firebase.config';
+import { Auth } from '../../../firebase/firebase.config';
 import { useMutationApp } from '../../../hooks/query/useMutationApp';
 import { CreateTaskDTO , UpdateTaskDTO  } from '../../../interface/types';
 import { selectTask, setEditTask } from '../../../redux/uiSlice';

@@ -8,73 +8,40 @@ import {
   updateProfile,
 } from '@firebase/auth';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { Auth } from '../../firebase.config';
+import { FieldValues, useForm } from 'react-hook-form';
+import { Auth } from '../../firebase/firebase.config';
+import { SignInFormDTO, SignUpFormDTO } from '../../interface/types';
 
 export const useLogin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [pass, setPass] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
-  const gravatar = useCallback(() => {
-    const md5 = crypto.createHash('md5');
-    const hashStr = md5.update(email, 'binary').digest('hex');
-    const url = `https://www.gravatar.com/avatar/${hashStr}/?d=robohash`;
-    return url;
-  },[email]);
-
-  const emailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  }, []);
-
-  const pwChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  }, []);
-
-  const pwNewCreate = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPass(e.target.value);
-  }, []);
-
-  const resetInput = useCallback(() => {
-    setEmail('');
-    setPassword('');
-    setPass('');
-  }, []);
-
-  const toggleMode = useCallback(() => {
-    setIsLogin(!isLogin);
-  }, [isLogin]);
-
-  const authUser = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (isLogin) {
+  const signInUser = useCallback(
+    async (data: SignInFormDTO) => {
         try {
-          await signInWithEmailAndPassword(Auth, email, password);
+          await signInWithEmailAndPassword(Auth, data.email, data.password);
         } catch (e) {
           alert(e.message);
           return;
         }
-        resetInput();
-      } else {
+    },
+    [],
+  );
+  const signUpUser = useCallback(
+    async (data: SignUpFormDTO) => {
         try {
-          if (pass === password) {
-            await createUserWithEmailAndPassword(Auth, email, password).then((user) => {
-              const url = gravatar();
+            await createUserWithEmailAndPassword(Auth, data.email, data.password).then(() => {
+              const md5 = crypto.createHash('md5');
+              const hashStr = md5.update(data.email, 'binary').digest('hex');
+              const url = `https://www.gravatar.com/avatar/${hashStr}/?d=robohash`;
               updateProfile(Auth.currentUser, {
                 photoURL: url,
               });
             });
-          } else {
-            alert('パスワードが違います。');
-          }
         } catch (e) {
           alert(e.message);
         }
-        resetInput();
-      }
-    },
-    [isLogin, resetInput, email, password, pass, gravatar],
+      },
+    [],
   );
+
   const loginWithGithub = useCallback(async (): Promise<void> => {
     try {
       const provider = new GithubAuthProvider();
@@ -92,17 +59,10 @@ export const useLogin = () => {
       alert(e.message);
     }
   }, []);
+
   return {
-    isLogin,
-    email,
-    pass,
-    password,
-    pwNewCreate,
-    emailChange,
-    pwChange,
-    resetInput,
-    authUser,
-    toggleMode,
+    signInUser,
+    signUpUser,
     loginWithGithub,
     loginWithGoogle,
   };

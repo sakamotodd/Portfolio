@@ -7,7 +7,7 @@ import { NewsEditMemo } from '../../components/archive/taskPage/NewsEdit';
 import { NewsListMemo } from '../../components/archive/taskPage/NewsList';
 import { TaskEditMemo } from '../../components/archive/taskPage/TaskEdit';
 import { TaskListMemo } from '../../components/archive/taskPage/TaskList';
-import { Auth } from '../../firebase.config';
+import { Auth } from '../../firebase/firebase.config';
 import { useLogout } from '../../hooks/auth/useLogout';
 
 const Tasks: VFC = () => {

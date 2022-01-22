@@ -1,6 +1,6 @@
 import React, { VFC } from 'react';
-import { EditInput } from '../components/EditInput';
-import { Layout } from '../components/common/Layout';
+import { EditInput } from '../components/post/container/EditInput';
+import { Layout } from '../components/common/container/Layout';
 
 const PostPage: VFC = () => {
   return (

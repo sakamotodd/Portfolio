@@ -3,13 +3,6 @@ import React, { VFC } from 'react';
 import { Link as Scroll } from 'react-scroll';
 import TextAnimation from './TextAnimation';
 
-{
-  /* <div className="absolute top-1/2 left-1/2 z-10 pr-2 mx-auto text-5xl text-white border-r-4 transform -translate-x-1/2 -translate-y-1/2">
-<div id="portfolio">
-  <TextAnimation section="portfolio">Portfolio</TextAnimation>
-</div>
-</div> */
-}
 const Header: VFC = () => {
   const headerBtn = ['Home1', 'Home2', 'Home3', 'Home4'];
   return (

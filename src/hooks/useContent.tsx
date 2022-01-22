@@ -33,7 +33,7 @@ export const useContent = () => {
 
   const handleLogout = useCallback(() => {
     logout();
-    router.push('/login');
+    router.push('/signIn');
   }, [logout, router]);
 
   const handleMovePage = useCallback(() => {

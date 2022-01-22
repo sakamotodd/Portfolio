@@ -1,6 +1,6 @@
 import { signOut } from 'firebase/auth';
 import Cookies from 'universal-cookie';
-import { Auth } from '../../firebase.config';
+import { Auth } from '../../firebase/firebase.config';
 import { unSubMeta } from './useUserChanged';
 
 const cookie = new Cookies();

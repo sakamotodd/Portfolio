@@ -43,3 +43,14 @@ export interface LayoutDTO {
   children: ReactNode;
   title: string;
 }
+
+export interface SignInFormDTO  {
+  email: string;
+  password: string;
+};
+
+export interface SignUpFormDTO {
+  email: string;
+  password: string;
+  pass: string;
+};

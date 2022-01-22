@@ -3,7 +3,7 @@ import { Pagination } from '@mui/material';
 import { GetStaticProps } from 'next';
 import React, { VFC } from 'react';
 import { dehydrate, QueryClient } from 'react-query';
-import { Layout } from '../components/common/Layout';
+import { Layout } from '../components/common/container/Layout';
 import { allNews } from '../hooks/query/useOrderNews';
 import { useContent } from '../hooks/useContent';
 
