@@ -14,6 +14,9 @@ module.exports = {
       fontFamily: {
         fantasy: 'fantasy',
       },
+      outline: {
+        red: '2px solid #f87171',
+      },
     },
   },
   variants: {

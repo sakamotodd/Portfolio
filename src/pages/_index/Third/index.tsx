@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { useIconData } from '../../../hooks/useIconData';
+import { useIconData } from '../../../hooks/_index/useIconData';
 //bg-gradient-to-r from-black to-gray-900 text-white
 const Third = () => {
   const [flag, setFlag] = useState(false);

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CreateTask, EditNews, EditTask } from '../interface/types';
+import { CreateTaskDTO, EditNewsDTO, EditTaskDTO } from '../interface/types';
 import { RootState } from './store';
 
 export interface uiState {
-  editTask: EditTask;
-  editNews: EditNews;
+  editTask: EditTaskDTO;
+  editNews: EditNewsDTO;
 }
 
 const initialState: uiState = {
@@ -24,13 +24,13 @@ export const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    setEditTask: (state, action: PayloadAction<EditTask>) => {
+    setEditTask: (state, action: PayloadAction<EditTaskDTO>) => {
       state.editTask = action.payload;
     },
     resetEditTask: (state) => {
       state.editTask = initialState.editTask;
     },
-    setEditNews: (state, action: PayloadAction<EditNews>) => {
+    setEditNews: (state, action: PayloadAction<EditNewsDTO>) => {
       state.editNews = action.payload;
     },
     resetEditNews: (state) => {

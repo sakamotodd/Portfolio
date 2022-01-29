@@ -5,11 +5,12 @@ import React from 'react';
 import { dehydrate, QueryClient, useQueryClient } from 'react-query';
 import { GET_ORDER_NEWS } from '../../GraphQL/queries';
 import { privateNews } from '../../hooks/query/useOrderNews';
-import { OrderNews } from '../../interface/types';
+import { OrderNewsDTO } from '../../interface/types';
+
 
 export default function Home() {
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<OrderNews[]>('news');
+  const data = queryClient.getQueryData<OrderNewsDTO[]>('news');
   return (
     <div className="text-black">
       {data.map((user) => {
@@ -29,11 +30,11 @@ export default function Home() {
   );
 }
 
-interface NewsRes {
-  news: OrderNews[];
+interface NewsResDTO {
+  news: OrderNewsDTO[];
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { news: data } = await request<NewsRes>(
+  const { news: data } = await request<NewsResDTO>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     GET_ORDER_NEWS,
   );

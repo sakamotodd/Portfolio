@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { OrderNewsDTO  } from '../interface/types';
-import { useLogout } from './auth/useLogout';
+import { OrderNewsDTO  } from '../../interface/types';
+import { useLogout } from '../login/useLogout';
 
 export const useContent = () => {
   const queryClient = useQueryClient();
@@ -33,7 +33,7 @@ export const useContent = () => {
 
   const handleLogout = useCallback(() => {
     logout();
-    router.push('/signIn');
+    router.push('/login/signIn');
   }, [logout, router]);
 
   const handleMovePage = useCallback(() => {

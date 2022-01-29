@@ -3,14 +3,16 @@ import { PencilAltIcon } from '@heroicons/react/solid';
 import Head from 'next/head';
 import Image from 'next/image';
 import { VFC } from 'react';
-import { Auth } from '../../../firebase/firebase.config';
-import { LayoutDTO } from '../../../interface/types';
+import { Auth } from '../../firebase/firebase.config';
+import { LayoutDTO } from '../../interface/types';
 
 export const Layout: VFC<LayoutDTO> = ({ children, title }) => {
   const user = Auth.currentUser;
   return (
     <div className="w-screen h-screen font-serif">
-      <Head>{title}</Head>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <header className="flex justify-between items-center px-8 w-full h-10 bg-white shadow-sm">
         <div className="flex items-center">
           <PencilAltIcon className="w-7 h-7 text-indigo-400" />

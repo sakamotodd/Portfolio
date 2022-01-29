@@ -53,4 +53,5 @@ export interface SignUpFormDTO {
   email: string;
   password: string;
   pass: string;
+  name: string;
 };

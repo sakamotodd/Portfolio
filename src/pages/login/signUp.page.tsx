@@ -1,9 +1,9 @@
 import { ChevronDoubleRightIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import React from 'react';
-import { GithubAndGoogleButton } from '../components/auth/container/GithubAndGoogleButton';
-import { MailFormSignUp } from '../components/auth/container/MailFormSignUp';
-import { Auth } from '../firebase/firebase.config';
+import { GithubAndGoogleButton } from '../../components/auth/GithubAndGoogleButton';
+import { Auth } from '../../firebase/firebase.config';
+import { MailFormSignUp } from './MailFormSignUp';
 
 export default function SignUpPage() {
   const user = Auth.currentUser;

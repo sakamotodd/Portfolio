@@ -8,7 +8,7 @@ import { NewsListMemo } from '../../components/archive/taskPage/NewsList';
 import { TaskEditMemo } from '../../components/archive/taskPage/TaskEdit';
 import { TaskListMemo } from '../../components/archive/taskPage/TaskList';
 import { Auth } from '../../firebase/firebase.config';
-import { useLogout } from '../../hooks/auth/useLogout';
+import { useLogout } from '../../hooks/login/useLogout';
 
 const Tasks: VFC = () => {
   const router = useRouter();
