@@ -70,11 +70,7 @@ const ContentPage: NextPageWithLayout = () => {
 export default ContentPage;
 
 ContentPage.getLayout = (page: ReactNode) => {
-  return (
-    <Layout title="TweetApp">
-      {page}
-    </Layout>
-  );
+  return <Layout title="TweetApp">{page}</Layout>;
 };
 
 export const getStaticProps: GetStaticProps = async () => {

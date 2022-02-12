@@ -12,7 +12,6 @@ export const useUserChanged = () => {
   const cookie = new Cookies();
   const router = useRouter();
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
-
   useEffect(() => {
     const unSubUser = onAuthStateChanged(Auth, async (user) => {
       try {
@@ -25,7 +24,9 @@ export const useUserChanged = () => {
           // Cookieに格納
           if (hasuraClaims) {
             cookie.set('token', token, { path: '/login' });
-            router.push('/content');
+            if (router.pathname === '/login/signUp' || router.pathname === '/login/signIn') {
+              router.push('/content');
+            }
           } else {
             // firestoreのコレクションの書き込み対してモニタリングする処理
             unSubMeta = onSnapshot(doc(db, 'user_meta', user.uid), async () => {

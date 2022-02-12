@@ -8,6 +8,7 @@
     "plugin:import/warnings",
     "plugin:tailwindcss/recommended"
   ],
+  "plugins": ["@typescript-eslint", "unused-imports"],
   "ignorePatterns": ["*.config.js"],
   "rules": {
     "import/order": [
