@@ -19,9 +19,7 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {},
-  },
+  variants: {},
   plugins: [
     function ({ addUtilities }) {
       const newUtilities = {
@@ -29,7 +27,6 @@ module.exports = {
           textShadow: '#FC0 1px 0 2px',
         },
       };
-
       addUtilities(newUtilities);
     },
   ],

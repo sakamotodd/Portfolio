@@ -39,7 +39,6 @@ export const useLogin = () => {
       try {
         await createUserWithEmailAndPassword(Auth, data.email, data.password).then(async (user) => {
           let url = '';
-
           if (tweetImage) {
             const S = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(16)))

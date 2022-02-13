@@ -24,6 +24,9 @@
 .markdownPreview h6 {
   font-size: 0.7rem;
 }
+.markdownPreview p {
+  wthite-space: pre-wrap;
+}
 .markdownPreview p code {
   background-color: #ebebeb;
 }
