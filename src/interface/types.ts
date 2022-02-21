@@ -1,9 +1,17 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface NewsDTO {
   id: string;
   content: string;
   created_at: string;
+  orderNo: number;
+  title: string;
+}
+
+export interface NewsVariableDTO {
+  content: string;
+  orderNo: number;
+  title: string;
 }
 
 export interface OrderNewsDTO {
@@ -12,29 +20,31 @@ export interface OrderNewsDTO {
   created_at: string;
   orderNo: number;
 }
-export interface EditNewsDTO  {
+export interface EditNewsDTO {
   id: string;
   content: string;
+  orderNo: number;
+  title: string;
 }
-export interface TaskDTO  {
+export interface TaskDTO {
   id: string;
   title: string;
   created_at: string;
   user_id: string;
   mail: string;
 }
-export interface EditTaskDTO  {
+export interface EditTaskDTO {
   id: string;
   title: string;
   mail: string;
 }
 
-export interface CreateTaskDTO  {
+export interface CreateTaskDTO {
   title: string;
   mail: string;
 }
 
-export interface UpdateTaskDTO  {
+export interface UpdateTaskDTO {
   id: string;
   title: string;
 }
@@ -44,14 +54,14 @@ export interface LayoutDTO {
   title: string;
 }
 
-export interface SignInFormDTO  {
+export interface SignInFormDTO {
   email: string;
   password: string;
-};
+}
 
 export interface SignUpFormDTO {
   email: string;
   password: string;
   pass: string;
   name: string;
-};
+}

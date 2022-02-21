@@ -12,7 +12,8 @@ module.exports = {
         bottom: '0px 10px 10px -5px rgba(0,0,0,0.1)',
       },
       fontFamily: {
-        fantasy: 'fantasy',
+        hiragino: 'Hiragino Sans W3',
+
       },
       outline: {
         red: '2px solid #f87171',

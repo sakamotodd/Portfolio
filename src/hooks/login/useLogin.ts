@@ -28,11 +28,10 @@ export const useLogin = () => {
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files![0]) {
         setTweetImage(e.target.files![0]);
-        console.log(tweetImage);
         e.target.value = '';
       }
     },
-    [tweetImage],
+    [],
   );
   const signUpUser = useCallback(
     async (data: SignUpFormDTO) => {

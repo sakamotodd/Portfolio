@@ -21,7 +21,7 @@ const ContentPage: NextPageWithLayout = () => {
     handleMovePage,
   } = useContent();
   return (
-    <div className="m-auto w-1/2">
+    <div className="m-auto w-1/2 font-hiragino">
       <h1 className="py-4 text-2xl text-gray-500">投稿一覧</h1>
       <div className="grid grid-rows-10 h-[calc(100vh-9rem-2.5rem)] bg-white">
         {data?.map((lie, index) => {
@@ -46,8 +46,6 @@ const ContentPage: NextPageWithLayout = () => {
         >
           <PlusSmIcon className="w-20 h-20" />
         </button>
-      </div>
-      <div className="static">
         <button
           className="flex absolute right-56 bottom-64 justify-center items-center w-28 h-28 leading-7 bg-indigo-600 rounded-full"
           onClick={handleLogout}

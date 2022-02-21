@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CreateTaskDTO, EditNewsDTO, EditTaskDTO } from '../interface/types';
+import { NewsVariableDTO, EditNewsDTO, EditTaskDTO } from '../interface/types';
 import { RootState } from './store';
 
 export interface uiState {
   editTask: EditTaskDTO;
   editNews: EditNewsDTO;
+  selectNews: NewsVariableDTO;
 }
 
 const initialState: uiState = {
@@ -17,6 +18,14 @@ const initialState: uiState = {
   editNews: {
     id: '',
     content: '',
+    orderNo: null,
+    title: '',
+  },
+
+  selectNews: {
+    content: '',
+    orderNo: 0,
+    title: '',
   },
 };
 
@@ -33,14 +42,17 @@ export const uiSlice = createSlice({
     setEditNews: (state, action: PayloadAction<EditNewsDTO>) => {
       state.editNews = action.payload;
     },
+    setEditTitle: (state, action: PayloadAction<NewsVariableDTO>) => {
+      state.selectNews = action.payload;
+    },
     resetEditNews: (state) => {
       state.editNews = initialState.editNews;
     },
   },
 });
 
-export const { setEditTask, resetEditTask, setEditNews, resetEditNews } = uiSlice.actions;
+export const { setEditTask, resetEditTask, setEditNews, setEditTitle, resetEditNews } = uiSlice.actions;
 export const selectTask = (state: RootState) => state.ui.editTask;
-export const selectNews = (state: RootState) => state.ui.editNews;
+export const selectNews = (state: RootState) => state.ui.selectNews;
 
 export default uiSlice.reducer;

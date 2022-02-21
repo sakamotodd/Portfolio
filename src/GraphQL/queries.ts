@@ -12,7 +12,7 @@ export const GET_NEWS = gql`
 
 export const GET_ORDER_NEWS = gql`
   query GetOrderNews {
-    news(order_by: {orderNo: desc}) {
+    news(order_by: { orderNo: desc }) {
       id
       content
       created_at
@@ -22,26 +22,26 @@ export const GET_ORDER_NEWS = gql`
 `;
 
 export const GET_PRIVATE_NEWS = gql`
-query GetOrderNews($orderNo: Int!) {
-  news(where: { orderNo: { _eq: $orderNo } }) {
-    id
-    content
-    created_at
-    orderNo
+  query GetOrderNews($orderNo: Int!) {
+    news(where: { orderNo: { _eq: $orderNo } }) {
+      id
+      content
+      created_at
+      orderNo
+    }
   }
-}
 `;
 
 export const GET_PAGINATION_NEWS = gql`
-query MyQuery ($pageNumber: Int!) {
-  news(order_by: {orderNo: desc}, limit: 10, offset: $pageNumber) {
-    id
-    content
-    created_at
-    orderNo
+  query MyQuery($pageNumber: Int!) {
+    news(order_by: { orderNo: desc }, limit: 10, offset: $pageNumber) {
+      id
+      content
+      created_at
+      orderNo
+    }
   }
-}
-`
+`;
 
 export const CREATE_NEWS = gql`
   mutation CreateNews($content: String!) {
@@ -49,6 +49,8 @@ export const CREATE_NEWS = gql`
       id
       content
       created_at
+      orderNo
+      title
     }
   }
 `;

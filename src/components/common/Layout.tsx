@@ -2,9 +2,13 @@
 import { PencilAltIcon } from '@heroicons/react/solid';
 import Head from 'next/head';
 import Image from 'next/image';
-import { VFC } from 'react';
+import {  VFC } from 'react';
 import { Auth } from '../../firebase/firebase.config';
 import { LayoutDTO } from '../../interface/types';
+
+interface ImageUserDTO {
+  photoUrl: string;
+}
 
 export const Layout: VFC<LayoutDTO> = ({ children, title }) => {
   const user = Auth.currentUser;

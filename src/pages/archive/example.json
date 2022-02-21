@@ -1,0 +1,16 @@
+{
+  "response": {
+    "errors": [
+      {
+        "extensions": { "path": "$", "code": "invalid-jwt" },
+        "message": "Could not verify JWT: JWSError (CompactDecodeError Invalid number of parts: Expected 3 parts; got 1)"
+      }
+    ],
+    "status": 200,
+    "headers": { "map": { "content-type": "application/json; charset=utf-8" } }
+  },
+  "request": {
+    "query": "\n mutation CreateNews($content: String!, $orderNo: Int!, $title: String!) {\n insert_news_one(object: { content: $content, orderNo: $orderNo, title: $title }) {\n id\n content\n created_at\n orderNo\n title\n }\n }\n",
+    "variables": { "content": "test", "orderNo": 23, "title": "test 最新" }
+  }
+}
