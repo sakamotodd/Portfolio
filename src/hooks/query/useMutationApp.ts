@@ -44,12 +44,10 @@ export const useMutationApp = () => {
   const creteTaskMutation = useMutation(
     (createTask: CreateTaskDTO) => graphQLClient.request(CREATE_TASK, createTask),
     {
-      // res => response情報, キャッシュを更新する必要がある
       onSuccess: (res) => {
         // tasksのキャッシュの一覧を取得
         const reactQueryTodo = reactQueryClient.getQueryData<TaskDTO[]>('tasks');
         if (reactQueryTodo) {
-          // スプレット構文でレスポンス情報追加
           reactQueryClient.setQueryData('tasks', [...reactQueryTodo, res.insert_tasks_one]);
         }
         dispatch(resetEditTask());
@@ -97,9 +95,11 @@ export const useMutationApp = () => {
     },
   );
 
+  // creteNewsMutation.mutate('test'); => contentの引数
   const creteNewsMutation = useMutation(
     (content: string) => graphQLClient.request(CREATE_NEWS, { content: content }),
     {
+      // ↓ここの処理に行かない
       onSuccess: (res) => {
         const reactQueryTodo = reactQueryClient.getQueryData<NewsDTO[]>('news');
         if (reactQueryTodo) {
@@ -107,7 +107,8 @@ export const useMutationApp = () => {
         }
         dispatch(resetEditNews());
       },
-      onError: (error, variables, context) => {
+      onError: (error) => {
+        // エラーメッセージ内容
         alert(error);
         dispatch(resetEditNews());
       },
