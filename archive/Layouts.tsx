@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { VFC } from 'react';
-import { LayoutDTO } from '../../interface/types';
+import { LayoutDTO } from '../src/interface/types';
 
 export const Layouts: VFC<LayoutDTO> = ({ children, title }) => {
   return (

@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }: Props) {
           queries: {
             retry: false,
             refetchOnWindowFocus: false,
+            staleTime: Infinity,
           },
         },
       }),

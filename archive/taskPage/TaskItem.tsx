@@ -1,9 +1,9 @@
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
 import { VFC, memo } from 'react';
 import { useDispatch } from 'react-redux';
-import { useMutationApp } from '../../../hooks/query/useMutationApp';
-import { TaskDTO  } from '../../../interface/types';
-import { setEditTask } from '../../../redux/uiSlice';
+import { useMutationApp } from '../../src/hooks/query/useMutationApp';
+import { TaskDTO  } from '../../src/interface/types';
+import { setEditTask } from '../../src/redux/uiSlice';
 
 interface Props {
   task: TaskDTO ;

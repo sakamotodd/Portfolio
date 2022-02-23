@@ -8,9 +8,11 @@
     "plugin:import/warnings",
     "plugin:tailwindcss/recommended"
   ],
+
   "plugins": ["@typescript-eslint", "unused-imports"],
   "ignorePatterns": ["*.config.js"],
   "rules": {
+    "react-hooks/exhaustive-deps": "off",
     "import/order": [
       "error",
       {

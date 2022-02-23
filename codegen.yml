@@ -1,0 +1,11 @@
+overwrite: true
+schema: 'https://portfolio-daigoro.hasura.app/v1/graphql'
+documents: 'src/GraphQL/*.ts'
+generates:
+  src/GraphQL/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      fetcher: graphql-request

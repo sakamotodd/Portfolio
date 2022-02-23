@@ -14,6 +14,14 @@ export const useContent = () => {
   const pageNumber = Math.ceil(data?.length / 10);
   const { logout } = useLogout();
 
+  // ページネーション表示データ
+  useEffect(() => {
+    if (router.query.page) {
+      setPage(Number(router.query.page));
+    }
+  }, [router.query.page]);
+
+  // ページネーション(onClick)
   const handlePageNation = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: number) => {
       setPage(value);
@@ -24,6 +32,7 @@ export const useContent = () => {
     [router],
   );
 
+  // privateページボタン(onClick)
   const handlePrivatePage = useCallback(
     (orderNo: number) => {
       router.push(`/content/${orderNo}`);
@@ -31,20 +40,16 @@ export const useContent = () => {
     [router],
   );
 
+  // ログアウトボタン(onClick)
   const handleLogout = useCallback(() => {
     logout();
     router.push('/login/signIn');
   }, [logout, router]);
 
+  // 投稿ページ遷移ボタン(onClick)
   const handleMovePage = useCallback(() => {
     router.push('/post');
   }, [router]);
-
-  useEffect(() => {
-    if (router.query.page) {
-      setPage(Number(router.query.page));
-    }
-  }, [router.query.page]);
 
   return {
     data,

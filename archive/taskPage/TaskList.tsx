@@ -1,5 +1,5 @@
 import { VFC, memo } from 'react';
-import { useQueryTasks } from '../../../hooks/query/useQueryTasks';
+import { useQueryTasks } from '../../src/hooks/query/useQueryTasks';
 import { TaskItemMemo } from './TaskItem';
 
 const TaskList: VFC = () => {

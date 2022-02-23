@@ -27,7 +27,6 @@ export const useUserChanged = () => {
   useEffect(() => {
     const unSubUser = onAuthStateChanged(Auth, async (user) => {
       try {
-        console.log(user);
         if (user) {
           // userに対応するtoken取得
           const token = await user.getIdToken(true);
@@ -36,7 +35,7 @@ export const useUserChanged = () => {
           const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY];
           // Cookieに格納
           if (hasuraClaims) {
-            cookie.set('token', token, { path: '/login/signIn' });
+            cookie.set('token', token, { path: '/' });
             if (
               router.pathname === '/login/signUp' ||
               router.pathname === '/login/signIn' ||
@@ -44,7 +43,7 @@ export const useUserChanged = () => {
             ) {
               router.push('/content');
             } else if (router.pathname === '/post') {
-              router.push('/post');
+              router.push('/content');
             }
             // else if (router.pathname === '/content/[id]') {
             //   orderNoData();
@@ -56,7 +55,7 @@ export const useUserChanged = () => {
               const idTokenResultSnap = await user.getIdTokenResult();
               const hasuraClaimsSNap = idTokenResultSnap.claims[HASURA_TOKEN_KEY];
               if (hasuraClaimsSNap) {
-                cookie.set('token', tokenSnap, { path: '/login/signUp' });
+                cookie.set('token', tokenSnap, { path: '/' });
                 router.push('/content');
               }
             });

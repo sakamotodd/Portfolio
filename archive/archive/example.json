@@ -10,7 +10,7 @@
     "headers": { "map": { "content-type": "application/json; charset=utf-8" } }
   },
   "request": {
-    "query": "\n mutation CreateNews($content: String!, $orderNo: Int!, $title: String!) {\n insert_news_one(object: { content: $content, orderNo: $orderNo, title: $title }) {\n id\n content\n created_at\n orderNo\n title\n }\n }\n",
-    "variables": { "content": "test", "orderNo": 23, "title": "test 最新" }
+    "query": "\n query GetOrderNews {\n news(order_by: {orderNo: desc}) {\n id\n content\n created_at\n orderNo\n }\n}\n ",
+    "variables": {}
   }
 }

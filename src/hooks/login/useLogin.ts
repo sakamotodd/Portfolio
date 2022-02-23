@@ -15,7 +15,8 @@ import { SignInFormDTO, SignUpFormDTO } from '../../interface/types';
 
 export const useLogin = () => {
   const [tweetImage, setTweetImage] = useState<File | null>(null);
-  //const notifyError = () => toast.error('そのメールアドレスは既に使用されています。');
+
+  // メールアドレスログイン（onSubmit）
   const signInUser = useCallback(async (data: SignInFormDTO) => {
     try {
       await signInWithEmailAndPassword(Auth, data.email, data.password);
@@ -24,6 +25,8 @@ export const useLogin = () => {
       return;
     }
   }, []);
+
+  // 画像取得（onSubmit）
   const getImage = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files![0]) {
@@ -33,6 +36,8 @@ export const useLogin = () => {
     },
     [],
   );
+
+  // メールアドレス作成(onSubmit)
   const signUpUser = useCallback(
     async (data: SignUpFormDTO) => {
       try {
@@ -66,6 +71,8 @@ export const useLogin = () => {
     },
     [tweetImage],
   );
+
+  // githubボタン（onClick）
   const loginWithGithub = useCallback(async (): Promise<void> => {
     try {
       const provider = new GithubAuthProvider();
@@ -75,6 +82,7 @@ export const useLogin = () => {
     }
   }, []);
 
+  // googleボタン（onClick）
   const loginWithGoogle = useCallback(async (): Promise<void> => {
     try {
       const provider = new GoogleAuthProvider();
@@ -83,6 +91,7 @@ export const useLogin = () => {
       alert(e.message);
     }
   }, []);
+  
   return {
     signInUser,
     signUpUser,

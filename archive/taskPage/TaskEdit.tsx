@@ -1,9 +1,9 @@
 import { VFC, memo, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Auth } from '../../../firebase/firebase.config';
-import { useMutationApp } from '../../../hooks/query/useMutationApp';
-import { CreateTaskDTO , UpdateTaskDTO  } from '../../../interface/types';
-import { selectTask, setEditTask } from '../../../redux/uiSlice';
+import { Auth } from '../../src/firebase/firebase.config';
+import { useMutationApp } from '../../src/hooks/query/useMutationApp';
+import { CreateTaskDTO , UpdateTaskDTO  } from '../../src/interface/types';
+import { selectTask, setEditTask } from '../../src/redux/uiSlice';
 
 const TaskEdit: VFC = () => {
   const dispatch = useDispatch();
