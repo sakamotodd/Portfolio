@@ -6,23 +6,15 @@ import { useRouter } from 'next/router';
 import React, { ReactNode, useEffect } from 'react';
 import { dehydrate, QueryClient, useQueryClient } from 'react-query';
 import Cookies from 'universal-cookie';
-import {
-  GetPrivateNewsDocument,
-  GetPrivateNewsQuery,
-  GetPrivateNewsQueryVariables,
-} from '../../GraphQL/generated/graphql';
-import { GET_ORDER_NEWS } from '../../GraphQL/queries';
+import { GetOrderNewsDocument } from '../../GraphQL/generated/graphql';
 import { Layout } from '../../components/common/Layout';
 import { Auth } from '../../firebase/firebase.config';
+import { privateNews } from '../../hooks/query/useOrderNews';
 import { OrderNewsDTO } from '../../interface/types';
 
 interface NewsResDTO {
   news: OrderNewsDTO[];
 }
-
-type ServerSideProps = {
-  data: GetPrivateNewsQuery;
-};
 
 const PrivateContentPage: NextPageWithLayout = () => {
   const cookie = new Cookies();
@@ -87,7 +79,7 @@ PrivateContentPage.getLayout = (page: ReactNode) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const { news: data } = await request<NewsResDTO>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GET_ORDER_NEWS,
+    GetOrderNewsDocument,
   );
   const paths = data.map((order) => ({
     params: { id: order.orderNo.toString() },
@@ -95,23 +87,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-export async function fetcher<TData, TVariables>(url: string, query: string, variables?: TVariables) {
-  return async (): Promise<TData> => await request<TData, TVariables>(url, query, variables);
-}
-
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = Number(params.id);
   const queryClient = new QueryClient();
   // プリフェッチ
-  await queryClient.prefetchQuery('news', () =>
-    fetcher<GetPrivateNewsQuery, GetPrivateNewsQueryVariables>(
-      process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-      GetPrivateNewsDocument,
-      {
-        orderNo: id,
-      },
-    ),
-  );
+  await queryClient.prefetchQuery('news', () => privateNews(id));
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

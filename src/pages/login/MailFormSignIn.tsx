@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import React, { VFC } from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { useErrorMessage } from '../../hooks/common/useErrorMessage';
 import { useLogin } from '../../hooks/login/useLogin';
 import { SignInFormDTO } from '../../interface/types';

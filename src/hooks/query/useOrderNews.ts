@@ -1,16 +1,11 @@
-import { validate } from 'graphql';
 import request from 'graphql-request';
-import { useQuery, UseQueryResult } from 'react-query';
-
 import {
   GetOrderNewsDocument,
   GetOrderNewsQuery,
-  GetOrderNewsQueryVariables,
-  GetPrivateNewsQuery,
+  GetPaginationNewsDocument,
+  GetPrivateNewsDocument,
   useGetOrderNewsQuery,
-  useGetPrivateNewsQuery,
 } from '../../GraphQL/generated/graphql';
-import { GET_ORDER_NEWS, GET_PAGINATION_NEWS, GET_PRIVATE_NEWS } from '../../GraphQL/queries';
 import { OrderNewsDTO } from '../../interface/types';
 import graphqlRequestClient from '../../lib/graphqlRequestClient';
 
@@ -24,11 +19,14 @@ export const useAllNews = async () => {
     {},
     { queryKey: 'news', staleTime: Infinity },
   );
-  return data;
+  return { data, error, isLoading };
 };
 
 export const allNews = async () => {
-  const { news: data } = await request<NewsRes>(process.env.NEXT_PUBLIC_HASURA_ENDPOINT, GET_ORDER_NEWS);
+  const { news: data } = await request<NewsRes>(
+    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
+    GetOrderNewsDocument,
+  );
   return data;
 };
 
@@ -49,26 +47,18 @@ export const allNews = async () => {
 export const paginationNews = async (pageNumber: number) => {
   const { news: data } = await request<NewsRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GET_PAGINATION_NEWS,
+    GetPaginationNewsDocument,
     { pageNumber: pageNumber },
   );
   return data;
 };
 
-export const privateNews = async (id: string) => {
+export const privateNews = async (id: number) => {
   const num = Number(id);
   const { news: data } = await request<NewsRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GET_PRIVATE_NEWS,
+    GetPrivateNewsDocument,
     { orderNo: num },
   );
-  return data;
-};
-// GraphQLの結果を返す(News取得)
-export const usePrivateNews = async (id: string) => {
-  const num = Number(id);
-  const { data } = useGetPrivateNewsQuery(graphqlRequestClient, {
-    orderNo: num,
-  });
   return data;
 };

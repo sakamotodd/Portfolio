@@ -1,8 +1,6 @@
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
 import React, { memo, VFC } from 'react';
-import { NewsItemMemo } from '../../archive/taskPage/NewsItem';
 import { GetOrderNewsQuery, useGetOrderNewsQuery } from '../GraphQL/generated/graphql';
-import { useQueryNews } from '../../archive/taskPage/useQueryNews';
 import graphqlRequestClient from '../lib/graphqlRequestClient';
 
 const NewsList: VFC = () => {

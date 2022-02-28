@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   ChangeEvent,
   FormEvent,
@@ -19,7 +18,6 @@ export const useOptionButton = () => {
   const [num, setNum] = useState<number>();
   const dispatch = useDispatch();
   const markdownRef = useRef(null);
-  const router = useRouter();
   const { createNewsMutation } = useMutationApp();
   const { data } = useContent();
 
@@ -89,7 +87,6 @@ export const useOptionButton = () => {
     alert('追加しました。');
   };
 
-  const createPostQueryClick = useCallback(() => {}, []);
   return {
     markdown,
     markdownRef,

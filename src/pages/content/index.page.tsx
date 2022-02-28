@@ -22,9 +22,6 @@ const ContentPage: NextPageWithLayout = () => {
     handleLogout,
     handleMovePage,
   } = useContent();
-  
-  
-
   // const { data, isLoading, error } = useGetOrderNewsQuery<GetOrderNewsQuery, Error>(
   //   graphqlRequestClient,
   //   {},

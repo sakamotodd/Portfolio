@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
 
-export const GET_ORDER_NEWS = gql`
+const GET_ORDER_NEWS = gql`
   query GetOrderNews {
     news(order_by: { orderNo: desc }) {
       id
@@ -11,7 +11,7 @@ export const GET_ORDER_NEWS = gql`
   }
 `;
 
-export const GET_NEWS = gql`
+const GET_NEWS = gql`
   query GetNews {
     news {
       id
@@ -21,7 +21,7 @@ export const GET_NEWS = gql`
   }
 `;
 
-export const GET_PRIVATE_NEWS = gql`
+const GET_PRIVATE_NEWS = gql`
   query GetPrivateNews($orderNo: Int!) {
     news(where: { orderNo: { _eq: $orderNo } }) {
       id
@@ -32,7 +32,7 @@ export const GET_PRIVATE_NEWS = gql`
   }
 `;
 
-export const GET_PAGINATION_NEWS = gql`
+const GET_PAGINATION_NEWS = gql`
   query GetPaginationNews($pageNumber: Int!) {
     news(order_by: { orderNo: desc }, limit: 10, offset: $pageNumber) {
       id
@@ -43,7 +43,7 @@ export const GET_PAGINATION_NEWS = gql`
   }
 `;
 
-export const CREATE_NEWS = gql`
+const CREATE_NEWS = gql`
 mutation CreateNews($content: String!, $orderNo: Int!, $title: String!) {
   insert_news_one(object: { content: $content, orderNo: $orderNo, title: $title }) {
     id

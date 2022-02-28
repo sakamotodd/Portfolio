@@ -19,12 +19,12 @@ import { useContent } from '../../hooks/content/useContent';
 import { useMarkdown } from '../../hooks/markdown/useMarkdown';
 import { useOptionButton } from '../../hooks/markdown/useMarkdownButton';
 import { useMutationApp } from '../../hooks/query/useMutationApp';
-import { resetEditTitle, selectNews, setEditNews, setEditTitle } from '../../redux/uiSlice';
+import { selectNews, setEditTitle } from '../../redux/uiSlice';
 import style from '../../styles/markdown-styles.module.css';
 
 export default function PostPage() {
   const dispatch = useDispatch();
-  const { markdown, markdownRef, setData, postNewsClick, setEnterPress, TypeHClick } =
+  const { markdown, markdownRef, setData, setEnterPress, TypeHClick } =
     useOptionButton();
   const { components } = useMarkdown();
   const router = useRouter();
