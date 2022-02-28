@@ -1,23 +1,20 @@
 import { onAuthStateChanged } from 'firebase/auth';
-import request, { GraphQLClient } from 'graphql-request';
+import request from 'graphql-request';
 import { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next';
-import { AppContext } from 'next/app';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useEffect } from 'react';
 import { dehydrate, QueryClient, useQueryClient } from 'react-query';
 import Cookies from 'universal-cookie';
 import {
-  GetPaginationNewsDocument,
+  GetPrivateNewsDocument,
   GetPrivateNewsQuery,
   GetPrivateNewsQueryVariables,
 } from '../../GraphQL/generated/graphql';
 import { GET_ORDER_NEWS } from '../../GraphQL/queries';
 import { Layout } from '../../components/common/Layout';
 import { Auth } from '../../firebase/firebase.config';
-import { privateNews, usePrivateNews } from '../../hooks/query/useOrderNews';
 import { OrderNewsDTO } from '../../interface/types';
-import graphqlRequestClient from '../../lib/graphqlRequestClient';
 
 interface NewsResDTO {
   news: OrderNewsDTO[];
@@ -98,20 +95,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-export function fetcher<TData, TVariables>(url: string, query: string, variables?: TVariables) {
-  return async (): Promise<TData> => request<TData, TVariables>(url, query, variables);
+export async function fetcher<TData, TVariables>(url: string, query: string, variables?: TVariables) {
+  return async (): Promise<TData> => await request<TData, TVariables>(url, query, variables);
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const id = params.id as string;
+  const id = Number(params.id);
   const queryClient = new QueryClient();
   // プリフェッチ
   await queryClient.prefetchQuery('news', () =>
     fetcher<GetPrivateNewsQuery, GetPrivateNewsQueryVariables>(
       process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-      GetPaginationNewsDocument,
+      GetPrivateNewsDocument,
       {
-        orderNo: Number(id),
+        orderNo: id,
       },
     ),
   );

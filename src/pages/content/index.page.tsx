@@ -7,12 +7,12 @@ import { dehydrate, QueryClient } from 'react-query';
 import { GetOrderNewsQuery, useGetOrderNewsQuery } from '../../GraphQL/generated/graphql';
 import { Layout } from '../../components/common/Layout';
 import { useContent } from '../../hooks/content/useContent';
-import { useAllNews } from '../../hooks/query/useOrderNews';
+import { allNews, useAllNews } from '../../hooks/query/useOrderNews';
 import graphqlRequestClient from '../../lib/graphqlRequestClient';
 
 const ContentPage: NextPageWithLayout = () => {
   const {
-    //data,
+    data,
     page,
     pageDataMax,
     pageDataMin,
@@ -22,12 +22,15 @@ const ContentPage: NextPageWithLayout = () => {
     handleLogout,
     handleMovePage,
   } = useContent();
+  
+  
 
-  const { data, isLoading, error } = useGetOrderNewsQuery<GetOrderNewsQuery, Error>(
-    graphqlRequestClient,
-    {},
-    { queryKey: 'news' },
-  );
+  // const { data, isLoading, error } = useGetOrderNewsQuery<GetOrderNewsQuery, Error>(
+  //   graphqlRequestClient,
+  //   {},
+  //   { queryKey: 'news' },
+  // );
+
   // if (error) {
   //   return <div>{error.message}</div>;
   // }
@@ -40,7 +43,7 @@ const ContentPage: NextPageWithLayout = () => {
     <div className="m-auto w-1/2 font-hiragino">
       <h1 className="py-4 text-2xl text-gray-500">投稿一覧</h1>
       <div className="grid grid-rows-10 h-[calc(100vh-9rem-2.5rem)] bg-white">
-        {data?.news.map((lie, index) => {
+        {data?.map((lie, index) => {
           return (
             pageDataMin <= index &&
             index < pageDataMax && (
@@ -89,7 +92,7 @@ ContentPage.getLayout = (page: ReactNode) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery('news', useAllNews);
+  await queryClient.prefetchQuery('news', allNews);
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

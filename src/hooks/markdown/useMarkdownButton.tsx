@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, {
+import {
   ChangeEvent,
   FormEvent,
   KeyboardEvent,
@@ -9,20 +9,27 @@ import React, {
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectNews } from '../../redux/uiSlice';
+import { resetEditTitle, selectNews, setEditTitle } from '../../redux/uiSlice';
+import { useContent } from '../content/useContent';
 import { useMutationApp } from '../query/useMutationApp';
 
 export const useOptionButton = () => {
   const [markdown, setMarkdown] = useState<string>();
-  const [num, setNum] = useState<number>();
-  const { creteNewsMutation } = useMutationApp();
   const reduxCreateNews = useSelector(selectNews);
+  const [num, setNum] = useState<number>();
   const dispatch = useDispatch();
   const markdownRef = useRef(null);
   const router = useRouter();
+  const { createNewsMutation } = useMutationApp();
+  const { data } = useContent();
+
+  const postNewsClick = useCallback(() => {
+    dispatch(setEditTitle({ ...reduxCreateNews, orderNo: data.length + 1, content: markdown }));
+    createNewsMutation.mutate(reduxCreateNews);
+    dispatch(resetEditTitle());
+  }, []);
 
   const setData = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
     setMarkdown(e.target.value);
   }, []);
 
@@ -81,5 +88,15 @@ export const useOptionButton = () => {
     e.preventDefault();
     alert('追加しました。');
   };
-  return { markdown, markdownRef, setData, createEditorHandle, setEnterPress, TypeHClick };
+
+  const createPostQueryClick = useCallback(() => {}, []);
+  return {
+    markdown,
+    markdownRef,
+    setData,
+    postNewsClick,
+    createEditorHandle,
+    setEnterPress,
+    TypeHClick,
+  };
 };

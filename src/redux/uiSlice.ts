@@ -45,13 +45,17 @@ export const uiSlice = createSlice({
     setEditTitle: (state, action: PayloadAction<NewsVariableDTO>) => {
       state.selectNews = action.payload;
     },
+    resetEditTitle: (state) => {
+      state.selectNews = initialState.selectNews;
+    },
     resetEditNews: (state) => {
       state.editNews = initialState.editNews;
     },
   },
 });
 
-export const { setEditTask, resetEditTask, setEditNews, setEditTitle, resetEditNews } = uiSlice.actions;
+export const { setEditTask, resetEditTask, setEditNews, setEditTitle, resetEditNews, resetEditTitle } =
+  uiSlice.actions;
 export const selectTask = (state: RootState) => state.ui.editTask;
 export const selectNews = (state: RootState) => state.ui.selectNews;
 

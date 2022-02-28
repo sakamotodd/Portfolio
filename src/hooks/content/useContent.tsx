@@ -13,13 +13,7 @@ export const useContent = () => {
   const router = useRouter();
   const pageNumber = Math.ceil(data?.length / 10);
   const { logout } = useLogout();
-
-  // ページネーション表示データ
-  useEffect(() => {
-    if (router.query.page) {
-      setPage(Number(router.query.page));
-    }
-  }, [router.query.page]);
+  
 
   // ページネーション(onClick)
   const handlePageNation = useCallback(
@@ -51,6 +45,12 @@ export const useContent = () => {
     router.push('/post');
   }, [router]);
 
+  // ページネーション表示データ
+  useEffect(() => {
+    if (router.query.page) {
+      setPage(Number(router.query.page));
+    }
+  }, [router.query.page]);
   return {
     data,
     page,

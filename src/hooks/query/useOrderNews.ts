@@ -27,6 +27,11 @@ export const useAllNews = async () => {
   return data;
 };
 
+export const allNews = async () => {
+  const { news: data } = await request<NewsRes>(process.env.NEXT_PUBLIC_HASURA_ENDPOINT, GET_ORDER_NEWS);
+  return data;
+};
+
 // react-queryの実行結果を返す
 // export const useOrderNews = () => {
 //   // const { data } = useGetOrderNewsQuery<GetOrderNewsQuery, Error>(
