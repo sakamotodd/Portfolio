@@ -4,13 +4,11 @@ import { GetStaticProps } from 'next';
 import type { NextPageWithLayout } from 'next';
 import React, { ReactNode } from 'react';
 import { dehydrate, QueryClient } from 'react-query';
-import { GetOrderNewsQuery, useGetOrderNewsQuery } from '../../GraphQL/generated/graphql';
 import { Layout } from '../../components/common/Layout';
 import { useContent } from '../../hooks/content/useContent';
-import { allNews, useAllNews } from '../../hooks/query/useOrderNews';
-import graphqlRequestClient from '../../lib/graphqlRequestClient';
+import { allNews } from '../../hooks/query/useOrderNews';
 
-const ContentPage: NextPageWithLayout = () => {
+const ContentPage: NextPageWithLayout = (props) => {
   const {
     data,
     page,

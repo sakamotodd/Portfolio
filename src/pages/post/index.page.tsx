@@ -100,7 +100,6 @@ export default function PostPage() {
             onClick={() => {
               const len = data?.length + 1;
               dispatch(setEditTitle({ ...reduxCreateNews, orderNo: len, content: markdown }));
-              console.log('reduxCreateNews: ', reduxCreateNews);
               //createNewsMutation.mutate(reduxCreateNews);
               //dispatch(resetEditTitle());
             }}

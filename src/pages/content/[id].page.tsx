@@ -21,7 +21,7 @@ const PrivateContentPage: NextPageWithLayout = () => {
   const router = useRouter();
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<OrderNewsDTO[]>('news');
+  const data = queryClient.getQueryData<OrderNewsDTO[]>('privateNews');
 
   useEffect(() => {
     const unSubUser = onAuthStateChanged(Auth, async (user) => {
@@ -91,7 +91,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = Number(params.id);
   const queryClient = new QueryClient();
   // プリフェッチ
-  await queryClient.prefetchQuery('news', () => privateNews(id));
+  await queryClient.prefetchQuery('privateNews', () => privateNews(id));
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

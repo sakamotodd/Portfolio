@@ -2,7 +2,7 @@
 import { PencilAltIcon } from '@heroicons/react/solid';
 import Head from 'next/head';
 import Image from 'next/image';
-import {  VFC } from 'react';
+import { VFC } from 'react';
 import { Auth } from '../../firebase/firebase.config';
 import { LayoutDTO } from '../../interface/types';
 
@@ -18,13 +18,15 @@ export const Layout: VFC<LayoutDTO> = ({ children, title }) => {
           <PencilAltIcon className="w-7 h-7 text-indigo-400" />
           <span className="pt-1 pl-2 text-indigo-600 text-shadow">TweetApp</span>
         </div>
-        <Image
-          src={user?.photoURL || '/'}
-          alt="ログイン画像"
-          width={32}
-          height={32}
-          className=" bg-center rounded-full"
-        />
+        {user?.photoURL.length > 0 && (
+          <Image
+            src={user?.photoURL}
+            alt="ログイン画像"
+            width={32}
+            height={32}
+            className=" bg-center rounded-full"
+          />
+        )}
       </header>
       <main className="w-screen h-[calc(100vh-2.5rem)] bg-gray-100">{children}</main>
     </div>

@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { CreateNewsMutation, useCreateNewsMutation } from '../../GraphQL/generated/graphql';
-import { CREATE_NEWS } from '../../GraphQL/queries';
 
 import { NewsDTO } from '../../interface/types';
 import graphqlRequestClient from '../../lib/graphqlRequestClient';

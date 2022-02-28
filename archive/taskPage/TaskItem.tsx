@@ -11,13 +11,13 @@ interface Props {
 
 const TaskItem: VFC<Props> = ({ task }) => {
   const dispatch = useDispatch();
-  const { deleteTaskMutation } = useMutationApp();
-  if (deleteTaskMutation.isLoading) {
-    return <p>Deleting...</p>;
-  }
-  if (deleteTaskMutation.error) {
-    return <p>Error</p>;
-  }
+  // const { deleteTaskMutation } = useMutationApp();
+  // if (deleteTaskMutation.isLoading) {
+  //   return <p>Deleting...</p>;
+  // }
+  // if (deleteTaskMutation.error) {
+  //   return <p>Error</p>;
+  // }
   return (
     <li className="my-3">
       <span className="font-bold">{task.title}</span>
@@ -36,9 +36,9 @@ const TaskItem: VFC<Props> = ({ task }) => {
         />
         <TrashIcon
           className="w-5 h-5 text-blue-500 cursor-pointer"
-          onClick={() => {
-            deleteTaskMutation.mutate(task.id);
-          }}
+          // onClick={() => {
+          //   deleteTaskMutation.mutate(task.id);
+          // }}
         />
       </div>
     </li>
