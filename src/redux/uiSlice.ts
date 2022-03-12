@@ -7,7 +7,6 @@ export interface uiState {
   editNews: EditNewsDTO;
   selectNews: NewsVariableDTO;
 }
-
 const initialState: uiState = {
   editTask: {
     id: '',
@@ -39,12 +38,15 @@ export const uiSlice = createSlice({
     resetEditTask: (state) => {
       state.editTask = initialState.editTask;
     },
-    setEditNews: (state, action: PayloadAction<EditNewsDTO>) => {
-      state.editNews = action.payload;
-    },
     setEditTitle: (state, action: PayloadAction<NewsVariableDTO>) => {
       state.selectNews = action.payload;
     },
+
+    setEditOrderNo: (state, action: PayloadAction<string>) => {
+      state.selectNews.content + action.payload;
+    },
+    // setEditContent: (state, action: PayloadAction<NewsVariableDTO>) => {
+    // },
     resetEditTitle: (state) => {
       state.selectNews = initialState.selectNews;
     },
@@ -54,8 +56,14 @@ export const uiSlice = createSlice({
   },
 });
 
-export const { setEditTask, resetEditTask, setEditNews, setEditTitle, resetEditNews, resetEditTitle } =
-  uiSlice.actions;
+export const {
+  setEditTask,
+  resetEditTask,
+  setEditOrderNo,
+  setEditTitle,
+  resetEditNews,
+  resetEditTitle,
+} = uiSlice.actions;
 export const selectTask = (state: RootState) => state.ui.editTask;
 export const selectNews = (state: RootState) => state.ui.selectNews;
 

@@ -1,19 +1,27 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { OrderNewsDTO } from '../../interface/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { NewsDTO, NewsVariableDTO, OrderNewsDTO } from '../../interface/types';
+import { selectNews, setEditOrderNo, setEditTitle } from '../../redux/uiSlice';
 import { useLogout } from '../login/useLogout';
+
+interface Props {
+  news: NewsVariableDTO;
+}
 
 export const useContent = () => {
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<OrderNewsDTO[]>('news');
+  const data = queryClient.getQueryData<NewsDTO[]>('news');
   const [page, setPage] = useState<number>(1);
   const [pageDataMax, setPageDataMax] = useState<number>(10);
   const [pageDataMin, setPageDataMin] = useState<number>(0);
   const router = useRouter();
   const pageNumber = Math.ceil(data?.length / 10);
   const { logout } = useLogout();
-  
+  const reduxCreateNews = useSelector(selectNews);
+  const dispatch = useDispatch();
+
   // ページネーション(onClick)
   const handlePageNation = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: number) => {
@@ -41,6 +49,7 @@ export const useContent = () => {
 
   // 投稿ページ遷移ボタン(onClick)
   const handleMovePage = useCallback(() => {
+    dispatch(setEditTitle({...reduxCreateNews, orderNo: data?.length}));
     router.push('/post');
   }, [router]);
 

@@ -47,7 +47,7 @@ const ContentPage: NextPageWithLayout = (props) => {
                 key={lie?.orderNo}
                 onClick={() => handlePrivatePage(lie?.orderNo)}
               >
-                {lie.content}
+                {lie.title}
               </div>
             )
           );

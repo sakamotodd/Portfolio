@@ -1,12 +1,12 @@
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
 import React, { memo, VFC } from 'react';
-import { GetOrderNewsQuery, useGetOrderNewsQuery } from '../GraphQL/generated/graphql';
-import graphqlRequestClient from '../lib/graphqlRequestClient';
+import { GetAllNewsQuery, useGetAllNewsQuery } from '../GraphQL/generated/graphql';
+import {graphqlRequestClient} from '../lib/graphqlRequestClient';
 
 const NewsList: VFC = () => {
   //const { status, data } = useQueryNews();
 
-  const { data, isLoading, error } = useGetOrderNewsQuery<GetOrderNewsQuery, Error>(
+  const { data, isLoading, error } = useGetAllNewsQuery<GetAllNewsQuery, Error>(
     graphqlRequestClient,
   );
   if (error) {

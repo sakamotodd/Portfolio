@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   ChangeEvent,
   FormEvent,
@@ -7,28 +8,38 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetEditTitle, selectNews, setEditTitle } from '../../redux/uiSlice';
-import { useContent } from '../content/useContent';
+import { OrderNewsDTO } from '../../interface/types';
+import { resetEditTitle, selectNews, setEditOrderNo, setEditTitle } from '../../redux/uiSlice';
 import { useMutationApp } from '../query/useMutationApp';
 
 export const useOptionButton = () => {
   const [markdown, setMarkdown] = useState<string>();
-  const reduxCreateNews = useSelector(selectNews);
+  const [title, setTitle] = useState<string>();
   const [num, setNum] = useState<number>();
+  const reduxCreateNews = useSelector(selectNews);
   const dispatch = useDispatch();
   const markdownRef = useRef(null);
   const { createNewsMutation } = useMutationApp();
-  const { data } = useContent();
+  const queryClient = useQueryClient();
+  const data = queryClient.getQueryData<OrderNewsDTO[]>('news');
+  const router = useRouter();
 
-  const postNewsClick = useCallback(() => {
-    dispatch(setEditTitle({ ...reduxCreateNews, orderNo: data.length + 1, content: markdown }));
+  const editHandle = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     createNewsMutation.mutate(reduxCreateNews);
-    dispatch(resetEditTitle());
-  }, []);
+    router.push(`/content/${reduxCreateNews.orderNo}`);
+  };
 
   const setData = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setMarkdown(e.target.value);
+    dispatch(setEditTitle({ ...reduxCreateNews, title: e.target.value, content: markdown }));
+  }, []);
+
+  const titleOnChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+    dispatch(setEditTitle({ ...reduxCreateNews, content: e.target.value, title: title }));
   }, []);
 
   const TypeHClick = useCallback(
@@ -74,6 +85,14 @@ export const useOptionButton = () => {
     }
   }, []);
 
+  const editPost = useCallback(() => {
+    //const len = data?.length;
+    //dispatch(setEditTitle({ title: "test", orderNo: len, content: "test1" }));
+    //createNewsMutation.mutate(reduxCreateNews);
+
+    dispatch(resetEditTitle());
+  }, [markdown, title]);
+
   useEffect(() => {
     if (num !== null) {
       markdownRef.current.focus();
@@ -81,7 +100,6 @@ export const useOptionButton = () => {
       setNum(null);
     }
   }, [num]);
-
   const createEditorHandle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert('追加しました。');
@@ -90,10 +108,16 @@ export const useOptionButton = () => {
   return {
     markdown,
     markdownRef,
+    data,
+    editHandle,
+    editPost,
+    titleOnChange,
     setData,
-    postNewsClick,
     createEditorHandle,
     setEnterPress,
     TypeHClick,
   };
 };
+function useRouterPrefetch(arg0: string, arg1: boolean): { handleRouterPush: any } {
+  throw new Error('Function not implemented.');
+}

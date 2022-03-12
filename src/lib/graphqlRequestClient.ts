@@ -6,8 +6,6 @@ const requestHeaders = {
   authorization: `Bearer ${cookie.get('token')}`,
 };
 
-const graphqlRequestClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
+export const graphqlRequestClient = new GraphQLClient(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
   headers: requestHeaders,
 });
-
-export default graphqlRequestClient;

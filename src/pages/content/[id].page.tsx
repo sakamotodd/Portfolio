@@ -6,14 +6,14 @@ import { useRouter } from 'next/router';
 import React, { ReactNode, useEffect } from 'react';
 import { dehydrate, QueryClient, useQueryClient } from 'react-query';
 import Cookies from 'universal-cookie';
-import { GetOrderNewsDocument } from '../../GraphQL/generated/graphql';
+import { GetAllNewsDocument } from '../../GraphQL/generated/graphql';
 import { Layout } from '../../components/common/Layout';
 import { Auth } from '../../firebase/firebase.config';
 import { privateNews } from '../../hooks/query/useOrderNews';
-import { OrderNewsDTO } from '../../interface/types';
+import { NewsDTO, OrderNewsDTO } from '../../interface/types';
 
 interface NewsResDTO {
-  news: OrderNewsDTO[];
+  news: NewsDTO[];
 }
 
 const PrivateContentPage: NextPageWithLayout = () => {
@@ -21,7 +21,7 @@ const PrivateContentPage: NextPageWithLayout = () => {
   const router = useRouter();
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<OrderNewsDTO[]>('privateNews');
+  const data = queryClient.getQueryData<NewsDTO[]>('privateNews');
 
   useEffect(() => {
     const unSubUser = onAuthStateChanged(Auth, async (user) => {
@@ -59,6 +59,7 @@ const PrivateContentPage: NextPageWithLayout = () => {
             <p>{user.id}</p>
             <p>{user.created_at}</p>
             <p>{user.orderNo}</p>
+            <p>{user.title}</p>
             <p>{user.content}</p>
           </div>
         );
@@ -79,7 +80,7 @@ PrivateContentPage.getLayout = (page: ReactNode) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const { news: data } = await request<NewsResDTO>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GetOrderNewsDocument,
+    GetAllNewsDocument,
   );
   const paths = data.map((order) => ({
     params: { id: order.orderNo.toString() },

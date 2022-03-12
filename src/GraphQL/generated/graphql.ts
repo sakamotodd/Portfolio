@@ -237,29 +237,29 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
-export type GetOrderNewsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetOrderNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', id: any, content: string, created_at: any, orderNo: number }> };
+export type GetAllNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', id: any, content: string, created_at: any, orderNo: number, title?: string | null }> };
 
 export type GetNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', id: any, content: string, created_at: any }> };
+export type GetNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', id: any, content: string, created_at: any, orderNo: number, title?: string | null }> };
 
 export type GetPrivateNewsQueryVariables = Exact<{
   orderNo: Scalars['Int'];
 }>;
 
 
-export type GetPrivateNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', id: any, content: string, created_at: any, orderNo: number }> };
+export type GetPrivateNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', id: any, content: string, title?: string | null, created_at: any, orderNo: number }> };
 
 export type GetPaginationNewsQueryVariables = Exact<{
   pageNumber: Scalars['Int'];
 }>;
 
 
-export type GetPaginationNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', id: any, content: string, created_at: any, orderNo: number }> };
+export type GetPaginationNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', id: any, title?: string | null, content: string, created_at: any, orderNo: number }> };
 
 export type CreateNewsMutationVariables = Exact<{
   content: Scalars['String'];
@@ -271,28 +271,29 @@ export type CreateNewsMutationVariables = Exact<{
 export type CreateNewsMutation = { __typename?: 'mutation_root', insert_news_one?: { __typename?: 'news', id: any, content: string, created_at: any, orderNo: number, title?: string | null } | null };
 
 
-export const GetOrderNewsDocument = `
-    query GetOrderNews {
+export const GetAllNewsDocument = `
+    query GetAllNews {
   news(order_by: {orderNo: desc}) {
     id
     content
     created_at
     orderNo
+    title
   }
 }
     `;
-export const useGetOrderNewsQuery = <
-      TData = GetOrderNewsQuery,
+export const useGetAllNewsQuery = <
+      TData = GetAllNewsQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: GetOrderNewsQueryVariables,
-      options?: UseQueryOptions<GetOrderNewsQuery, TError, TData>,
+      variables?: GetAllNewsQueryVariables,
+      options?: UseQueryOptions<GetAllNewsQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<GetOrderNewsQuery, TError, TData>(
-      variables === undefined ? ['GetOrderNews'] : ['GetOrderNews', variables],
-      fetcher<GetOrderNewsQuery, GetOrderNewsQueryVariables>(client, GetOrderNewsDocument, variables, headers),
+    useQuery<GetAllNewsQuery, TError, TData>(
+      variables === undefined ? ['GetAllNews'] : ['GetAllNews', variables],
+      fetcher<GetAllNewsQuery, GetAllNewsQueryVariables>(client, GetAllNewsDocument, variables, headers),
       options
     );
 export const GetNewsDocument = `
@@ -301,6 +302,8 @@ export const GetNewsDocument = `
     id
     content
     created_at
+    orderNo
+    title
   }
 }
     `;
@@ -323,6 +326,7 @@ export const GetPrivateNewsDocument = `
   news(where: {orderNo: {_eq: $orderNo}}) {
     id
     content
+    title
     created_at
     orderNo
   }
@@ -346,6 +350,7 @@ export const GetPaginationNewsDocument = `
     query GetPaginationNews($pageNumber: Int!) {
   news(order_by: {orderNo: desc}, limit: 10, offset: $pageNumber) {
     id
+    title
     content
     created_at
     orderNo

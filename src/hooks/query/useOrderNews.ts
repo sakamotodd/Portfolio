@@ -1,20 +1,20 @@
 import request from 'graphql-request';
 import {
-  GetOrderNewsDocument,
-  GetOrderNewsQuery,
+  GetAllNewsDocument,
+  GetAllNewsQuery,
   GetPaginationNewsDocument,
   GetPrivateNewsDocument,
-  useGetOrderNewsQuery,
+  useGetAllNewsQuery,
 } from '../../GraphQL/generated/graphql';
-import { OrderNewsDTO } from '../../interface/types';
-import graphqlRequestClient from '../../lib/graphqlRequestClient';
+import { NewsDTO } from '../../interface/types';
+import { graphqlRequestClient } from '../../lib/graphqlRequestClient';
 
 interface NewsRes {
-  news: OrderNewsDTO[];
+  news: NewsDTO[];
 }
 // GraphQLの結果を返す(News取得)
 export const useAllNews = async () => {
-  const { data, error, isLoading } = useGetOrderNewsQuery<GetOrderNewsQuery, Error>(
+  const { data, error, isLoading } = useGetAllNewsQuery<GetAllNewsQuery, Error>(
     graphqlRequestClient,
     {},
     { queryKey: 'news', staleTime: Infinity },
@@ -25,10 +25,18 @@ export const useAllNews = async () => {
 export const allNews = async () => {
   const { news: data } = await request<NewsRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GetOrderNewsDocument,
+    GetAllNewsDocument,
   );
   return data;
 };
+
+// export const allNewsLen = async () => {
+//   const { news: data } = await request<NewsRes>(
+//     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
+//     Get,
+//   );
+//   return data?.length + 1;
+// };
 
 // react-queryの実行結果を返す
 // export const useOrderNews = () => {

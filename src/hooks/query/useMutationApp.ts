@@ -8,8 +8,8 @@ import Cookies from 'universal-cookie';
 import { CreateNewsMutation, useCreateNewsMutation } from '../../GraphQL/generated/graphql';
 
 import { NewsDTO } from '../../interface/types';
-import graphqlRequestClient from '../../lib/graphqlRequestClient';
-import { resetEditNews } from '../../redux/uiSlice';
+import { graphqlRequestClient } from '../../lib/graphqlRequestClient';
+import { resetEditNews, resetEditTitle } from '../../redux/uiSlice';
 
 const cookie = new Cookies();
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT;
@@ -84,14 +84,14 @@ export const useMutationApp = () => {
 
   // creteNewsMutation.mutate('test'); => contentの引数
 
-  const createNewsMutation = useCreateNewsMutation<Error>(graphqlRequestClient, {
+  const createNewsMutation = useCreateNewsMutation<Error>(graphQLClient, {
     onSuccess: (res) => {
       const reactQueryTodo = reactQueryClient.getQueryData<NewsDTO[]>('news');
       if (reactQueryTodo) {
         reactQueryClient.setQueryData('news', [...reactQueryTodo, res.insert_news_one]);
       }
       alert('成功しました。');
-      dispatch(resetEditNews());
+      dispatch(resetEditTitle());
     },
     onError: (error) => {
       // エラーメッセージ内容
