@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NewsVariableDTO, EditNewsDTO, EditTaskDTO } from '../interface/types';
+import { NewsVariableDTO, EditNewsDTO, EditTaskDTO, UpdateNewsDTO } from '../interface/types';
 import { RootState } from './store';
 
 export interface uiState {
   editTask: EditTaskDTO;
   editNews: EditNewsDTO;
   selectNews: NewsVariableDTO;
+  updateNews: UpdateNewsDTO;
 }
 const initialState: uiState = {
   editTask: {
@@ -19,11 +20,23 @@ const initialState: uiState = {
     content: '',
     orderNo: null,
     title: '',
+    name: '',
+    email: '',
+    photoURL: '',
   },
 
   selectNews: {
     content: '',
     orderNo: 0,
+    title: '',
+    name: '',
+    email: '',
+    photoURL: '',
+  },
+
+  updateNews: {
+    id: '',
+    content: '',
     title: '',
   },
 };
@@ -42,11 +55,13 @@ export const uiSlice = createSlice({
       state.selectNews = action.payload;
     },
 
-    setEditOrderNo: (state, action: PayloadAction<string>) => {
-      state.selectNews.content + action.payload;
+    setUpdateNewsReducer: (state, action: PayloadAction<UpdateNewsDTO>) => {
+      state.updateNews = action.payload;
     },
-    // setEditContent: (state, action: PayloadAction<NewsVariableDTO>) => {
-    // },
+
+    resetUpdateNews: (state) => {
+      state.updateNews = initialState.updateNews;
+    },
     resetEditTitle: (state) => {
       state.selectNews = initialState.selectNews;
     },
@@ -59,12 +74,14 @@ export const uiSlice = createSlice({
 export const {
   setEditTask,
   resetEditTask,
-  setEditOrderNo,
+  setUpdateNewsReducer,
   setEditTitle,
   resetEditNews,
   resetEditTitle,
+  resetUpdateNews,
 } = uiSlice.actions;
 export const selectTask = (state: RootState) => state.ui.editTask;
 export const selectNews = (state: RootState) => state.ui.selectNews;
+export const selectUpdateNews = (state: RootState) => state.ui.updateNews;
 
 export default uiSlice.reducer;

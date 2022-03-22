@@ -10,7 +10,7 @@ import { GetAllNewsDocument } from '../../GraphQL/generated/graphql';
 import { Layout } from '../../components/common/Layout';
 import { Auth } from '../../firebase/firebase.config';
 import { privateNews } from '../../hooks/query/useOrderNews';
-import { NewsDTO, OrderNewsDTO } from '../../interface/types';
+import { NewsDTO} from '../../interface/types';
 
 interface NewsResDTO {
   news: NewsDTO[];

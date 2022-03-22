@@ -10,8 +10,8 @@ import {
 } from 'react';
 import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { OrderNewsDTO } from '../../interface/types';
-import { resetEditTitle, selectNews, setEditOrderNo, setEditTitle } from '../../redux/uiSlice';
+import { NewsDTO } from '../../interface/types';
+import { resetEditTitle, selectNews, selectUpdateNews, setEditTitle } from '../../redux/uiSlice';
 import { useMutationApp } from '../query/useMutationApp';
 
 export const useOptionButton = () => {
@@ -19,17 +19,24 @@ export const useOptionButton = () => {
   const [title, setTitle] = useState<string>();
   const [num, setNum] = useState<number>();
   const reduxCreateNews = useSelector(selectNews);
+  const reduxUpdateNews = useSelector(selectUpdateNews);
   const dispatch = useDispatch();
   const markdownRef = useRef(null);
-  const { createNewsMutation } = useMutationApp();
+  const { createNewsMutation, updateNewsMutation } = useMutationApp();
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<OrderNewsDTO[]>('news');
+  const data = queryClient.getQueryData<NewsDTO[]>('news');
   const router = useRouter();
 
   const editHandle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createNewsMutation.mutate(reduxCreateNews);
     router.push(`/content/${reduxCreateNews.orderNo}`);
+  };
+
+  const updateHandle = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    updateNewsMutation.mutate(reduxUpdateNews);
+    router.push('/content');
   };
 
   const setData = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -110,6 +117,7 @@ export const useOptionButton = () => {
     markdownRef,
     data,
     editHandle,
+    updateHandle,
     editPost,
     titleOnChange,
     setData,

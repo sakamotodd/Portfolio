@@ -17,38 +17,41 @@ import remarkGfm from 'remark-gfm';
 import { Layout } from '../../components/common/Layout';
 import { useMarkdown } from '../../hooks/markdown/useMarkdown';
 import { useOptionButton } from '../../hooks/markdown/useMarkdownButton';
-import { selectNews, setEditTitle } from '../../redux/uiSlice';
+import {
+  resetUpdateNews,
+  selectNews,
+  selectUpdateNews,
+  setEditTitle,
+  setUpdateNewsReducer,
+} from '../../redux/uiSlice';
 import style from '../../styles/markdown-styles.module.css';
 
-export default function PostPage() {
+export default function UpdatePage() {
   const dispatch = useDispatch();
-  const {
-    markdownRef,
-    data,
-    editHandle,
-    setEnterPress,
-    TypeHClick,
-  } = useOptionButton();
+  const { markdownRef, data, updateHandle, setEnterPress, TypeHClick } = useOptionButton();
   const { components } = useMarkdown();
   const router = useRouter();
-  const reduxCreateNews = useSelector(selectNews);
+  const reduxCreateNews = useSelector(selectUpdateNews);
 
   useEffect(() => {
-    dispatch(setEditTitle({ ...reduxCreateNews, orderNo: data?.length + 1 }));
-    console.log(reduxCreateNews);
+    return () => {
+      dispatch(resetUpdateNews);
+    };
   }, []);
 
   return (
     <div className="flex flex-col font-hiragino">
-      <h1 className="py-10 text-3xl font-bold text-center">投稿を作成</h1>
+      <h1 className="py-10 text-3xl font-bold text-center">投稿を編集</h1>
       <div className="flex-grow flex-shrink">
-        <form onSubmit={editHandle}>
+        <form onSubmit={updateHandle}>
           <input
             type="text"
             id="post-title"
             placeholder="Title"
             value={reduxCreateNews.title}
-            onChange={(e) => dispatch(setEditTitle({ ...reduxCreateNews, title: e.target.value }))}
+            onChange={(e) =>
+              dispatch(setUpdateNewsReducer({ ...reduxCreateNews, title: e.target.value }))
+            }
             className="block px-5 mx-auto mb-5 w-4/5 h-14 text-2xl font-bold rounded-lg border shadow-lg focus:outline-none"
           />
           <div className="flex justify-between h-[32rem]">
@@ -87,7 +90,7 @@ export default function PostPage() {
                 className="py-4 px-2 w-full h-[90%] border shadow-xl focus:outline-none resize-none"
                 value={reduxCreateNews.content}
                 onChange={(e) =>
-                  dispatch(setEditTitle({ ...reduxCreateNews, content: e.target.value }))
+                  dispatch(setUpdateNewsReducer({ ...reduxCreateNews, content: e.target.value }))
                 }
                 onKeyPress={setEnterPress}
               ></textarea>
@@ -126,6 +129,6 @@ export default function PostPage() {
   );
 }
 
-PostPage.getLayout = (page: ReactNode) => {
+UpdatePage.getLayout = (page: ReactNode) => {
   return <Layout title="TweetApp">{page}</Layout>;
 };

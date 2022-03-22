@@ -5,9 +5,13 @@ import { useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { CreateNewsMutation, useCreateNewsMutation } from '../../GraphQL/generated/graphql';
+import {
+  CreateNewsMutation,
+  useCreateNewsMutation,
+  useUpdateNewsMutation,
+} from '../../GraphQL/generated/graphql';
 
-import { NewsDTO } from '../../interface/types';
+import { NewsDTO, UpdateNewDTO, UpdateNewsDTO } from '../../interface/types';
 import { graphqlRequestClient } from '../../lib/graphqlRequestClient';
 import { resetEditNews, resetEditTitle } from '../../redux/uiSlice';
 
@@ -100,24 +104,21 @@ export const useMutationApp = () => {
     },
   });
 
-  // const updateNewsMutation = useMutation(
-  //   (news: EditNewsDTO) => graphQLClient.request(UPDATE_NEWS, news),
-  //   {
-  //     onSuccess: (res, variables) => {
-  //       const reactQueryTodo = reactQueryClient.getQueryData<NewsDTO[]>('news');
-  //       if (reactQueryTodo) {
-  //         reactQueryClient.setQueryData<NewsDTO[]>(
-  //           'news',
-  //           reactQueryTodo.map((news) => (news.id === variables.id ? res.update_news_by_pk : news)),
-  //         );
-  //       }
-  //       dispatch(resetEditNews());
-  //     },
-  //     onError: () => {
-  //       dispatch(resetEditNews());
-  //     },
-  //   },
-  // );
+  const updateNewsMutation = useUpdateNewsMutation<Error, UpdateNewDTO>(graphQLClient, {
+    onSuccess: (res, variables) => {
+      const reactQueryTodo = reactQueryClient.getQueryData<UpdateNewDTO[]>('updateNews');
+      if (reactQueryTodo) {
+        reactQueryClient.setQueryData<UpdateNewDTO[]>(
+          'updateNews',
+          reactQueryTodo.map((news) => (news.id === variables.id ? res.update_news_by_pk : news)),
+        );
+      }
+      dispatch(resetEditNews());
+    },
+    onError: () => {
+      dispatch(resetEditNews());
+    },
+  });
 
   // const deleteNewsMutation = useMutation(
   //   (id: string) => graphQLClient.request(DELETE_NEWS, { id: id }),
@@ -139,7 +140,7 @@ export const useMutationApp = () => {
     // updateTaskMutation,
     // deleteTaskMutation,
     createNewsMutation,
-    // updateNewsMutation,
+    updateNewsMutation,
     // deleteNewsMutation,
   };
 };

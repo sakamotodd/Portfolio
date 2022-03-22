@@ -6,25 +6,41 @@ export interface NewsDTO {
   created_at: string;
   orderNo: number;
   title: string;
+  name: string;
+  email: string;
+  photoURL: string;
 }
 
 export interface NewsVariableDTO {
   content: string;
   orderNo: number;
   title: string;
+  name: string;
+  email: string;
+  photoURL: string;
 }
 
-export interface OrderNewsDTO {
-  id: string;
-  content: string;
-  created_at: string;
-  orderNo: number;
-}
 export interface EditNewsDTO {
   id: string;
   content: string;
   orderNo: number;
   title: string;
+  name: string;
+  email: string;
+  photoURL: string;
+}
+
+export interface UpdateNewsDTO {
+  id: string;
+  content: string;
+  title: string;
+}
+
+export interface UpdateNewDTO {
+  created_at: any;
+  title?: string;
+  content: string;
+  id: any;
 }
 export interface TaskDTO {
   id: string;

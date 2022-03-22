@@ -2,12 +2,12 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { NewsDTO, NewsVariableDTO, OrderNewsDTO } from '../../interface/types';
-import { selectNews, setEditOrderNo, setEditTitle } from '../../redux/uiSlice';
+import { NewsDTO, NewsVariableDTO, UpdateNewsDTO } from '../../interface/types';
+import { selectNews, setEditTitle, setUpdateNewsReducer } from '../../redux/uiSlice';
 import { useLogout } from '../login/useLogout';
 
 interface Props {
-  news: NewsVariableDTO;
+  news: UpdateNewsDTO;
 }
 
 export const useContent = () => {
@@ -41,6 +41,11 @@ export const useContent = () => {
     [router],
   );
 
+  const updateNewsButtonClick = useCallback((id: string, content: string, title: string) => {
+    dispatch(setUpdateNewsReducer({ title: title, content: content, id: id }));
+    router.push('/update');
+  }, []);
+
   // ログアウトボタン(onClick)
   const handleLogout = useCallback(() => {
     logout();
@@ -49,7 +54,7 @@ export const useContent = () => {
 
   // 投稿ページ遷移ボタン(onClick)
   const handleMovePage = useCallback(() => {
-    dispatch(setEditTitle({...reduxCreateNews, orderNo: data?.length}));
+    dispatch(setEditTitle({ ...reduxCreateNews, orderNo: data?.length }));
     router.push('/post');
   }, [router]);
 
@@ -69,5 +74,6 @@ export const useContent = () => {
     handlePageNation,
     handleLogout,
     handleMovePage,
+    updateNewsButtonClick,
   };
 };
