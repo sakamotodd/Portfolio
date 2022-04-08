@@ -1,19 +1,24 @@
 /* eslint-disable import/namespace */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { GraphQLClient } from 'graphql-request';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
+import { GetCommentNewsDTO, NewsDTO, UpdateNewDTO } from '../../interface/types';
 import {
-  CreateNewsMutation,
+  resetCommentNewsReducer,
+  resetEditNews,
+  resetEditTitle,
+  resetUpdateNews,
+} from '../../redux/uiSlice';
+import {
+  useCreateCommentMutation,
   useCreateNewsMutation,
+  useDeleteNewsMutation,
   useUpdateNewsMutation,
-} from '../../GraphQL/generated/graphql';
-
-import { NewsDTO, UpdateNewDTO, UpdateNewsDTO } from '../../interface/types';
-import { graphqlRequestClient } from '../../lib/graphqlRequestClient';
-import { resetEditNews, resetEditTitle } from '../../redux/uiSlice';
+} from '../../util/GraphQL/generated/graphql';
 
 const cookie = new Cookies();
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT;
@@ -21,6 +26,7 @@ let graphQLClient: GraphQLClient;
 
 export const useMutationApp = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   // キャッシュにアクセスし更新するため
   const reactQueryClient = useQueryClient();
 
@@ -31,62 +37,6 @@ export const useMutationApp = () => {
       },
     });
   }, [cookie.get('token')]);
-
-  // const creteTaskMutation = useMutation(
-  //   (createTask: CreateTaskDTO) => graphQLClient.request(CREATE_TASK, createTask),
-  //   {
-  //     onSuccess: (res) => {
-  //       // tasksのキャッシュの一覧を取得
-  //       const reactQueryTodo = reactQueryClient.getQueryData<TaskDTO[]>('tasks');
-  //       if (reactQueryTodo) {
-  //         reactQueryClient.setQueryData('tasks', [...reactQueryTodo, res.insert_tasks_one]);
-  //       }
-  //       dispatch(resetEditTask());
-  //     },
-  //     onError: () => {
-  //       dispatch(resetEditTask());
-  //     },
-  //   },
-  // );
-
-  // const updateTaskMutation = useMutation(
-  //   (task: UpdateTaskDTO) => graphQLClient.request(UPDATE_TASK, task),
-  //   {
-  //     onSuccess: (res, variables) => {
-  //       const reactQueryTodo = reactQueryClient.getQueryData<TaskDTO[]>('tasks');
-  //       if (reactQueryTodo) {
-  //         reactQueryClient.setQueryData<TaskDTO[]>(
-  //           'tasks',
-  //           reactQueryTodo.map((task) =>
-  //             task.id === variables.id ? res.update_tasks_by_pk : task,
-  //           ),
-  //         );
-  //       }
-  //       dispatch(resetEditTask());
-  //     },
-  //     onError: () => {
-  //       dispatch(resetEditTask());
-  //     },
-  //   },
-  // );
-
-  // const deleteTaskMutation = useMutation(
-  //   (id: string) => graphQLClient.request(DELETE_TASK, { id: id }),
-  //   {
-  //     onSuccess: (res, variables) => {
-  //       const reactQueryTodo = reactQueryClient.getQueryData<TaskDTO[]>('tasks');
-  //       if (reactQueryTodo) {
-  //         reactQueryClient.setQueryData<TaskDTO[]>(
-  //           'tasks',
-  //           reactQueryTodo.filter((task) => task.id !== variables),
-  //         );
-  //       }
-  //       dispatch(resetEditTask());
-  //     },
-  //   },
-  // );
-
-  // creteNewsMutation.mutate('test'); => contentの引数
 
   const createNewsMutation = useCreateNewsMutation<Error>(graphQLClient, {
     onSuccess: (res) => {
@@ -104,43 +54,52 @@ export const useMutationApp = () => {
     },
   });
 
-  const updateNewsMutation = useUpdateNewsMutation<Error, UpdateNewDTO>(graphQLClient, {
-    onSuccess: (res, variables) => {
+  const createCommentMutation = useCreateCommentMutation<Error>(graphQLClient, {
+    onSuccess: (res) => {
+      const reactQueryTodo = reactQueryClient.getQueryData<GetCommentNewsDTO[]>('privateNews');
+      if (reactQueryTodo) {
+        reactQueryClient.setQueryData('privateNews', [...reactQueryTodo, res.insert_comment_one]);
+      }
+      dispatch(resetCommentNewsReducer);
+      alert('成功しました。');
+      router.reload();
+    },
+  });
+
+  const updateNewsMutation = useUpdateNewsMutation<Error>(graphQLClient, {
+    onSuccess: (res, UpdateNewsMutationVariables) => {
       const reactQueryTodo = reactQueryClient.getQueryData<UpdateNewDTO[]>('updateNews');
       if (reactQueryTodo) {
         reactQueryClient.setQueryData<UpdateNewDTO[]>(
           'updateNews',
-          reactQueryTodo.map((news) => (news.id === variables.id ? res.update_news_by_pk : news)),
+          reactQueryTodo.map((news) =>
+            news.id === UpdateNewsMutationVariables.id ? res.update_news_by_pk : news,
+          ),
         );
       }
-      dispatch(resetEditNews());
+      dispatch(resetUpdateNews());
     },
     onError: () => {
-      dispatch(resetEditNews());
+      dispatch(resetUpdateNews());
     },
   });
 
-  // const deleteNewsMutation = useMutation(
-  //   (id: string) => graphQLClient.request(DELETE_NEWS, { id: id }),
-  //   {
-  //     onSuccess: (res, variables) => {
-  //       const reactQueryTodo = reactQueryClient.getQueryData<NewsDTO[]>('news');
-  //       if (reactQueryTodo) {
-  //         reactQueryClient.setQueryData<NewsDTO[]>(
-  //           'news',
-  //           reactQueryTodo.filter((news) => news.id !== variables),
-  //         );
-  //       }
-  //       dispatch(resetEditNews());
-  //     },
-  //   },
-  // );
+  const deleteNewsMutation = useDeleteNewsMutation(graphQLClient, {
+    onSuccess: (res, DeleteNewsMutationVariables) => {
+      const reactQueryTodo = reactQueryClient.getQueryData<NewsDTO[]>('news');
+      if (reactQueryTodo) {
+        reactQueryClient.setQueryData<NewsDTO[]>(
+          'news',
+          reactQueryTodo.filter((news) => news.id !== DeleteNewsMutationVariables.id),
+        );
+      }
+      dispatch(resetUpdateNews());
+    },
+  });
   return {
-    // creteTaskMutation,
-    // updateTaskMutation,
-    // deleteTaskMutation,
+    createCommentMutation,
     createNewsMutation,
     updateNewsMutation,
-    // deleteNewsMutation,
+    deleteNewsMutation,
   };
 };

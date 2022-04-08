@@ -2,25 +2,32 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { NewsDTO, NewsVariableDTO, UpdateNewsDTO } from '../../interface/types';
-import { selectNews, setEditTitle, setUpdateNewsReducer } from '../../redux/uiSlice';
-import { useLogout } from '../login/useLogout';
-
-interface Props {
-  news: UpdateNewsDTO;
-}
+import { useMutationApp } from '../../hooks/query/useMutationApp';
+import { NewsDTO } from '../../interface/types';
+import {
+  commentNewsState,
+  selectNews,
+  setCommentNewsReducer,
+  setUpdateNewsReducer,
+} from '../../redux/uiSlice';
+import { useLogout } from './useLogout';
 
 export const useContent = () => {
-  const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<NewsDTO[]>('news');
-  const [page, setPage] = useState<number>(1);
   const [pageDataMax, setPageDataMax] = useState<number>(10);
   const [pageDataMin, setPageDataMin] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const { deleteNewsMutation } = useMutationApp();
+  const queryClient = useQueryClient();
+  const data = queryClient.getQueryData<NewsDTO[]>('news');
   const router = useRouter();
   const pageNumber = Math.ceil(data?.length / 10);
   const { logout } = useLogout();
-  const reduxCreateNews = useSelector(selectNews);
+  const reduxCreateComment = useSelector(commentNewsState);
   const dispatch = useDispatch();
+
+  const a = {
+    id: '',
+  };
 
   // ページネーション(onClick)
   const handlePageNation = useCallback(
@@ -35,15 +42,32 @@ export const useContent = () => {
 
   // privateページボタン(onClick)
   const handlePrivatePage = useCallback(
-    (orderNo: number) => {
+    (orderNo: number, id: string, photoURL: string, name: string) => {
+      dispatch(
+        setCommentNewsReducer({
+          ...reduxCreateComment,
+          groupNewsId: id,
+          commentPhotURL: photoURL,
+          commentName: name,
+        }),
+      );
       router.push(`/content/${orderNo}`);
     },
     [router],
   );
 
+  // 更新ボタン(onClick)
   const updateNewsButtonClick = useCallback((id: string, content: string, title: string) => {
     dispatch(setUpdateNewsReducer({ title: title, content: content, id: id }));
     router.push('/update');
+  }, []);
+
+  // 削除ボタン（onClick）
+  const deleteNewsButtonClick = useCallback(({ id }) => {
+    a.id = id;
+    deleteNewsMutation.mutate(a);
+    //router.reload();
+    //alert('削除しました。');
   }, []);
 
   // ログアウトボタン(onClick)
@@ -54,7 +78,6 @@ export const useContent = () => {
 
   // 投稿ページ遷移ボタン(onClick)
   const handleMovePage = useCallback(() => {
-    dispatch(setEditTitle({ ...reduxCreateNews, orderNo: data?.length }));
     router.push('/post');
   }, [router]);
 
@@ -75,5 +98,6 @@ export const useContent = () => {
     handleLogout,
     handleMovePage,
     updateNewsButtonClick,
+    deleteNewsButtonClick,
   };
 };

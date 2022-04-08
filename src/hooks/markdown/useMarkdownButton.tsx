@@ -11,18 +11,25 @@ import {
 import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { NewsDTO } from '../../interface/types';
-import { resetEditTitle, selectNews, selectUpdateNews, setEditTitle } from '../../redux/uiSlice';
+import {
+  commentNewsState,
+  resetEditTitle,
+  selectNews,
+  selectUpdateNews,
+  setEditTitle,
+} from '../../redux/uiSlice';
 import { useMutationApp } from '../query/useMutationApp';
 
-export const useOptionButton = () => {
+export const useMarkdownButton = () => {
   const [markdown, setMarkdown] = useState<string>();
   const [title, setTitle] = useState<string>();
   const [num, setNum] = useState<number>();
   const reduxCreateNews = useSelector(selectNews);
+  const reduxCreateComment = useSelector(commentNewsState);
   const reduxUpdateNews = useSelector(selectUpdateNews);
   const dispatch = useDispatch();
   const markdownRef = useRef(null);
-  const { createNewsMutation, updateNewsMutation } = useMutationApp();
+  const { createNewsMutation, createCommentMutation, updateNewsMutation } = useMutationApp();
   const queryClient = useQueryClient();
   const data = queryClient.getQueryData<NewsDTO[]>('news');
   const router = useRouter();
@@ -30,7 +37,12 @@ export const useOptionButton = () => {
   const editHandle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createNewsMutation.mutate(reduxCreateNews);
-    router.push(`/content/${reduxCreateNews.orderNo}`);
+    // router.push(`/content/${reduxCreateNews.orderNo}`);
+  };
+
+  const editCommentHandle = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createCommentMutation.mutate(reduxCreateComment);
   };
 
   const updateHandle = (e: FormEvent<HTMLFormElement>) => {
@@ -100,13 +112,6 @@ export const useOptionButton = () => {
     dispatch(resetEditTitle());
   }, [markdown, title]);
 
-  useEffect(() => {
-    if (num !== null) {
-      markdownRef.current.focus();
-      markdownRef.current.setSelectionRange(num, num);
-      setNum(null);
-    }
-  }, [num]);
   const createEditorHandle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert('追加しました。');
@@ -124,8 +129,6 @@ export const useOptionButton = () => {
     createEditorHandle,
     setEnterPress,
     TypeHClick,
+    editCommentHandle,
   };
 };
-function useRouterPrefetch(arg0: string, arg1: boolean): { handleRouterPush: any } {
-  throw new Error('Function not implemented.');
-}

@@ -10,12 +10,11 @@ import {
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { ChangeEvent, useCallback, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Auth, storage } from '../../firebase/firebase.config';
 import { SignInFormDTO, SignUpFormDTO } from '../../interface/types';
+import { Auth, storage } from '../../util/firebase/firebase.config';
 
 export const useLogin = () => {
   const [tweetImage, setTweetImage] = useState<File | null>(null);
-
   // メールアドレスログイン（onSubmit）
   const signInUser = useCallback(async (data: SignInFormDTO) => {
     try {
@@ -27,15 +26,12 @@ export const useLogin = () => {
   }, []);
 
   // 画像取得（onSubmit）
-  const getImage = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files![0]) {
-        setTweetImage(e.target.files![0]);
-        e.target.value = '';
-      }
-    },
-    [],
-  );
+  const getImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files![0]) {
+      setTweetImage(e.target.files![0]);
+      e.target.value = '';
+    }
+  }, []);
 
   // メールアドレス作成(onSubmit)
   const signUpUser = useCallback(
@@ -91,7 +87,7 @@ export const useLogin = () => {
       alert(e.message);
     }
   }, []);
-  
+
   return {
     signInUser,
     signUpUser,

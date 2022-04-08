@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React, { VFC } from 'react';
-import { useLogin } from '../../hooks/login/useLogin';
+import { useLogin } from '../../pages/login/useLogin';
 
 export const GithubAndGoogleButton: VFC = () => {
   const { loginWithGithub, loginWithGoogle } = useLogin();

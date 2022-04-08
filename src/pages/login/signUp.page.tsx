@@ -2,7 +2,7 @@ import { ChevronDoubleRightIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import React from 'react';
 import { GithubAndGoogleButton } from '../../components/auth/GithubAndGoogleButton';
-import { Auth } from '../../firebase/firebase.config';
+import { Auth } from '../../util/firebase/firebase.config';
 import { MailFormSignUp } from './MailFormSignUp';
 
 export default function SignUpPage() {

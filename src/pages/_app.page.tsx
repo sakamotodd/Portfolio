@@ -1,4 +1,6 @@
 import 'tailwindcss/tailwind.css';
+import '../styles/button.css';
+import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
 import NextNprogress from 'nextjs-progressbar';
 import { useState } from 'react';
@@ -30,21 +32,23 @@ function MyApp({ Component, pageProps }: Props) {
   );
 
   return getLayout(
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Provider store={store}>
-          <NextNprogress
-            color="#29D"
-            startPosition={0.2}
-            stopDelayMs={200}
-            height={3}
-            showOnShallow={true}
-          />
-          <Component {...pageProps} />
-        </Provider>
-      </Hydrate>
-      <ReactQueryDevtools />
-    </QueryClientProvider>,
+    <ThemeProvider attribute="class" defaultTheme="light">
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Provider store={store}>
+            <NextNprogress
+              color="#29D"
+              startPosition={0.2}
+              stopDelayMs={200}
+              height={3}
+              showOnShallow={true}
+            />
+            <Component {...pageProps} />
+          </Provider>
+        </Hydrate>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ThemeProvider>,
   );
 }
 

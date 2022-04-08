@@ -1,35 +1,23 @@
-.markdownPreview h1,
-.markdownPreview h2,
-.markdownPreview h3,
-.markdownPreview h4,
-.markdownPreview h5,
-.markdownPreview h6 {
-  font-weight: 600;
-}
+
 .markdownPreview h1 {
   font-size: 2rem;
+  margin-bottom: 2rem;
+  border-bottom-width: 2px;
+  font-weight: 600;
 }
 .markdownPreview h2 {
   font-size: 1.5rem;
+  font-weight: 400;
 }
 .markdownPreview h3 {
   font-size: 1.3rem;
-}
-.markdownPreview h4 {
-  font-size: 1.1rem;
-}
-.markdownPreview h5 {
-  font-size: 0.9rem;
-}
-.markdownPreview h6 {
-  font-size: 0.7rem;
+  font-weight: 200;
 }
 .markdownPreview p {
   wthite-space: pre-wrap;
+  font-background: #ffffff
 }
-.markdownPreview p code {
-  background-color: #ebebeb;
-}
+
 .markdownPreview p a {
   color: #0000ee;
 }

@@ -2,15 +2,15 @@
   "response": {
     "errors": [
       {
-        "extensions": { "path": "$", "code": "invalid-jwt" },
-        "message": "Could not verify JWT: JWTExpired"
+        "extensions": { "path": "$.variables", "code": "parse-failed" },
+        "message": "parsing HashMap failed, expected Object, but encountered String"
       }
     ],
     "status": 200,
     "headers": { "map": { "content-type": "application/json; charset=utf-8" } }
   },
   "request": {
-    "query": "\n    mutation CreateNews($content: String!, $orderNo: Int!, $title: String!) {\n  insert_news_one(object: {content: $content, orderNo: $orderNo, title: $title}) {\n    id\n    content\n    created_at\n    orderNo\n    title\n  }\n}\n    ",
-    "variables": { "content": "dskjfjsdfns", "orderNo": 27, "title": "最新" }
+    "query": "\n    mutation DeleteNews($id: uuid!) {\n  delete_news_by_pk(id: $id) {\n    id\n    content\n    created_at\n    email\n    name\n    orderNo\n    photoURL\n    title\n  }\n}\n    ",
+    "variables": "4f154643-01b3-458d-87e8-b6cf13812b76"
   }
 }

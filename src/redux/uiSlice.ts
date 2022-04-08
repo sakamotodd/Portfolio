@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NewsVariableDTO, EditNewsDTO, EditTaskDTO, UpdateNewsDTO } from '../interface/types';
+import {
+  NewsVariableDTO,
+  EditNewsDTO,
+  EditTaskDTO,
+  UpdateNewsDTO,
+  CreateCommentDTO,
+} from '../interface/types';
 import { RootState } from './store';
 
 export interface uiState {
@@ -7,6 +13,7 @@ export interface uiState {
   editNews: EditNewsDTO;
   selectNews: NewsVariableDTO;
   updateNews: UpdateNewsDTO;
+  editComment: CreateCommentDTO;
 }
 const initialState: uiState = {
   editTask: {
@@ -18,7 +25,6 @@ const initialState: uiState = {
   editNews: {
     id: '',
     content: '',
-    orderNo: null,
     title: '',
     name: '',
     email: '',
@@ -27,7 +33,6 @@ const initialState: uiState = {
 
   selectNews: {
     content: '',
-    orderNo: 0,
     title: '',
     name: '',
     email: '',
@@ -38,6 +43,12 @@ const initialState: uiState = {
     id: '',
     content: '',
     title: '',
+  },
+  editComment: {
+    groupNewsId: '',
+    commentText: '',
+    commentName: '',
+    commentPhotURL: '',
   },
 };
 
@@ -58,7 +69,9 @@ export const uiSlice = createSlice({
     setUpdateNewsReducer: (state, action: PayloadAction<UpdateNewsDTO>) => {
       state.updateNews = action.payload;
     },
-
+    setCommentNewsReducer: (state, action: PayloadAction<CreateCommentDTO>) => {
+      state.editComment = action.payload;
+    },
     resetUpdateNews: (state) => {
       state.updateNews = initialState.updateNews;
     },
@@ -68,6 +81,9 @@ export const uiSlice = createSlice({
     resetEditNews: (state) => {
       state.editNews = initialState.editNews;
     },
+    resetCommentNewsReducer: (state) => {
+      state.editComment = initialState.editComment;
+    },
   },
 });
 
@@ -75,13 +91,15 @@ export const {
   setEditTask,
   resetEditTask,
   setUpdateNewsReducer,
+  setCommentNewsReducer,
   setEditTitle,
   resetEditNews,
   resetEditTitle,
   resetUpdateNews,
+  resetCommentNewsReducer,
 } = uiSlice.actions;
 export const selectTask = (state: RootState) => state.ui.editTask;
 export const selectNews = (state: RootState) => state.ui.selectNews;
 export const selectUpdateNews = (state: RootState) => state.ui.updateNews;
-
+export const commentNewsState = (state: RootState) => state.ui.editComment;
 export default uiSlice.reducer;

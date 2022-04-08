@@ -1,27 +1,54 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { onAuthStateChanged } from 'firebase/auth';
 import request from 'graphql-request';
 import { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next';
-import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { ReactNode, useEffect } from 'react';
+import React, { FormEvent, ReactNode, useCallback, useEffect } from 'react';
+import { CardHeading, ThreeDotsVertical } from 'react-bootstrap-icons';
+import ReactMarkdown from 'react-markdown';
 import { dehydrate, QueryClient, useQueryClient } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import remarkBreaks from 'remark-breaks';
+import remarkGfm from 'remark-gfm';
 import Cookies from 'universal-cookie';
-import { GetAllNewsDocument } from '../../GraphQL/generated/graphql';
-import { Layout } from '../../components/common/Layout';
-import { Auth } from '../../firebase/firebase.config';
-import { privateNews } from '../../hooks/query/useOrderNews';
-import { NewsDTO} from '../../interface/types';
+import MarkdownText from '../../components/markdown';
+import { useMarkdown } from '../../hooks/markdown/useMarkdown';
 
-interface NewsResDTO {
+import { useMutationApp } from '../../hooks/query/useMutationApp';
+import { privateNews } from '../../hooks/query/useOrderNews';
+import { NewsDTO, PrivateNewsDTO } from '../../interface/types';
+import { Layout } from '../../layout/Layout';
+import { commentNewsState, setCommentNewsReducer } from '../../redux/uiSlice';
+import style from '../../styles/markdown-styles.module.css';
+import { GetAllNewsDocument } from '../../util/GraphQL/generated/graphql';
+import { Auth } from '../../util/firebase/firebase.config';
+
+interface newsResDTO {
   news: NewsDTO[];
 }
 
 const PrivateContentPage: NextPageWithLayout = () => {
   const cookie = new Cookies();
   const router = useRouter();
+  const dispatch = useDispatch();
+  const reduxCreateComment = useSelector(commentNewsState);
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<NewsDTO[]>('privateNews');
+  const data = queryClient.getQueryData<PrivateNewsDTO[]>('privateNews');
+  const { components } = useMarkdown();
+  const { createCommentMutation } = useMutationApp();
+  const user = Auth.currentUser;
+  // privateページボタン(onClick)
+
+  const editCommentHandle = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      console.log(reduxCreateComment);
+      createCommentMutation.mutate(reduxCreateComment);
+    },
+    [reduxCreateComment],
+  );
 
   useEffect(() => {
     const unSubUser = onAuthStateChanged(Auth, async (user) => {
@@ -36,8 +63,19 @@ const PrivateContentPage: NextPageWithLayout = () => {
           if (hasuraClaims) {
             cookie.set('token', token, { path: '/' });
             if (router.pathname === '/content/[id]') {
-              data?.map((user) => {
-                return router.push(`/content/${user.orderNo}`);
+              data?.map((page) => {
+                const handlePrivatePage = () => {
+                  dispatch(
+                    setCommentNewsReducer({
+                      ...reduxCreateComment,
+                      groupNewsId: page.id,
+                      commentPhotURL: user?.photoURL,
+                      commentName: user?.displayName,
+                    }),
+                  );
+                  router.push(`/content/${page.orderNo}`);
+                };
+                return handlePrivatePage();
               });
             }
           }
@@ -52,21 +90,83 @@ const PrivateContentPage: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <div className="font-mono text-black">
-      {data?.map((user) => {
-        return (
-          <div key={user.orderNo}>
-            <p>{user.id}</p>
-            <p>{user.created_at}</p>
-            <p>{user.orderNo}</p>
-            <p>{user.title}</p>
-            <p>{user.content}</p>
+    <div className="flex flex-col justify-center items-center font-hiragino text-black ">
+      <div className="w-2/3 h-full">
+        {data?.map((priNews) => {
+          return (
+            <div key={priNews.orderNo}>
+              <div className="py-8">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <CardHeading size={36} className="text-blue-400 cursor-pointer " />
+                    <span className="pl-1 text-3xl font-bold">{priNews.title}</span>
+                  </div>
+                  <ThreeDotsVertical size={24} />
+                </div>
+                {priNews?.photoURL?.length > 0 && (
+                  <Image
+                    src={priNews?.photoURL}
+                    alt="ログイン画像"
+                    width={24}
+                    height={24}
+                    className=" bg-center rounded-full"
+                  />
+                )}
+              </div>
+              <div className="overflow-y-scroll py-4 px-2 bg-white border shadow-xl markdown-preview">
+                <ReactMarkdown
+                  className={style.markdownPreview}
+                  remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}
+                  components={components}
+                >
+                  {priNews.content}
+                </ReactMarkdown>
+              </div>
+            </div>
+          );
+        })}
+        <div className="m-4">
+          {data?.map((user) => {
+            return (
+              <div key={user.orderNo}>
+                {user?.comments?.map((comment) => {
+                  return (
+                    <div key={comment.commentOrderNo} className="border">
+                      <div className="py-8">
+                        {comment?.comment_photURL?.length > 0 && (
+                          <Image
+                            src={comment?.comment_photURL}
+                            alt="ログイン画像"
+                            width={24}
+                            height={24}
+                            className=" bg-center rounded-full"
+                          />
+                        )}
+                      </div>
+                      <div className="overflow-y-scroll py-4 px-2 bg-white border shadow-xl markdown-preview">
+                        <ReactMarkdown
+                          className={style.markdownPreview}
+                          remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}
+                          components={components}
+                        >
+                          {comment.commentText}
+                        </ReactMarkdown>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+        <h1 className="mt-8 text-2xl font-bold">コメントする</h1>
+        <form onSubmit={editCommentHandle}>
+          <div className="flex mt-4 mb-12 h-96">
+            <MarkdownText flag={false} />
           </div>
-        );
-      })}
-      <Link href="/content">
-        <a className=" text-blue-400">コンテントページ</a>
-      </Link>
+          <button className="mt-4 text-black bg-purple-400 border-r-2">コメントする</button>
+        </form>
+      </div>
     </div>
   );
 };
@@ -74,18 +174,22 @@ const PrivateContentPage: NextPageWithLayout = () => {
 export default PrivateContentPage;
 
 PrivateContentPage.getLayout = (page: ReactNode) => {
-  return <Layout title="個人ページ">{page}</Layout>;
+  return (
+    <Layout title="個人ページ" styles="h-full">
+      {page}
+    </Layout>
+  );
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { news: data } = await request<NewsResDTO>(
+  const { news: data } = await request<newsResDTO>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     GetAllNewsDocument,
   );
   const paths = data.map((order) => ({
-    params: { id: order.orderNo.toString() },
+    params: { id: order.orderNo.toString(), commentId: order.id },
   }));
-  return { paths, fallback: false };
+  return { paths, fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {

@@ -10,9 +10,9 @@ import Link from 'next/link';
 import React, { VFC } from 'react';
 import { useForm } from 'react-hook-form';
 import { Toaster } from 'react-hot-toast';
-import { useErrorMessage } from '../../hooks/common/useErrorMessage';
-import { useLogin } from '../../hooks/login/useLogin';
 import { SignUpFormDTO } from '../../interface/types';
+import { useErrorMessage } from './useErrorMessage';
+import { useLogin } from './useLogin';
 
 export const MailFormSignUp: VFC = () => {
   const { signUpValidationSchema } = useErrorMessage();

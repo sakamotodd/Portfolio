@@ -4,9 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import React, { VFC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useErrorMessage } from '../../hooks/common/useErrorMessage';
-import { useLogin } from '../../hooks/login/useLogin';
 import { SignInFormDTO } from '../../interface/types';
+import { useErrorMessage } from './useErrorMessage';
+import { useLogin } from './useLogin';
 
 export const MailFormSignIn: VFC = () => {
   const { signInValidationSchema } = useErrorMessage();
@@ -48,7 +48,7 @@ export const MailFormSignIn: VFC = () => {
             } py-3 pl-12 w-full leading-tight focus:placeholder-gray-600 text-gray-600 rounded-md border border-gray-100 focus:ring-gray-600 shadow-sm focus:shadow-md transition appearance-none focus:outline-none focus:shadow-outline`}
             type="password"
             placeholder="Password ?"
-            autoComplete='on'
+            autoComplete="on"
           />
           <div className="flex absolute inset-y-0 left-0 items-center">
             <LockOpenIcon

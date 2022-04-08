@@ -4,10 +4,7 @@ import { doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Cookies from 'universal-cookie';
-import { Auth, db } from '../../firebase/firebase.config';
-// import { useQueryClient } from 'react-query';
-// import { OrderNewsDTO } from '../../interface/types';
-// import { useContent } from '../content/useContent';
+import { Auth, db } from '../../util/firebase/firebase.config';
 
 export let unSubMeta: () => void;
 
@@ -15,14 +12,6 @@ export const useUserChanged = () => {
   const cookie = new Cookies();
   const router = useRouter();
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
-
-  //const queryClient = useQueryClient();
-  // const orderNoData = async () => {
-  //   const data = queryClient.getQueryData<OrderNewsDTO[]>('news');
-  //   data.map((user) => {
-  //     return router.push(`/content/${user.orderNo}`);
-  //   });
-  // };
 
   useEffect(() => {
     const unSubUser = onAuthStateChanged(Auth, async (user) => {
@@ -43,11 +32,10 @@ export const useUserChanged = () => {
             ) {
               router.push('/content');
             } else if (router.pathname === '/post') {
-              router.push('/content');
+              router.push('/post');
+            } else if (router.pathname === '/content/[id]') {
+              return;
             }
-            // else if (router.pathname === '/content/[id]') {
-            //   orderNoData();
-            // }
           } else {
             // firestoreのコレクションの書き込み対してモニタリングする処理
             unSubMeta = onSnapshot(doc(db, 'user_meta', user.uid), async () => {
@@ -68,7 +56,6 @@ export const useUserChanged = () => {
     return () => {
       unSubUser();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return {};
 };

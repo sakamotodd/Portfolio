@@ -14,16 +14,10 @@ import ReactMarkdown from 'react-markdown';
 import { useDispatch, useSelector } from 'react-redux';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
-import { Layout } from '../../components/common/Layout';
 import { useMarkdown } from '../../hooks/markdown/useMarkdown';
 import { useOptionButton } from '../../hooks/markdown/useMarkdownButton';
-import {
-  resetUpdateNews,
-  selectNews,
-  selectUpdateNews,
-  setEditTitle,
-  setUpdateNewsReducer,
-} from '../../redux/uiSlice';
+import { Layout } from '../../layout/Layout';
+import { resetUpdateNews, selectUpdateNews, setUpdateNewsReducer } from '../../redux/uiSlice';
 import style from '../../styles/markdown-styles.module.css';
 
 export default function UpdatePage() {
@@ -130,5 +124,9 @@ export default function UpdatePage() {
 }
 
 UpdatePage.getLayout = (page: ReactNode) => {
-  return <Layout title="TweetApp">{page}</Layout>;
+  return (
+    <Layout title="TweetApp" styles="h-[calc(100vh-3.5rem)]">
+      {page}
+    </Layout>
+  );
 };

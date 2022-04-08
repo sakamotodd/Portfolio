@@ -4,9 +4,9 @@ schema:
       headers:
         x-hasura-admin-secret: skmt1114
         x-hasura-role: staff
-documents: 'src/GraphQL/*.ts'
+documents: 'src/util/GraphQL/*.ts'
 generates:
-  src/GraphQL/generated/graphql.ts:
+  src/util/GraphQL/generated/graphql.ts:
     plugins:
       - typescript
       - typescript-operations

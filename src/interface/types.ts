@@ -11,9 +11,43 @@ export interface NewsDTO {
   photoURL: string;
 }
 
+export interface PrivateNewsDTO {
+  comments: GetCommentNewsDTO[];
+  id: string;
+  content: string;
+  created_at: string;
+  orderNo: number;
+  title: string;
+  name: string;
+  email: string;
+  photoURL: string;
+}
+export interface CreateCommentDTO {
+  groupNewsId: string;
+  commentText: string;
+  commentPhotURL: string;
+  commentName: string;
+}
+
+export interface TasksDTO {
+  created_at: string;
+  id: string;
+  mail: string;
+  title: string;
+  user_id: string;
+}
+
+export interface GetCommentNewsDTO {
+  commentId: string;
+  commentText: string;
+  commentOrderNo: number;
+  group_news_id: string;
+  comment_name: string;
+  comment_photURL: string;
+  comment_create_at: string;
+}
 export interface NewsVariableDTO {
   content: string;
-  orderNo: number;
   title: string;
   name: string;
   email: string;
@@ -23,7 +57,6 @@ export interface NewsVariableDTO {
 export interface EditNewsDTO {
   id: string;
   content: string;
-  orderNo: number;
   title: string;
   name: string;
   email: string;
@@ -37,7 +70,6 @@ export interface UpdateNewsDTO {
 }
 
 export interface UpdateNewDTO {
-  created_at: any;
   title?: string;
   content: string;
   id: any;
@@ -68,6 +100,13 @@ export interface UpdateTaskDTO {
 export interface LayoutDTO {
   children: ReactNode;
   title: string;
+  styles: string;
+}
+
+export interface HeaderDTO {
+  title: string;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  darkMode: boolean;
 }
 
 export interface SignInFormDTO {
