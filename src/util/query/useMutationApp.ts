@@ -1,5 +1,3 @@
-/* eslint-disable import/namespace */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -77,10 +75,12 @@ export const useMutationApp = () => {
           ),
         );
       }
+      alert('成功しました');
       dispatch(resetUpdateNews());
     },
     onError: () => {
       dispatch(resetUpdateNews());
+      alert('失敗');
     },
   });
 

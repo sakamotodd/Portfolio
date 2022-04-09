@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutationApp } from '../../hooks/query/useMutationApp';
 import { NewsDTO } from '../../interface/types';
 import {
   commentNewsState,
@@ -10,6 +9,7 @@ import {
   setCommentNewsReducer,
   setUpdateNewsReducer,
 } from '../../redux/uiSlice';
+import { useMutationApp } from '../../util/query/useMutationApp';
 import { useLogout } from './useLogout';
 
 export const useContent = () => {

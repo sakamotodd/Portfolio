@@ -1,12 +1,14 @@
-import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { FormEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { CodeComponent, ReactMarkdownNames } from 'react-markdown/lib/ast-to-react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { xonokai } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { useMutationApp } from '../../util/query/useMutationApp';
 
 export const useMarkdownArea = () => {
   const [markdown, setMarkdown] = useState<string>();
   const [num, setNum] = useState<number>();
   const markdownRef = useRef(null);
+  const { createNewsMutation } = useMutationApp();
 
   useEffect(() => {
     if (num !== null) {
@@ -58,12 +60,6 @@ export const useMarkdownArea = () => {
       } else return;
     }
   }, []);
-
-  // const editCommentHandle = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   createCommentMutation.mutate(reduxCreateComment);
-  // };
-
 
   const CodeBlock: CodeComponent | ReactMarkdownNames = ({
     inline,

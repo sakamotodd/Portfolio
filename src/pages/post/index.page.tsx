@@ -1,20 +1,25 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useRouter } from 'next/router';
-import { ReactNode, useEffect } from 'react';
+import { FormEvent, ReactNode, useCallback, useEffect } from 'react';
 import { ChevronDoubleLeft } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MarkdownText from '../../components/markdown';
-import { useMarkdownButton } from '../../hooks/markdown/useMarkdownButton';
 import { Layout } from '../../layout/Layout';
 import { selectNews, setEditTitle } from '../../redux/uiSlice';
 import { Auth } from '../../util/firebase/firebase.config';
+import { useMutationApp } from '../../util/query/useMutationApp';
 
 export default function PostPage() {
   const user = Auth.currentUser;
   const dispatch = useDispatch();
-  const { editHandle } = useMarkdownButton();
   const router = useRouter();
+  const { createNewsMutation } = useMutationApp();
   const reduxCreateNews = useSelector(selectNews);
+
+  const editHandle = useCallback((e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createNewsMutation.mutate(reduxCreateNews);
+  }, []);
 
   useEffect(() => {
     if (user?.photoURL.length > 0) {
@@ -42,10 +47,10 @@ export default function PostPage() {
             onChange={(e) => dispatch(setEditTitle({ ...reduxCreateNews, title: e.target.value }))}
             className="block px-5 mx-auto mb-5 w-4/5 h-14 text-2xl font-bold rounded-lg border shadow-lg focus:outline-none"
           />
-          <div className="flex justify-between ml-10 h-[32rem]">
-            <MarkdownText flag={true}/>
+          <div className="flex justify-between ml-10 h-[30rem]">
+            <MarkdownText flag={true} updateFlag={true} />
           </div>
-          <div className="flex justify-around items-center mt-12">
+          <div className="flex justify-around items-center mt-4">
             <button className="py-2 px-4 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
               投稿内容を保存
             </button>

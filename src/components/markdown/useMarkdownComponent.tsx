@@ -1,9 +1,8 @@
-import { CodeComponent, ReactMarkdownNames } from "react-markdown/lib/ast-to-react";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { xonokai } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { CodeComponent, ReactMarkdownNames } from 'react-markdown/lib/ast-to-react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { xonokai } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
-
-export const useMarkdown = () => {
+export const useMarkdownComponent = () => {
   const CodeBlock: CodeComponent | ReactMarkdownNames = ({
     inline,
     className,
@@ -25,5 +24,6 @@ export const useMarkdown = () => {
   const components = {
     code: CodeBlock,
   };
-  return {components};
+
+  return { components };
 };

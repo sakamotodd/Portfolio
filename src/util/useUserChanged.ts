@@ -4,7 +4,7 @@ import { doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Cookies from 'universal-cookie';
-import { Auth, db } from '../../util/firebase/firebase.config';
+import { Auth, db } from './firebase/firebase.config';
 
 export let unSubMeta: () => void;
 

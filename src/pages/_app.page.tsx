@@ -7,9 +7,9 @@ import { useState } from 'react';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import { useUserChanged } from '../hooks/login/useUserChanged';
 import { NextPageWithLayout } from '../interface/page';
 import { store } from '../redux/store';
+import { useUserChanged } from '../util/useUserChanged';
 
 type Props = AppProps & {
   Component: NextPageWithLayout;

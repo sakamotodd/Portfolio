@@ -1,13 +1,10 @@
 import { CogIcon, HomeIcon, PencilAltIcon, UserIcon, XIcon } from '@heroicons/react/solid';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState, VFC } from 'react';
-import { LayoutDTO } from '../interface/types';
-import { Header } from './Header';
+import { SideBarDTO } from '../../interface/types';
 
-export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
+export const SideBar: VFC<SideBarDTO> = ({ children, styles, listFlag, setListFlag }) => {
   const router = useRouter();
-  const [darkMode, setDarkMode] = useState(false);
-  const [listFlag, setListFlag] = useState(false);
   const [selectMode, setSelectMode] = useState('');
 
   useEffect(() => {
@@ -21,24 +18,16 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
       return setSelectMode('profile');
     }
   });
-
   const XIconClick = useCallback(() => {
     setListFlag(false);
   }, []);
 
   return (
-    <div className="maxMd:relative w-screen h-screen font-serif font-light text-black dark:text-gray-200 bg-white dark:bg-darkBody">
-      <Header
-        title={title}
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
-        listFlag={listFlag}
-        setListFlag={setListFlag}
-      />
+    <>
       {listFlag ? (
-        <div className="flex">
+        <div className="flex bg-white dark:bg-darkBody">
           <nav
-            className={`md:block maxMd:absolute maxMd:left-0 maxMd:top-0 z-0 maxMd:z-50 w-40 h-screen font-helvetica text-sm text-gray-600 dark:text-white border-[1px] maxMd:bg-white maxMd:dark:bg-darkBody`}
+            className={`md:block maxMd:absolute maxMd:left-0 maxMd:top-0 z-0 maxMd:z-50 w-40 maxMd:h-screen font-helvetica text-sm text-gray-600 dark:text-white border-[1px] maxMd:bg-white maxMd:dark:bg-darkBody`}
           >
             <div className="flex md:hidden items-center px-3">
               <XIcon
@@ -48,7 +37,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
             </div>
             <div
               className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
-                selectMode === 'content' && ' bg-blue-400'
+                selectMode === 'content' && ' bg-blue-300 opacity-20'
               }`}
               onClick={() => router.push('/content')}
             >
@@ -57,7 +46,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
             </div>
             <div
               className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
-                selectMode === 'post' && ' bg-blue-400'
+                selectMode === 'post' && ' bg-blue-300 opacity-20'
               }`}
               onClick={() => router.push('/post')}
             >
@@ -66,7 +55,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
             </div>
             <div
               className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
-                selectMode === 'profile' && ' bg-blue-400'
+                selectMode === 'profile' && ' bg-blue-300 opacity-20'
               }`}
             >
               <UserIcon className="p-2 w-10 h-10" />
@@ -74,7 +63,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
             </div>
             <div
               className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard border-b-[1px] dark:hover:opacity-50 cursor-pointer ${
-                selectMode === 'setting' && ' bg-blue-400'
+                selectMode === 'setting' && ' bg-blue-300 opacity-20'
               }`}
             >
               <CogIcon className="p-2 w-10 h-10" />
@@ -88,11 +77,11 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
           </main>
         </div>
       ) : (
-        <div className={`flex ${styles} w-screen`}>
+        <div className={`flex ${styles} w-screen dark:bg-darkBody bg-white`}>
           <nav className="hidden md:block md:w-16 font-helvetica text-sm text-gray-600 dark:text-white border-[1px]">
             <div
               className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
-                selectMode === 'content' && ' bg-blue-400'
+                selectMode === 'content' && ' bg-blue-300 opacity-20'
               }`}
               onClick={() => router.push('/content')}
             >
@@ -100,7 +89,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
             </div>
             <div
               className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
-                selectMode === 'post' && ' bg-blue-400'
+                selectMode === 'post' && ' bg-blue-300 opacity-20'
               }`}
               onClick={() => router.push('/post')}
             >
@@ -108,14 +97,14 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
             </div>
             <div
               className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
-                selectMode === 'profile' && ' bg-blue-400'
+                selectMode === 'profile' && ' bg-blue-300 opacity-20'
               }`}
             >
               <UserIcon className="p-2 w-10 h-10" />
             </div>
             <div
               className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard border-b-[1px] dark:hover:opacity-50 cursor-pointer ${
-                selectMode === 'setting' && ' bg-blue-400'
+                selectMode === 'setting' && ' bg-blue-300 opacity-20'
               }`}
             >
               <CogIcon className="p-2 w-10 h-10" />
@@ -128,6 +117,6 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
           </main>
         </div>
       )}
-    </div>
+    </>
   );
 };

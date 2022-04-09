@@ -1,15 +1,15 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import Head from 'next/head';
 import Image from 'next/image';
-import { useEffect, VFC } from 'react';
+import { useCallback, useEffect, VFC } from 'react';
 import { List } from 'react-bootstrap-icons';
 import { HeaderDTO } from '../../interface/types';
 import { Auth } from '../../util/firebase/firebase.config';
 
-export const Header: VFC<HeaderDTO> = ({ title, darkMode, setDarkMode }) => {
+export const Header: VFC<HeaderDTO> = ({ title, darkMode, setDarkMode, listFlag, setListFlag }) => {
   const user = Auth.currentUser;
 
-  const handleChangeDarkMode = () => {
+  const handleChangeDarkMode = useCallback(() => {
     if (darkMode) {
       localStorage.theme = 'light';
       setDarkMode(!darkMode);
@@ -17,7 +17,11 @@ export const Header: VFC<HeaderDTO> = ({ title, darkMode, setDarkMode }) => {
       localStorage.theme = 'dark';
       setDarkMode(!darkMode);
     }
-  };
+  }, [darkMode, setDarkMode]);
+
+  const listClick = useCallback(() => {
+    setListFlag(!listFlag);
+  }, [listFlag]);
 
   useEffect(() => {
     if (
@@ -37,9 +41,12 @@ export const Header: VFC<HeaderDTO> = ({ title, darkMode, setDarkMode }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <header className="flex justify-between items-center px-8 w-full h-14 bg-white dark:bg-darkBody shadow-sm">
+      <header className="flex justify-between items-center px-3 w-full h-14 bg-white dark:bg-darkBody">
         <div className="flex items-center">
-          <List className="p-2 w-10 h-10 hover:bg-gray-200 hover:rounded-full cursor-pointer" />
+          <List
+            className="p-2 w-10 h-10 hover:bg-gray-50 dark:hover:bg-darkCard hover:rounded-full dark:hover:opacity-50 cursor-pointer"
+            onClick={listClick}
+          />
           <span className="pt-1 pl-2 text-indigo-600 dark:text-gray-200 text-shadow">TweetApp</span>
         </div>
         <div className="flex items-center">

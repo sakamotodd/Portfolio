@@ -12,28 +12,39 @@ import ReactMarkdown from 'react-markdown';
 import { useDispatch, useSelector } from 'react-redux';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
-import { CreateCommentDTO, NewsVariableDTO } from '../../interface/types';
-import { commentNewsState, selectNews, setCommentNewsReducer, setEditTitle } from '../../redux/uiSlice';
+import {
+  commentNewsState,
+  selectNews,
+  selectUpdateNews,
+  setCommentNewsReducer,
+  setEditTitle,
+  setUpdateNewsReducer,
+} from '../../redux/uiSlice';
 import style from '../../styles/markdown-styles.module.css';
 import { useMarkdownArea } from './useMarkdownArea';
 
 type Props = {
-  // reduxCreateNews?: NewsVariableDTO;
-  // reduxCreateComment?: CreateCommentDTO;
   flag: boolean;
+  updateFlag?: boolean;
 };
-const MarkdownText: VFC<Props> = ({ flag }) => {
+const MarkdownText: VFC<Props> = ({ flag, updateFlag }) => {
   const { markdownRef, setEnterPress, TypeHClick, components } = useMarkdownArea();
   const reduxCreateComment = useSelector(commentNewsState);
   const reduxCreateNews = useSelector(selectNews);
+  const reduxUpdateNews = useSelector(selectUpdateNews);
   const dispatch = useDispatch();
 
-  const textAreaHandle = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    flag
-      ? dispatch(setEditTitle({ ...reduxCreateNews, content: e.target.value }))
-      : dispatch(setCommentNewsReducer({ ...reduxCreateComment, commentText: e.target.value }));
-  }, [reduxCreateNews, reduxCreateComment]);
-  console.log(reduxCreateComment);
+  const textAreaHandle = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      flag
+        ? updateFlag
+          ? dispatch(setEditTitle({ ...reduxCreateNews, content: e.target.value }))
+          : dispatch(setUpdateNewsReducer({ ...reduxUpdateNews, content: e.target.value }))
+        : dispatch(setCommentNewsReducer({ ...reduxCreateComment, commentText: e.target.value }));
+    },
+    [reduxCreateNews, reduxCreateComment],
+  );
+
   return (
     <>
       <div className="w-1/2">
@@ -69,7 +80,13 @@ const MarkdownText: VFC<Props> = ({ flag }) => {
           ref={markdownRef}
           placeholder="Markdownで記述"
           className="py-4 px-2 w-full h-[90%] border shadow-xl focus:outline-none resize-none"
-          value={flag ? reduxCreateNews.content : reduxCreateComment.commentText}
+          value={
+            flag
+              ? updateFlag
+                ? reduxCreateNews.content
+                : reduxUpdateNews.content
+              : reduxCreateComment.commentText
+          }
           onChange={textAreaHandle}
           onKeyPress={setEnterPress}
         ></textarea>
@@ -81,7 +98,11 @@ const MarkdownText: VFC<Props> = ({ flag }) => {
             remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}
             components={components}
           >
-            {flag ? reduxCreateNews.content : reduxCreateComment.commentText}
+            {flag
+              ? updateFlag
+                ? reduxCreateNews.content
+                : reduxUpdateNews.content
+              : reduxCreateComment.commentText}
           </ReactMarkdown>
         </div>
       </div>

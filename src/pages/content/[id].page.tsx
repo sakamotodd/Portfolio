@@ -13,16 +13,15 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import Cookies from 'universal-cookie';
 import MarkdownText from '../../components/markdown';
-import { useMarkdown } from '../../hooks/markdown/useMarkdown';
-
-import { useMutationApp } from '../../hooks/query/useMutationApp';
-import { privateNews } from '../../hooks/query/useOrderNews';
+import { useMarkdownComponent } from '../../components/markdown/useMarkdownComponent';
 import { NewsDTO, PrivateNewsDTO } from '../../interface/types';
 import { Layout } from '../../layout/Layout';
 import { commentNewsState, setCommentNewsReducer } from '../../redux/uiSlice';
 import style from '../../styles/markdown-styles.module.css';
 import { GetAllNewsDocument } from '../../util/GraphQL/generated/graphql';
 import { Auth } from '../../util/firebase/firebase.config';
+import { useMutationApp } from '../../util/query/useMutationApp';
+import { privateNews } from '../../util/query/useOrderNews';
 
 interface newsResDTO {
   news: NewsDTO[];
@@ -36,15 +35,13 @@ const PrivateContentPage: NextPageWithLayout = () => {
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
   const queryClient = useQueryClient();
   const data = queryClient.getQueryData<PrivateNewsDTO[]>('privateNews');
-  const { components } = useMarkdown();
+  const { components } = useMarkdownComponent();
   const { createCommentMutation } = useMutationApp();
-  const user = Auth.currentUser;
   // privateページボタン(onClick)
 
   const editCommentHandle = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(reduxCreateComment);
       createCommentMutation.mutate(reduxCreateComment);
     },
     [reduxCreateComment],

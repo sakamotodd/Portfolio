@@ -101,12 +101,25 @@ export interface LayoutDTO {
   children: ReactNode;
   title: string;
   styles: string;
+  setDarkMode?: React.Dispatch<React.SetStateAction<boolean>>;
+  darkMode?: boolean;
+  listFlag?: boolean;
+  setListFlag?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface SideBarDTO {
+  children: ReactNode;
+  styles: string;
+  listFlag: boolean;
+  setListFlag: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface HeaderDTO {
   title: string;
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
   darkMode: boolean;
+  listFlag: boolean;
+  setListFlag: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface SignInFormDTO {
