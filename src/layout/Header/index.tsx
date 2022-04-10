@@ -8,7 +8,6 @@ import { Auth } from '../../util/firebase/firebase.config';
 
 export const Header: VFC<HeaderDTO> = ({ title, darkMode, setDarkMode, listFlag, setListFlag }) => {
   const user = Auth.currentUser;
-
   const handleChangeDarkMode = useCallback(() => {
     if (darkMode) {
       localStorage.theme = 'light';
@@ -41,10 +40,10 @@ export const Header: VFC<HeaderDTO> = ({ title, darkMode, setDarkMode, listFlag,
       <Head>
         <title>{title}</title>
       </Head>
-      <header className="flex justify-between items-center px-3 w-full h-14 bg-white dark:bg-darkBody">
+      <header className="flex justify-between items-center px-3 w-full h-14 bg-white dark:bg-darkCard">
         <div className="flex items-center">
           <List
-            className="p-2 w-10 h-10 hover:bg-gray-50 dark:hover:bg-darkCard hover:rounded-full dark:hover:opacity-50 cursor-pointer"
+            className="p-2 w-10 h-10 hover:bg-gray-50 dark:hover:bg-darkBody hover:rounded-full dark:hover:opacity-50 cursor-pointer"
             onClick={listClick}
           />
           <span className="pt-1 pl-2 text-indigo-600 dark:text-gray-200 text-shadow">TweetApp</span>

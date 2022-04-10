@@ -38,16 +38,16 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
       {listFlag ? (
         <div className="flex">
           <nav
-            className={`md:block maxMd:absolute maxMd:left-0 maxMd:top-0 z-0 maxMd:z-50 w-40 h-screen font-helvetica text-sm text-gray-600 dark:text-white border-[1px] maxMd:bg-white maxMd:dark:bg-darkBody`}
+            className={`md:block maxMd:absolute maxMd:left-0 maxMd:top-0 z-0 maxMd:z-50 w-40 h-screen font-helvetica text-sm text-gray-600 dark:text-white border-[1px] dark:border-darkCard maxMd:bg-white maxMd:dark:bg-darkCard`}
           >
             <div className="flex md:hidden items-center px-3">
               <XIcon
-                className={`p-2 w-10 h-10 hover:bg-gray-100 dark:hover:bg-darkCard hover:rounded-full dark:hover:opacity-50 cursor-pointer`}
+                className={`p-2 w-10 h-10 hover:bg-gray-100 dark:hover:bg-darkBody hover:rounded-full dark:hover:opacity-50 cursor-pointer`}
                 onClick={XIconClick}
               />
             </div>
             <div
-              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
+              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkBody dark:hover:opacity-50 cursor-pointer ${
                 selectMode === 'content' && ' bg-blue-400'
               }`}
               onClick={() => router.push('/content')}
@@ -56,7 +56,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
               <span className="pl-4">ホーム</span>
             </div>
             <div
-              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
+              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkBody dark:hover:opacity-50 cursor-pointer ${
                 selectMode === 'post' && ' bg-blue-400'
               }`}
               onClick={() => router.push('/post')}
@@ -65,7 +65,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
               <span className="pl-4">投稿</span>
             </div>
             <div
-              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
+              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkBody dark:hover:opacity-50 cursor-pointer ${
                 selectMode === 'profile' && ' bg-blue-400'
               }`}
             >
@@ -73,7 +73,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
               <span className="pl-4">マイページ</span>
             </div>
             <div
-              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard border-b-[1px] dark:hover:opacity-50 cursor-pointer ${
+              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkBody border-b-[1px] dark:border-darkCard dark:hover:opacity-50 cursor-pointer ${
                 selectMode === 'setting' && ' bg-blue-400'
               }`}
             >
@@ -82,16 +82,16 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
             </div>
           </nav>
           <main
-            className={`border-t-[1px] md:w-[calc(100vw-10rem)] maxMd:w-screen maxMd:z-10 bg-slate dark:bg-darkCard ${styles}`}
+            className={`border-t-[1px] dark:border-darkCard md:w-[calc(100vw-10rem)] maxMd:w-screen maxMd:z-10 bg-slate dark:bg-darkBody ${styles}`}
           >
             {children}
           </main>
         </div>
       ) : (
         <div className={`flex ${styles} w-screen`}>
-          <nav className="hidden md:block md:w-16 font-helvetica text-sm text-gray-600 dark:text-white border-[1px]">
+          <nav className="hidden md:block md:w-16 font-helvetica text-sm text-gray-600 dark:text-white border-[1px] dark:border-darkCard">
             <div
-              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
+              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkBody dark:hover:opacity-50 cursor-pointer ${
                 selectMode === 'content' && ' bg-blue-400'
               }`}
               onClick={() => router.push('/content')}
@@ -99,7 +99,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
               <HomeIcon className="p-2 w-10 h-10" />
             </div>
             <div
-              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
+              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkBody dark:hover:opacity-50 cursor-pointer ${
                 selectMode === 'post' && ' bg-blue-400'
               }`}
               onClick={() => router.push('/post')}
@@ -107,14 +107,14 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
               <PencilAltIcon className="p-2 w-10 h-10" />
             </div>
             <div
-              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard dark:hover:opacity-50 cursor-pointer ${
+              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkBody dark:hover:opacity-50 cursor-pointer ${
                 selectMode === 'profile' && ' bg-blue-400'
               }`}
             >
               <UserIcon className="p-2 w-10 h-10" />
             </div>
             <div
-              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkCard border-b-[1px] dark:hover:opacity-50 cursor-pointer ${
+              className={`flex items-center px-3 hover:bg-gray-100 dark:hover:bg-darkBody border-b-[1px] dark:border-darkCard dark:hover:opacity-50 cursor-pointer ${
                 selectMode === 'setting' && ' bg-blue-400'
               }`}
             >
@@ -122,7 +122,7 @@ export const Layout: VFC<LayoutDTO> = ({ children, title, styles }) => {
             </div>
           </nav>
           <main
-            className={`border-t-[1px] md:w-[calc(100vw-4rem)] w-screen bg-slate dark:bg-darkCard`}
+            className={`border-t-[1px] md:w-[calc(100vw-4rem)] dark:border-darkCard w-screen bg-slate dark:bg-darkBody`}
           >
             {children}
           </main>

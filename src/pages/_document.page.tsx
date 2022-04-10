@@ -6,10 +6,10 @@ const MyDocument = () => {
       <Head>
         <meta name="application-name" content="MyApp" />
       </Head>
-      <body className="light:text-black dark:text-gray-200 light:bg-slate dark:bg-gray-800">
+      <body className="light:text-black dark:text-gray-200 light:bg-slate dark:bg-darkGrey">
         <Main />
         <NextScript />
-      </body> 
+      </body>
     </Html>
   );
 };

@@ -4,14 +4,14 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      screens: { maxMd: { max: '767px' } },
+      screens: { maxMd: { max: '767px' }, bwMd: { min: '768px', max: '1023px' },  },
       gridTemplateRows: {
         10: 'repeat(10, minmax(0, 1fr))',
       },
       colors: {
         darkGrey: '#222831',
-        darkCard: 'rgb(48, 48, 48)',
-        darkBody: '#424242',
+        darkBody: 'rgb(48, 48, 48)',
+        darkCard: '#424242',
         slate: '#f1f5f9',
       },
       boxShadow: {

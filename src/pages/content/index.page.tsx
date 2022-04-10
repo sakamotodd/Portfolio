@@ -1,4 +1,4 @@
-import { LogoutIcon, PlusSmIcon } from '@heroicons/react/solid';
+import { LogoutIcon, PencilIcon, PlusSmIcon, SearchIcon } from '@heroicons/react/solid';
 import { makeStyles } from '@material-ui/core/styles';
 import { Pagination } from '@mui/material';
 import { format } from 'date-fns';
@@ -13,14 +13,14 @@ import { SideBar } from '../../layout/SideBar.tsx';
 import { allNews } from '../../util/query/useOrderNews';
 import { useContent } from './useContent';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     '& .MuiPaginationItem-root': {
       color: '#fff',
     },
   },
 }));
-export default function ContentPage()  {
+export default function ContentPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [listFlag, setListFlag] = useState(false);
   const classes = useStyles();
@@ -32,13 +32,12 @@ export default function ContentPage()  {
     pageNumber,
     handlePrivatePage,
     handlePageNation,
-    handleLogout,
     handleMovePage,
     updateNewsButtonClick,
     deleteNewsButtonClick,
   } = useContent();
   return (
-    <div className="maxMd:relative w-screen h-screen font-serif text-black dark:text-gray-200 bg-gray-200 dark:bg-darkCard">
+    <div className="maxMd:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200">
       <Header
         title="TweetApp"
         darkMode={darkMode}
@@ -46,19 +45,44 @@ export default function ContentPage()  {
         listFlag={listFlag}
         setListFlag={setListFlag}
       />
-      <SideBar styles="h-[calc(100vh-3.5rem)]" listFlag={listFlag} setListFlag={setListFlag}>
-        <div className="m-auto w-1/2 font-hiragino">
+      <SideBar styles="h-full" listFlag={listFlag} setListFlag={setListFlag}>
+        <div className=" relative">
+          <div className="fixed right-20 md:right-40 bottom-12">
+            <button
+              className="flex justify-center items-center w-32 maxMd:w-12 h-12 leading-7 bg-indigo-600 hover:bg-indigo-500 rounded-full maxMd:rounded-full cursor-pointer"
+              onClick={handleMovePage}
+            >
+              <PencilIcon className="w-4 h-4 text-white" />
+              <span className="maxMd:hidden pl-2 text-sm text-center text-white">投稿する</span>
+            </button>
+          </div>
+          <div className="fixed right-4 bottom-12">
+            <button
+              className="flex justify-center items-center w-32 maxMd:w-12 h-12 leading-7 bg-indigo-600 hover:bg-indigo-500 rounded-full maxMd:rounded-full cursor-pointer"
+              onClick={handleMovePage}
+            >
+              <SearchIcon className="w-4 h-4 text-white" />
+              <span className="maxMd:hidden pl-2 text-sm text-center text-white">検索する</span>
+            </button>
+          </div>
+        </div>
+        <div className="m-auto w-2/3 font-hiragino">
           <h1 className="py-4 text-2xl text-gray-500">投稿一覧</h1>
-          <div className="grid grid-cols-2 gap-4 h-[calc(100vh-3.5rem-9rem)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-5 gap-4 h-full lg:h-[calc(100vh-3.5rem-9rem)]">
             {data?.map((lie, index) => {
               return (
                 pageDataMin <= index &&
                 index < pageDataMax && (
                   <div
-                    className="flex justify-between px-4 bg-white dark:bg-darkBody rounded-md border-b shadow-sm cursor-pointer"
+                    className="flex justify-between px-4 bg-white hover:bg-gray-50 dark:bg-darkCard rounded-md shadow-sm dark:hover:opacity-50 cursor-pointer"
                     key={lie?.orderNo}
                   >
-                    <div className="mt-1 h-full">
+                    <div
+                      className="mt-1 h-28 lg:h-full"
+                      onClick={() =>
+                        handlePrivatePage(lie?.orderNo, lie?.id, lie.photoURL, lie.name)
+                      }
+                    >
                       <div className="flex items-center h-1/3 text-sm text-gray-400">
                         {lie?.photoURL.length > 0 && (
                           <Image
@@ -78,50 +102,13 @@ export default function ContentPage()  {
                         </p>
                       </div>
                       <div className="flex items-center pl-8 h-2/3 text-lg font-bold">
-                        <p
-                          className=" hover:text-blue-500"
-                          onClick={() =>
-                            handlePrivatePage(lie?.orderNo, lie?.id, lie.photoURL, lie.name)
-                          }
-                        >
-                          {lie.title}
-                        </p>
+                        <p className="">{lie.title}</p>
                       </div>
-                    </div>
-                    <div>
-                      <PencilSquare
-                        type="button"
-                        color="blue"
-                        size={20}
-                        className="h-1/2 cursor-pointer"
-                        onClick={() => updateNewsButtonClick(lie.id, lie.content, lie.title)}
-                      />
-                      <TrashFill
-                        type="button"
-                        color="blue"
-                        size={20}
-                        className="h-1/2 cursor-pointer"
-                        onClick={() => deleteNewsButtonClick({ id: lie.id })}
-                      />
                     </div>
                   </div>
                 )
               );
             })}
-          </div>
-          <div className="static">
-            <button
-              className="flex absolute right-56 bottom-24 justify-center items-center w-28 h-28 leading-7 bg-indigo-600 rounded-full"
-              onClick={handleMovePage}
-            >
-              <PlusSmIcon className="w-20 h-20" />
-            </button>
-            <button
-              className="flex absolute right-56 bottom-64 justify-center items-center w-28 h-28 leading-7 bg-indigo-600 rounded-full"
-              onClick={handleLogout}
-            >
-              <LogoutIcon className="my-3 w-5 h-5 text-blue-500 cursor-pointer" />
-            </button>
           </div>
           <div className="flex justify-center items-center h-20">
             <Pagination
@@ -136,8 +123,7 @@ export default function ContentPage()  {
       </SideBar>
     </div>
   );
-};
-
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
