@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import ja from 'date-fns/locale/ja';
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PencilSquare, TrashFill } from 'react-bootstrap-icons';
 import { dehydrate, QueryClient } from 'react-query';
 import { Header } from '../../layout/Header';
@@ -23,6 +23,7 @@ const useStyles = makeStyles(() => ({
 export default function ContentPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [listFlag, setListFlag] = useState(false);
+
   const classes = useStyles();
   const {
     data,
@@ -37,7 +38,9 @@ export default function ContentPage() {
     deleteNewsButtonClick,
   } = useContent();
   return (
-    <div className="maxMd:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200">
+    <div
+      className={`maxMd:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 `}
+    >
       <Header
         title="TweetApp"
         darkMode={darkMode}
@@ -66,15 +69,19 @@ export default function ContentPage() {
             </button>
           </div>
         </div>
-        <div className="m-auto w-2/3 font-hiragino">
+        <div
+          className={`m-auto w-2/3 font-hiragino ${
+            listFlag && 'maxMd:transition maxMd:ease-in maxMd:opacity-60 maxMd:cursor-default'
+          }`}
+        >
           <h1 className="py-4 text-2xl text-gray-500">投稿一覧</h1>
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-5 gap-4 h-full lg:h-[calc(100vh-3.5rem-9rem)]">
             {data?.map((lie, index) => {
               return (
                 pageDataMin <= index &&
                 index < pageDataMax && (
-                  <div
-                    className="flex justify-between px-4 bg-white hover:bg-gray-50 dark:bg-darkCard rounded-md shadow-sm dark:hover:opacity-50 cursor-pointer"
+                  <button
+                    className="flex justify-between px-4 bg-white hover:bg-gray-50 dark:bg-darkCard dark:hover:bg-darkHover rounded-md shadow-sm cursor-pointer"
                     key={lie?.orderNo}
                   >
                     <div
@@ -105,7 +112,7 @@ export default function ContentPage() {
                         <p className="">{lie.title}</p>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 )
               );
             })}
