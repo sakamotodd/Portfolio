@@ -39,7 +39,9 @@ export default function ContentPage() {
   } = useContent();
   return (
     <div
-      className={`maxMd:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 `}
+      className={`maxMd:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 ${
+        listFlag && 'maxMd:overflow-hidden'
+      }`}
     >
       <Header
         title="TweetApp"
