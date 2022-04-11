@@ -4,7 +4,7 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      screens: { maxMd: { max: '767px' }, bwMd: { min: '768px', max: '1023px' },  },
+      screens: { maxMd: { max: '767px' }, bwMd: { min: '768px', max: '1023px' } },
       gridTemplateRows: {
         10: 'repeat(10, minmax(0, 1fr))',
       },
@@ -12,6 +12,8 @@ module.exports = {
         darkGrey: '#222831',
         darkBody: 'rgb(48, 48, 48)',
         darkCard: '#424242',
+        darkHover: '#808080',
+        selectBlue: 'rgba(33, 150, 243, 0.16)',
         slate: '#f1f5f9',
       },
       boxShadow: {

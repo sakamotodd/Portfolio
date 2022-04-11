@@ -112,6 +112,7 @@ export interface SideBarDTO {
   styles: string;
   listFlag: boolean;
   setListFlag: React.Dispatch<React.SetStateAction<boolean>>;
+  dropdownRef?: React.MutableRefObject<HTMLDivElement>;
 }
 
 export interface HeaderDTO {

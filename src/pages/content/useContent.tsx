@@ -25,7 +25,7 @@ export const useContent = () => {
   const reduxCreateComment = useSelector(commentNewsState);
   const dispatch = useDispatch();
 
-  const a = {
+  const deleteId = {
     id: '',
   };
 
@@ -64,8 +64,8 @@ export const useContent = () => {
 
   // 削除ボタン（onClick）
   const deleteNewsButtonClick = useCallback(({ id }) => {
-    a.id = id;
-    deleteNewsMutation.mutate(a);
+    deleteId.id = id;
+    deleteNewsMutation.mutate(deleteId);
     //router.reload();
     //alert('削除しました。');
   }, []);
