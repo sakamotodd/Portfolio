@@ -42,8 +42,10 @@ export const Header: VFC<HeaderDTO> = ({ title, darkMode, setDarkMode, listFlag,
       </Head>
       <header
         className={`flex justify-between items-center px-3 w-full h-14 bg-white dark:bg-darkCard ${
-          listFlag && 'maxMd:pointer-events-none'
-        }`}
+          listFlag &&
+          'maxMd:pointer-events-none maxMd:transition maxMd:ease-in maxMd:opacity-60 maxMd:cursor-default'
+        }
+        `}
       >
         <div className="flex items-center">
           <List
