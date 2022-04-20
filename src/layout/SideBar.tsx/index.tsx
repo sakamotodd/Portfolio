@@ -3,12 +3,35 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState, VFC } from 'react';
 import { SideBarDTO } from '../../interface/types';
 
-export const SideBar: VFC<SideBarDTO> = ({ children, styles, listFlag, setListFlag }) => {
+export const SideBar: VFC<SideBarDTO> = ({ children, listFlag, setListFlag, listClickRef }) => {
   const router = useRouter();
   const [selectMode, setSelectMode] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null!);
 
+  const handleOutsideClick = useCallback(
+    (e) => {
+      console.log(e.target?.className);
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target) &&
+        !listClickRef.current.contains(e.target)
+      ) {
+        if (e.target?.className.indexOf('flex w-screen bg-white dark:bg-darkCard') > -1) {
+          setListFlag(false);
+        } else if (
+          e.target?.className.indexOf(
+            'maxLg:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 maxLg:overflow-hidden',
+          ) > -1
+        ) {
+          setListFlag(false);
+        }
+      }
+    },
+    [dropdownRef, listClickRef],
+  );
+
   useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
     if (router.pathname === '/content') {
       return setSelectMode('content');
     } else if (router.pathname === '/post') {
@@ -18,6 +41,9 @@ export const SideBar: VFC<SideBarDTO> = ({ children, styles, listFlag, setListFl
     } else if (router.pathname === '/profile') {
       return setSelectMode('profile');
     }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
   }, [router]);
 
   const XIconClick = useCallback(() => {
@@ -51,26 +77,13 @@ export const SideBar: VFC<SideBarDTO> = ({ children, styles, listFlag, setListFl
     },
   ];
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, []);
-
-  const handleOutsideClick = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setListFlag(false);
-    }
-  };
-
   return (
-    <div className="flex bg-white dark:bg-darkCard">
+    <div className="flex w-screen bg-white dark:bg-darkCard">
       <aside
-        className={`${
+        className={`md:mt-14 md:h-[calc(100vh-3.5rem)] fixed dark:border-gray-600 dark:text-white border-[1px] text-gray-600 text-sm maxLg:h-screen ${
           listFlag
-            ? 'md:block maxMd:absolute maxMd:left-0 maxMd:top-0 z-0 maxMd:z-50 w-40 maxMd:h-screen font-helvetica text-sm text-gray-600 dark:text-white border-[1px] dark:border-darkCard maxMd:bg-white maxMd:dark:bg-darkCard'
-            : 'hidden md:block md:w-16 font-helvetica text-sm text-gray-600 dark:text-white border-[1px] dark:border-darkCard'
+            ? 'md:block maxLg:absolute maxLg:left-0 maxLg:top-0 z-0 maxLg:z-50 w-40 font-helvetica maxLg:bg-white dark:bg-darkCard'
+            : 'hidden md:block md:w-16 font-helvetica'
         }`}
         ref={dropdownRef}
       >
@@ -102,8 +115,10 @@ export const SideBar: VFC<SideBarDTO> = ({ children, styles, listFlag, setListFl
       </aside>
       <main
         className={`${
-          listFlag && 'maxMd:pointer-events-none'
-        } border-t-[1px] dark:border-darkCard md:w-[calc(100vw-4rem)] min-h-[calc(100vh-3.5rem)] h-full w-screen bg-slate dark:bg-darkBody`}
+          listFlag
+            ? 'maxLg:pointer-events-none maxLg:transition maxLg:ease-in maxLg:dark:opacity-80 maxLg:cursor-default md:ml-40 md:w-[calc(100vw-10rem)]'
+            : 'md:w-[calc(100vw-4rem)] md:ml-16'
+        } z-0 mt-14 border-t-[1px] dark:border-gray-600 min-h-[calc(100vh-3.5rem)] h-full w-screen bg-slate dark:bg-darkBody`}
       >
         {children}
       </main>

@@ -2,31 +2,200 @@ import React, { useRef, useState, useEffect } from 'react';
 import Dropdown from './Dropdown';
 
 const Popup = () => {
+  const [index, setIndex] = useState(15);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const result = [
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+  ];
+
+  const displayMore = () => {
+    if (index > result.length) {
+      setIsEmpty(true);
+    } else {
+      setIndex(index + 15);
+    }
+  };
+
   return (
     <>
-      <Dropdown label="Options">
-        <a
-          href="#"
-          className="block py-2 px-4 text-sm leading-5 text-gray-700 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-          role="menuitem"
-        >
-          Item0
-        </a>
-        <a
-          href="#"
-          className="block py-2 px-4 text-sm leading-5 text-gray-700 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-          role="menuitem"
-        >
-          Item1
-        </a>
-        <a
-          href="#"
-          className="block py-2 px-4 text-sm leading-5 text-gray-700 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-          role="menuitem"
-        >
-          Item2
-        </a>
-      </Dropdown>
+      {result.slice(0, index).map((re, i) => {
+        return (
+          <div className="block" key={i}>
+            {re}
+          </div>
+        );
+      })}
+      <br />
+      <button disabled={isEmpty ? true : false} onClick={displayMore}>
+        さらに表示
+      </button>
     </>
   );
 };

@@ -23,6 +23,8 @@ const useStyles = makeStyles(() => ({
 export default function ContentPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [listFlag, setListFlag] = useState(false);
+  // const [otherClick, setOtherClick] = useState(false);
+  const listClickRef = useRef<HTMLButtonElement>(null!);
 
   const classes = useStyles();
   const {
@@ -39,8 +41,8 @@ export default function ContentPage() {
   } = useContent();
   return (
     <div
-      className={`maxMd:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 ${
-        listFlag && 'maxMd:overflow-hidden'
+      className={`maxLg:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 ${
+        listFlag && 'maxLg:overflow-hidden'
       }`}
     >
       <Header
@@ -49,35 +51,41 @@ export default function ContentPage() {
         setDarkMode={setDarkMode}
         listFlag={listFlag}
         setListFlag={setListFlag}
+        listClickRef={listClickRef}
       />
-      <SideBar styles="h-full" listFlag={listFlag} setListFlag={setListFlag}>
-        <div className=" relative">
+      <SideBar
+        styles="h-full"
+        listFlag={listFlag}
+        setListFlag={setListFlag}
+        listClickRef={listClickRef}
+      >
+        <div className=" relative z-20">
           <div className="fixed right-20 md:right-40 bottom-12">
             <button
-              className="flex justify-center items-center w-32 maxMd:w-12 h-12 leading-7 bg-indigo-600 hover:bg-indigo-500 rounded-full maxMd:rounded-full cursor-pointer"
+              className="flex justify-center items-center w-32 maxLg:w-12 h-12 leading-7 bg-indigo-600 hover:bg-indigo-500 rounded-full maxLg:rounded-full cursor-pointer"
               onClick={handleMovePage}
             >
               <PencilIcon className="w-4 h-4 text-white" />
-              <span className="maxMd:hidden pl-2 text-sm text-center text-white">投稿する</span>
+              <span className="maxLg:hidden pl-2 text-sm text-center text-white">投稿する</span>
             </button>
           </div>
           <div className="fixed right-4 bottom-12">
             <button
-              className="flex justify-center items-center w-32 maxMd:w-12 h-12 leading-7 bg-indigo-600 hover:bg-indigo-500 rounded-full maxMd:rounded-full cursor-pointer"
+              className="flex justify-center items-center w-32 maxLg:w-12 h-12 leading-7 bg-indigo-600 hover:bg-indigo-500 rounded-full maxLg:rounded-full cursor-pointer"
               onClick={handleMovePage}
             >
               <SearchIcon className="w-4 h-4 text-white" />
-              <span className="maxMd:hidden pl-2 text-sm text-center text-white">検索する</span>
+              <span className="maxLg:hidden pl-2 text-sm text-center text-white">検索する</span>
             </button>
           </div>
         </div>
         <div
           className={`m-auto w-2/3 font-hiragino ${
-            listFlag && 'maxMd:transition maxMd:ease-in maxMd:opacity-60 maxMd:cursor-default'
+            listFlag && 'maxLg:transition maxLg:ease-in maxLg:opacity-60 maxLg:cursor-default'
           }`}
         >
           <h1 className="py-4 text-2xl text-gray-500">投稿一覧</h1>
-          <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-5 gap-4 h-full lg:h-[calc(100vh-3.5rem-9rem)]">
+          <div className="grid z-0 grid-cols-1 lg:grid-cols-2 lg:grid-rows-5 gap-4 h-full lg:h-[calc(100vh-3.5rem-9rem)]">
             {data?.map((lie, index) => {
               return (
                 pageDataMin <= index &&

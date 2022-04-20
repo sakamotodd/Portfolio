@@ -112,7 +112,7 @@ export interface SideBarDTO {
   styles: string;
   listFlag: boolean;
   setListFlag: React.Dispatch<React.SetStateAction<boolean>>;
-  dropdownRef?: React.MutableRefObject<HTMLDivElement>;
+  listClickRef: React.MutableRefObject<HTMLButtonElement>;
 }
 
 export interface HeaderDTO {
@@ -121,6 +121,7 @@ export interface HeaderDTO {
   darkMode: boolean;
   listFlag: boolean;
   setListFlag: React.Dispatch<React.SetStateAction<boolean>>;
+  listClickRef: React.MutableRefObject<HTMLButtonElement>;
 }
 
 export interface SignInFormDTO {

@@ -79,7 +79,7 @@ const MarkdownText: VFC<Props> = ({ flag, updateFlag }) => {
           id="md"
           ref={markdownRef}
           placeholder="Markdownで記述"
-          className="py-4 px-2 w-full h-[90%] border shadow-xl focus:outline-none resize-none"
+          className="py-4 px-2 w-full h-[90%] dark:text-black bg-white border shadow-xl focus:outline-none resize-none"
           value={
             flag
               ? updateFlag
@@ -91,8 +91,8 @@ const MarkdownText: VFC<Props> = ({ flag, updateFlag }) => {
           onKeyPress={setEnterPress}
         ></textarea>
       </div>
-      <div className="mr-10 w-1/2">
-        <div className="overflow-y-scroll py-4 px-2 h-full bg-white border shadow-xl markdown-preview">
+      <div className=" w-1/2">
+        <div className="overflow-y-scroll py-4 px-2 w-full h-full bg-white dark:bg-darkCard border shadow-xl markdown-preview">
           <ReactMarkdown
             className={style.markdownPreview}
             remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}

@@ -4,7 +4,12 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      screens: { maxMd: { max: '767px' }, bwMd: { min: '768px', max: '1023px' } },
+      screens: {
+        maxLg: { max: '767px' },
+        maxLg: { max: '1024px' },
+        max2Xl: { max: '1536px' },
+        bwMd: { min: '768px', max: '1023px' },
+      },
       gridTemplateRows: {
         10: 'repeat(10, minmax(0, 1fr))',
       },

@@ -35,39 +35,31 @@ export default function PostPage() {
   }, []);
 
   return (
-    <div className="flex flex-col font-hiragino">
-      <h1 className="py-10 text-3xl font-bold text-center">投稿を作成</h1>
-      <div className="flex-grow flex-shrink">
-        <form onSubmit={editHandle}>
-          <input
-            type="text"
-            id="post-title"
-            placeholder="Title"
-            value={reduxCreateNews.title}
-            onChange={(e) => dispatch(setEditTitle({ ...reduxCreateNews, title: e.target.value }))}
-            className="block px-5 mx-auto mb-5 w-4/5 h-14 text-2xl font-bold rounded-lg border shadow-lg focus:outline-none"
-          />
-          <div className="flex justify-between ml-10 h-[30rem]">
-            <MarkdownText flag={true} updateFlag={true} />
-          </div>
-          <div className="flex justify-around items-center mt-4">
-            <button className="py-2 px-4 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
-              投稿内容を保存
-            </button>
-            <button className="py-2 px-4 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
-              一覧ページに投稿
-            </button>
-          </div>
-        </form>
-        <div className="static">
-          <button
-            className="flex absolute right-14 bottom-8 justify-center items-center w-16 h-16 leading-7 bg-indigo-600 rounded-full"
-            onClick={() => router.push('/content')}
-          >
-            <ChevronDoubleLeft className="w-8 h-8" />
-          </button>
-        </div>
+    <div className="xl:mx-32 2xl:mx-36 mt-8 font-hiragino">
+      <div className="flex justify-end items-center mt-4">
+        <button className="py-2 px-4 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
+          投稿内容を保存
+        </button>
+        <button className="py-2 px-4 ml-2 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
+          一覧ページに投稿
+        </button>
+        <button className="py-2 px-4 ml-2 font-medium text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-md transition-colors">
+          削除
+        </button>
       </div>
+      <form onSubmit={editHandle} className="max-w-[80rem]">
+        <input
+          type="text"
+          id="post-title"
+          placeholder="タイトル"
+          value={reduxCreateNews.title}
+          onChange={(e) => dispatch(setEditTitle({ ...reduxCreateNews, title: e.target.value }))}
+          className="block mx-auto mb-5 w-full h-14 text-2xl font-bold bg-slate dark:bg-darkBody outline-none"
+        />
+        <div className="flex justify-center max-w-[80rem] h-[35rem]">
+          <MarkdownText flag={true} updateFlag={true} />
+        </div>
+      </form>
     </div>
   );
 }

@@ -16,7 +16,6 @@ export default function UpdatePage() {
   const updateHandle = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(reduxUpdateNews);
       updateNewsMutation.mutate(reduxUpdateNews);
     },
     [reduxUpdateNews],
