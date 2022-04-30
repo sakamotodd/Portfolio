@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { FormEvent, ReactNode, useCallback } from 'react';
 import { ChevronDoubleLeft } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import MarkdownText from '../../components/markdown';
-import { Layout } from '../../layout/Layout';
-import { selectUpdateNews, setUpdateNewsReducer } from '../../redux/uiSlice';
-import { useMutationApp } from '../../util/query/useMutationApp';
+import MarkdownText from '../../../components/markdown';
+import { Layout } from '../../../layout/Layout';
+import { selectUpdateNews, setUpdateNewsReducer } from '../../../redux/uiSlice';
+import { useMutationApp } from '../../../util/query/useMutationApp';
 export default function UpdatePage() {
   const dispatch = useDispatch();
   const router = useRouter();

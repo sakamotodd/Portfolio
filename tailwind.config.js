@@ -19,6 +19,7 @@ module.exports = {
         darkCard: '#424242',
         darkHover: '#808080',
         selectBlue: 'rgba(33, 150, 243, 0.16)',
+        popup: 'rgba(0,0,0,0.5)',
         slate: '#f1f5f9',
       },
       boxShadow: {
@@ -28,7 +29,10 @@ module.exports = {
       fontFamily: {
         hiragino: 'Hiragino Sans W3',
         helvetica: 'Roboto, Helvetica, Arial, sans-serif',
+        sans: ["'Josefin Sans'"],
+        mono: ["'Space Mono'"],
       },
+
       outline: {
         red: '2px solid #f87171',
       },

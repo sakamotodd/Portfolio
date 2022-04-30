@@ -32,9 +32,9 @@ export const MailFormSignIn: VFC = () => {
             type="text"
             placeholder="email ?"
           />
-          <div className="flex absolute inset-y-0 left-0 items-center">
+          <span className="flex absolute inset-y-0 left-0 items-center">
             <MailIcon className={`${errors.email && 'mb-6'} p-1 ml-3 w-7 h-7 text-gray-400`} />
-          </div>
+          </span>
           {errors.email && (
             <p className="mt-2 ml-12 text-sm text-red-500">{errors.email?.message}</p>
           )}

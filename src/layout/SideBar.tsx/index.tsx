@@ -10,7 +10,6 @@ export const SideBar: VFC<SideBarDTO> = ({ children, listFlag, setListFlag, list
 
   const handleOutsideClick = useCallback(
     (e) => {
-      console.log(e.target?.className);
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(e.target) &&

@@ -1,4 +1,5 @@
 /* eslint-disable tailwindcss/no-custom-classname */
+import { DocumentTextIcon } from '@heroicons/react/solid';
 import { onAuthStateChanged } from 'firebase/auth';
 import request from 'graphql-request';
 import { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next';
@@ -87,30 +88,35 @@ const PrivateContentPage: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center font-hiragino text-black ">
-      <div className="w-2/3 h-full">
+    <div className="flex flex-col justify-center items-center p-4 font-hiragino dark:text-white">
+      <div className="mt-8 w-2/3 h-full">
         {data?.map((priNews) => {
           return (
-            <div key={priNews.orderNo}>
-              <div className="py-8">
+            <div key={priNews.orderNo} className="rounded-md border">
+              <div className="py-8 w-full">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
-                    <CardHeading size={36} className="text-blue-400 cursor-pointer " />
-                    <span className="pl-1 text-3xl font-bold">{priNews.title}</span>
+                    <DocumentTextIcon className="w-8 h-8 dark:text-gray-300" />
+                    <label>
+                      <span className="pl-1 text-3xl font-bold">{priNews.title}</span>
+                    </label>
                   </div>
                   <ThreeDotsVertical size={24} />
                 </div>
-                {priNews?.photoURL?.length > 0 && (
-                  <Image
-                    src={priNews?.photoURL}
-                    alt="ログイン画像"
-                    width={24}
-                    height={24}
-                    className=" bg-center rounded-full"
-                  />
-                )}
+                <div className="flex justify-items-start mt-4">
+                  {priNews?.photoURL?.length > 0 && (
+                    <Image
+                      src={priNews?.photoURL}
+                      alt="ログイン画像"
+                      width={24}
+                      height={24}
+                      className="bg-center rounded-full"
+                    />
+                  )}
+                  <span className="ml-4">{priNews.name}</span>
+                </div>
               </div>
-              <div className="overflow-y-scroll py-4 px-2 bg-white border shadow-xl markdown-preview">
+              <div className="overflow-y-scroll py-4 px-2 shadow-xl markdown-preview">
                 <ReactMarkdown
                   className={style.markdownPreview}
                   remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}
@@ -122,14 +128,15 @@ const PrivateContentPage: NextPageWithLayout = () => {
             </div>
           );
         })}
-        <div className="m-4">
+        <div className="mt-8">
+          <h1 className="text-2xl font-bold">コメント一覧</h1>
           {data?.map((user) => {
             return (
-              <div key={user.orderNo}>
+              <div key={user.orderNo} className="">
                 {user?.comments?.map((comment) => {
                   return (
-                    <div key={comment.commentOrderNo} className="border">
-                      <div className="py-8">
+                    <div key={comment.commentOrderNo} className="mt-4 rounded-md border">
+                      <div className="flex py-4 ">
                         {comment?.comment_photURL?.length > 0 && (
                           <Image
                             src={comment?.comment_photURL}
@@ -139,8 +146,9 @@ const PrivateContentPage: NextPageWithLayout = () => {
                             className=" bg-center rounded-full"
                           />
                         )}
+                        <span className='pl-2'>{comment.comment_name}</span>
                       </div>
-                      <div className="overflow-y-scroll py-4 px-2 bg-white border shadow-xl markdown-preview">
+                      <div className="overflow-y-scroll py-4 px-2 shadow-xl markdown-preview">
                         <ReactMarkdown
                           className={style.markdownPreview}
                           remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}

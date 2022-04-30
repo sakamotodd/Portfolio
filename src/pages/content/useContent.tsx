@@ -59,7 +59,7 @@ export const useContent = () => {
   // 更新ボタン(onClick)
   const updateNewsButtonClick = useCallback((id: string, content: string, title: string) => {
     dispatch(setUpdateNewsReducer({ title: title, content: content, id: id }));
-    router.push('/update');
+    router.push('/content/update');
   }, []);
 
   // 削除ボタン（onClick）

@@ -3,6 +3,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 import { Auth, db } from './firebase/firebase.config';
 
@@ -12,6 +13,7 @@ export const useUserChanged = () => {
   const cookie = new Cookies();
   const router = useRouter();
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
+  const routerPath = ['/post', '/update', '/profile', '/setting', '/search', '/content/[id]'];
 
   useEffect(() => {
     const unSubUser = onAuthStateChanged(Auth, async (user) => {
@@ -31,10 +33,11 @@ export const useUserChanged = () => {
               router.pathname === '/content'
             ) {
               router.push('/content');
-            } else if (router.pathname === '/post') {
-              router.push('/post');
-            } else if (router.pathname === '/content/[id]') {
-              return;
+            } else {
+              let path = routerPath.find((name) => {
+                return router.pathname === name;
+              });
+              router.push(path);
             }
           } else {
             // firestoreのコレクションの書き込み対してモニタリングする処理
@@ -50,7 +53,7 @@ export const useUserChanged = () => {
           }
         }
       } catch (e) {
-        alert(e.message);
+        toast.error(e.message);
       }
     });
     return () => {
