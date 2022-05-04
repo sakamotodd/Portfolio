@@ -18,7 +18,6 @@ import { useMarkdownComponent } from '../../components/markdown/useMarkdownCompo
 import { NewsDTO, PrivateNewsDTO } from '../../interface/types';
 import { Layout } from '../../layout/Layout';
 import { commentNewsState, setCommentNewsReducer } from '../../redux/uiSlice';
-import style from '../../styles/markdown-styles.module.css';
 import { GetAllNewsDocument } from '../../util/GraphQL/generated/graphql';
 import { Auth } from '../../util/firebase/firebase.config';
 import { useMutationApp } from '../../util/reactQuery/useMutationApp';
@@ -118,7 +117,7 @@ const PrivateContentPage: NextPageWithLayout = () => {
               </div>
               <div className="overflow-y-scroll py-4 px-2 shadow-xl markdown-preview">
                 <ReactMarkdown
-                  className={style.markdownPreview}
+                  className="markdown"
                   remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}
                   components={components}
                 >
@@ -146,11 +145,11 @@ const PrivateContentPage: NextPageWithLayout = () => {
                             className=" bg-center rounded-full"
                           />
                         )}
-                        <span className='pl-2'>{comment.comment_name}</span>
+                        <span className="pl-2">{comment.comment_name}</span>
                       </div>
                       <div className="overflow-y-scroll py-4 px-2 shadow-xl markdown-preview">
                         <ReactMarkdown
-                          className={style.markdownPreview}
+                          className="markdown"
                           remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}
                           components={components}
                         >

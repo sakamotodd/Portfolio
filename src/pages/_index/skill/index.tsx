@@ -1,6 +1,6 @@
 import React, { useState, VFC } from 'react';
 import { Lan_skills } from './LanguageSkill';
-import { OtherSkills } from './otherSkil';
+import { OtherSkills } from './otherSkill';
 
 const Skill: VFC = () => {
   const [openFlag, setOpenFlag] = useState(false);
