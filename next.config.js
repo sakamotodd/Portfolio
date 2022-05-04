@@ -7,7 +7,8 @@ module.exports = {
       'avatars.githubusercontent.com',
       'www.gravatar.com',
       'firebasestorage.googleapis.com',
-    ],
+      'images.unsplash.com'
+    ]
   },
   pageExtensions: ['page.tsx', 'page.ts'],
   i18n: { locales: ['ja'], defaultLocale: 'ja' },

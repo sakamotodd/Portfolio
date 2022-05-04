@@ -117,7 +117,7 @@ export const SideBar: VFC<SideBarDTO> = ({ children, listFlag, setListFlag, list
           listFlag
             ? 'maxLg:pointer-events-none maxLg:transition maxLg:ease-in maxLg:dark:opacity-80 maxLg:cursor-default md:ml-40 md:w-[calc(100vw-10rem)]'
             : 'md:w-[calc(100vw-4rem)] md:ml-16'
-        } z-0 mt-14 border-t-[1px] dark:border-gray-600 min-h-[calc(100vh-3.5rem)] h-full w-screen bg-slate dark:bg-darkBody`}
+        } z-0 mt-14 border-t-[1px] dark:border-gray-600 min-h-[calc(100vh-3.5rem)] h-full w-screen bg-slate-100 dark:bg-darkBody`}
       >
         {children}
       </main>

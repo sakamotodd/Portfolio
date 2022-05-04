@@ -16,7 +16,7 @@ import {
   useCreateNewsMutation,
   useDeleteNewsMutation,
   useUpdateNewsMutation,
-} from '../../util/GraphQL/generated/graphql';
+} from '../GraphQL/generated/graphql';
 
 const cookie = new Cookies();
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT;

@@ -2,7 +2,6 @@ import * as yup from 'yup';
 import { BaseYup } from './ErrorMessage';
 
 export const useErrorMessage = () => {
-
   // サイン時のエラーメッセージ
   const signInValidationSchema = BaseYup.object().shape({
     email: BaseYup.string().required().email(),
@@ -28,5 +27,11 @@ export const useErrorMessage = () => {
       .oneOf([yup.ref('password')], '入力したパスワードが一致しません'),
   });
 
-  return { signInValidationSchema, signUpValidationSchema };
+  //問い合わせ時のエラーメッセージ
+  const contactValidationSchema = yup.object().shape({
+    name: BaseYup.string().required().max(30),
+    email: BaseYup.string().required().email(),
+    contact: BaseYup.string().required().max(999),
+  });
+  return { signInValidationSchema, signUpValidationSchema, contactValidationSchema };
 };

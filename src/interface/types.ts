@@ -135,3 +135,9 @@ export interface SignUpFormDTO {
   pass: string;
   name: string;
 }
+
+export interface ContactFormDTO {
+  name: string;
+  email: string;
+  contact: string;
+}

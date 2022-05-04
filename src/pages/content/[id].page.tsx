@@ -21,8 +21,8 @@ import { commentNewsState, setCommentNewsReducer } from '../../redux/uiSlice';
 import style from '../../styles/markdown-styles.module.css';
 import { GetAllNewsDocument } from '../../util/GraphQL/generated/graphql';
 import { Auth } from '../../util/firebase/firebase.config';
-import { useMutationApp } from '../../util/query/useMutationApp';
-import { privateNews } from '../../util/query/useOrderNews';
+import { useMutationApp } from '../../util/reactQuery/useMutationApp';
+import { privateNews } from '../../util/reactQuery/useOrderNews';
 
 interface newsResDTO {
   news: NewsDTO[];

@@ -7,7 +7,7 @@ import MarkdownText from '../../components/markdown';
 import { Layout } from '../../layout/Layout';
 import { selectNews, setEditTitle } from '../../redux/uiSlice';
 import { Auth } from '../../util/firebase/firebase.config';
-import { useMutationApp } from '../../util/query/useMutationApp';
+import { useMutationApp } from '../../util/reactQuery/useMutationApp';
 
 export default function PostPage() {
   const user = Auth.currentUser;
@@ -54,7 +54,7 @@ export default function PostPage() {
           placeholder="タイトル"
           value={reduxCreateNews.title}
           onChange={(e) => dispatch(setEditTitle({ ...reduxCreateNews, title: e.target.value }))}
-          className="block mx-auto mb-5 w-full h-14 text-2xl font-bold bg-slate dark:bg-darkBody outline-none"
+          className="block mx-auto mb-5 w-full h-14 text-2xl font-bold bg-slate-100 dark:bg-darkBody outline-none"
         />
         <div className="flex justify-center max-w-[80rem] h-[35rem]">
           <MarkdownText flag={true} updateFlag={true} />

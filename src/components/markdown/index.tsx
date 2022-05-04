@@ -20,7 +20,6 @@ import {
   setEditTitle,
   setUpdateNewsReducer,
 } from '../../redux/uiSlice';
-import style from '../../styles/markdown-styles.module.css';
 import { useMarkdownArea } from './useMarkdownArea';
 
 type Props = {
@@ -94,7 +93,7 @@ const MarkdownText: VFC<Props> = ({ flag, updateFlag }) => {
       <div className=" w-1/2">
         <div className="overflow-y-scroll py-4 px-2 w-full h-full bg-white dark:bg-darkCard border shadow-xl markdown-preview">
           <ReactMarkdown
-            className={style.markdownPreview}
+            className="markdown"
             remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}
             components={components}
           >

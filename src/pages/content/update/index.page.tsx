@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import MarkdownText from '../../../components/markdown';
 import { Layout } from '../../../layout/Layout';
 import { selectUpdateNews, setUpdateNewsReducer } from '../../../redux/uiSlice';
-import { useMutationApp } from '../../../util/query/useMutationApp';
+import { useMutationApp } from '../../../util/reactQuery/useMutationApp';
 export default function UpdatePage() {
   const dispatch = useDispatch();
   const router = useRouter();

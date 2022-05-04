@@ -4,6 +4,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      borderColor: ['autofill', 'dark'],
+      textColor: ['autofill', 'dark'],
+      backgroundColor: ['autofill', 'dark'],
       screens: {
         maxLg: { max: '767px' },
         maxLg: { max: '1024px' },
@@ -20,7 +23,20 @@ module.exports = {
         darkHover: '#808080',
         selectBlue: 'rgba(33, 150, 243, 0.16)',
         popup: 'rgba(0,0,0,0.5)',
-        slate: '#f1f5f9',
+        slate: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+        },
+        indigo9: '#0000d9',
+        violet9: '#581f8e',
       },
       boxShadow: {
         '3xl': '0 20px 25px -5px rgba(230, 180, 15, 0.9), 0 10px 10px 5px rgba(8, 131, 161, 0.9)',
@@ -32,7 +48,6 @@ module.exports = {
         sans: ["'Josefin Sans'"],
         mono: ["'Space Mono'"],
       },
-
       outline: {
         red: '2px solid #f87171',
       },
@@ -41,6 +56,7 @@ module.exports = {
   variants: {},
   important: true,
   plugins: [
+    require('tailwindcss-autofill'),
     function ({ addUtilities }) {
       const newUtilities = {
         '.text-shadow': {

@@ -10,7 +10,7 @@ import { PencilSquare, TrashFill } from 'react-bootstrap-icons';
 import { dehydrate, QueryClient } from 'react-query';
 import { Header } from '../../layout/Header';
 import { SideBar } from '../../layout/SideBar.tsx';
-import { allNews } from '../../util/query/useOrderNews';
+import { allNews } from '../../util/reactQuery/useOrderNews';
 import { useContent } from './useContent';
 
 const useStyles = makeStyles(() => ({

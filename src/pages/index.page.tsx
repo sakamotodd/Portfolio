@@ -1,14 +1,18 @@
-import Header from "./_index/First";
-import Introduction from "./_index/Second";
-import Third from "./_index/Third";
 
+import Contact from './_index/contact';
+import Home from './_index/home';
+import Portfolio from './_index/portfolio';
+import Skill from './_index/skill';
 
-export default function Home() {
+export default function Top() {
   return (
     <>
-      <Header />
-      <Introduction />
-      <Third />
+      <div className="font-hiragino bg-gradient-to-r from-yellow-200 via-green-200 to-green-500 opacity-80">
+        <Home />
+        <Skill />
+        <Portfolio />
+        <Contact/>
+      </div>
     </>
   );
 }

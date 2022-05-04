@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
-import { Auth, db } from './firebase/firebase.config';
+import { Auth, db } from './firebase.config';
 
 export let unSubMeta: () => void;
 

@@ -11,7 +11,7 @@ import React, { VFC } from 'react';
 import { useForm } from 'react-hook-form';
 import { Toaster } from 'react-hot-toast';
 import { SignUpFormDTO } from '../../interface/types';
-import { useErrorMessage } from './useErrorMessage';
+import { useErrorMessage } from '../../util/form/useErrorMessage';
 import { useLogin } from './useLogin';
 
 export const MailFormSignUp: VFC = () => {
@@ -40,10 +40,7 @@ export const MailFormSignUp: VFC = () => {
         <input
           name="name"
           {...register('name')}
-          className={`${
-            errors.name &&
-            'bg-red-50 border border-red-400 focus:ring-red-500 focus:border-red-500 text-gray-700'
-          } focus:placeholder-transparent py-3 pl-12 w-full leading-tight focus:placeholder-gray-600 text-gray-600 rounded-md border border-gray-100 focus:ring-gray-600 shadow-sm focus:shadow-md transition appearance-none focus:outline-none focus:shadow-outline`}
+          className={`${errors.name && 'errorInputForm'} inputLoginForm`}
           type="text"
           placeholder="name ?"
         />
@@ -61,10 +58,7 @@ export const MailFormSignUp: VFC = () => {
         <input
           name="email"
           {...register('email')}
-          className={`${
-            errors.email &&
-            'bg-red-50 border border-red-400 focus:ring-red-500 focus:border-red-500 text-gray-700'
-          } focus:placeholder-transparent py-3 pl-12 w-full leading-tight focus:placeholder-gray-600 text-gray-600 rounded border border-gray-100 focus:ring-gray-600 shadow-sm focus:shadow-md transition appearance-none focus:outline-none focus:shadow-outline`}
+          className={`${errors.email && 'errorInputForm'} inputLoginForm`}
           type="text"
           placeholder="email ?"
         />
@@ -82,10 +76,7 @@ export const MailFormSignUp: VFC = () => {
         <input
           name="password"
           {...register('password')}
-          className={`${
-            errors.password &&
-            'bg-red-50 border border-red-400 focus:ring-red-500 focus:border-red-500 text-gray-700'
-          } focus:placeholder-transparent py-3 pl-12 w-full leading-tight focus:placeholder-gray-600 text-gray-600 rounded-md border border-gray-100 focus:ring-gray-600 shadow-sm focus:shadow-md transition appearance-none focus:outline-none focus:shadow-outline`}
+          className={`${errors.password && 'errorInputForm'} inputLoginForm`}
           type="password"
           placeholder="Password ?"
           autoComplete="on"
@@ -106,10 +97,7 @@ export const MailFormSignUp: VFC = () => {
         <input
           name="pass"
           {...register('pass')}
-          className={`${
-            errors.pass &&
-            'bg-red-50 border border-red-400 focus:ring-red-500 focus:border-red-500 text-gray-700'
-          } focus:placeholder-transparent py-3 pl-12 w-full leading-tight focus:placeholder-gray-600 text-gray-600 rounded-md border border-gray-100 focus:ring-gray-600 shadow-sm focus:shadow-md transition appearance-none focus:outline-none focus:shadow-outline`}
+          className={`${errors.pass && 'errorInputForm'} inputLoginForm`}
           type="password"
           placeholder="Password ?"
           autoComplete="on"
@@ -132,10 +120,7 @@ export const MailFormSignUp: VFC = () => {
         </Link>
       </div>
       <div className="flex justify-center items-center mt-8">
-        <button
-          type="submit"
-          className="py-2 px-4 font-medium text-white uppercase bg-indigo-500 hover:bg-indigo-600 rounded shadow hover:shadow-lg transition transform hover:-translate-y-0.5"
-        >
+        <button type="submit" className="btnForm">
           Sign in
         </button>
       </div>

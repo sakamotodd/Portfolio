@@ -2,7 +2,7 @@ import { FormEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } fr
 import { CodeComponent, ReactMarkdownNames } from 'react-markdown/lib/ast-to-react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { xonokai } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import { useMutationApp } from '../../util/query/useMutationApp';
+import { useMutationApp } from '../../util/reactQuery/useMutationApp';
 
 export const useMarkdownArea = () => {
   const [markdown, setMarkdown] = useState<string>();

@@ -5,11 +5,10 @@ import { GithubAndGoogleButton } from '../../components/auth/GithubAndGoogleButt
 import { Auth } from '../../util/firebase/firebase.config';
 import { MailFormSignIn } from './MailFormSignIn';
 
-
 export default function signInPage() {
   const user = Auth.currentUser;
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-blue-900 via-purple-900 to-gray-900">
+    <div className="flex flex-col justify-center items-center min-h-screen font-hiragino bg-gradient-to-r from-yellow-200 via-green-200 to-green-500 opacity-80">
       <div className="p-8 mx-auto lg:w-1/2">
         <GithubAndGoogleButton />
         <div className="py-12 px-4 lg:px-20 bg-gray-100 rounded-b-lg">

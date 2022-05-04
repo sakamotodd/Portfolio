@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { VFC } from 'react';
 import { useForm } from 'react-hook-form';
 import { SignInFormDTO } from '../../interface/types';
-import { useErrorMessage } from './useErrorMessage';
+import { useErrorMessage } from '../../util/form/useErrorMessage';
 import { useLogin } from './useLogin';
 
 export const MailFormSignIn: VFC = () => {
@@ -26,9 +26,7 @@ export const MailFormSignIn: VFC = () => {
           <input
             name="email"
             {...register('email')}
-            className={`${
-              errors.email && 'outline-red'
-            } py-3 pl-12 w-full leading-tight focus:placeholder-gray-600 text-gray-600 rounded-md border border-gray-100 focus:ring-red-600 shadow-sm focus:shadow-md transition appearance-none focus:outline-none focus:shadow-outline"`}
+            className={`${errors.email && 'outline-red'} inputLoginForm`}
             type="text"
             placeholder="email ?"
           />
@@ -43,9 +41,7 @@ export const MailFormSignIn: VFC = () => {
           <input
             name="password"
             {...register('password')}
-            className={`${
-              errors.password && 'outline-red'
-            } py-3 pl-12 w-full leading-tight focus:placeholder-gray-600 text-gray-600 rounded-md border border-gray-100 focus:ring-gray-600 shadow-sm focus:shadow-md transition appearance-none focus:outline-none focus:shadow-outline`}
+            className={`${errors.password && 'outline-red'} inputLoginForm`}
             type="password"
             placeholder="Password ?"
             autoComplete="on"
@@ -67,10 +63,7 @@ export const MailFormSignIn: VFC = () => {
           </Link>
         </div>
         <div className="flex justify-center items-center mt-8">
-          <button
-            type="submit"
-            className="py-2 px-4 font-medium text-white uppercase bg-indigo-500 hover:bg-indigo-600 rounded shadow hover:shadow-lg transition transform hover:-translate-y-0.5"
-          >
+          <button type="submit" className="btnForm">
             Sign in
           </button>
         </div>

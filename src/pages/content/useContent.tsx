@@ -9,7 +9,7 @@ import {
   setCommentNewsReducer,
   setUpdateNewsReducer,
 } from '../../redux/uiSlice';
-import { useMutationApp } from '../../util/query/useMutationApp';
+import { useMutationApp } from '../../util/reactQuery/useMutationApp';
 import { useLogout } from './useLogout';
 
 export const useContent = () => {

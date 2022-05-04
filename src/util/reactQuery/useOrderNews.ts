@@ -15,8 +15,8 @@ import {
   useGetAllNewsQuery,
   useGetCommentNewsQuery,
   useGetTaskQuery,
-} from '../../util/GraphQL/generated/graphql';
-import { graphqlRequestClient } from '../../util/lib/graphqlRequestClient';
+} from '../GraphQL/generated/graphql';
+import { graphqlRequestClient } from '../lib/graphqlRequestClient';
 
 const cookie = new Cookie();
 const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT;
