@@ -1,6 +1,7 @@
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
@@ -42,12 +43,12 @@ export const useMutationApp = () => {
       if (reactQueryTodo) {
         reactQueryClient.setQueryData('news', [...reactQueryTodo, res.insert_news_one]);
       }
-      alert('成功しました。');
+      toast.success('成功しました。');
       dispatch(resetEditTitle());
     },
     onError: (error) => {
       // エラーメッセージ内容
-      alert(error);
+      toast.error(error.message);
       dispatch(resetEditNews());
     },
   });
@@ -59,8 +60,8 @@ export const useMutationApp = () => {
         reactQueryClient.setQueryData('privateNews', [...reactQueryTodo, res.insert_comment_one]);
       }
       dispatch(resetCommentNewsReducer);
-      alert('成功しました。');
-      router.reload();
+      toast.success('成功しました。');
+      router.push('/content');
     },
   });
 
@@ -75,12 +76,12 @@ export const useMutationApp = () => {
           ),
         );
       }
-      alert('成功しました');
+      toast.success('成功しました');
       dispatch(resetUpdateNews());
     },
     onError: () => {
       dispatch(resetUpdateNews());
-      alert('失敗');
+      toast.success('失敗');
     },
   });
 

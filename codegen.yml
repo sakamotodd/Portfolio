@@ -3,6 +3,7 @@ schema:
   - 'https://portfolio-daigoro.hasura.app/v1/graphql':
       headers:
         x-hasura-admin-secret: skmt1114
+        x-hasura-allowed-roles: ["staff"]
         x-hasura-role: staff
 documents: 'src/util/GraphQL/*.ts'
 generates:

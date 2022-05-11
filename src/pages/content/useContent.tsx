@@ -73,13 +73,15 @@ export const useContent = () => {
   // ログアウトボタン(onClick)
   const handleLogout = useCallback(() => {
     logout();
-    router.push('/login/signIn');
-  }, [logout, router]);
+  }, [logout]);
 
   // 投稿ページ遷移ボタン(onClick)
-  const handleMovePage = useCallback(() => {
-    router.push('/post');
-  }, [router]);
+  const handleMovePage = useCallback(
+    (path: string) => {
+      router.push(path);
+    },
+    [router],
+  );
 
   // ページネーション表示データ
   useEffect(() => {

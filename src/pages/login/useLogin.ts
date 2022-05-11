@@ -18,13 +18,13 @@ export const useLogin = () => {
   // メールアドレスログイン（onSubmit）
   const signInUser = useCallback(async (data: SignInFormDTO) => {
     try {
-      await signInWithEmailAndPassword(Auth, data.email, data.password);
+      await signInWithEmailAndPassword(Auth, data.email, data.password).then(() => toast.success("ログイン成功しました。"))
     } catch (e) {
-      alert(e.message);
+      toast.error(e.message);
       return;
     }
   }, []);
-
+  
   // 画像取得（onSubmit）
   const getImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files![0]) {
@@ -74,7 +74,7 @@ export const useLogin = () => {
       const provider = new GithubAuthProvider();
       await signInWithPopup(Auth, provider);
     } catch (e) {
-      alert(e.message);
+      toast.error(e.message);
     }
   }, []);
 
@@ -84,7 +84,7 @@ export const useLogin = () => {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(Auth, provider);
     } catch (e) {
-      alert(e.message);
+      toast.error(e.message);
     }
   }, []);
 

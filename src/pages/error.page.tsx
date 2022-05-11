@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useLogout } from './content/useLogout';
 
 export default function Custom404() {
@@ -10,7 +9,7 @@ export default function Custom404() {
         <title>404ページ</title>
       </Head>
       <div className="flex flex-col justify-center items-center p-8 w-1/2 h-full bg-white">
-        404-対象のページはありません。
+        システムエラーが起きました。再度ログインしてください。
       </div>
       <button
         className="py-2 px-4 mt-12 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors"

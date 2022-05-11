@@ -6,7 +6,8 @@ import { GetStaticPaths, GetStaticProps, NextPageWithLayout } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { FormEvent, ReactNode, useCallback, useEffect } from 'react';
-import { CardHeading, ThreeDotsVertical } from 'react-bootstrap-icons';
+import { ThreeDotsVertical } from 'react-bootstrap-icons';
+import { toast } from 'react-hot-toast';
 import ReactMarkdown from 'react-markdown';
 import { dehydrate, QueryClient, useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
@@ -78,7 +79,7 @@ const PrivateContentPage: NextPageWithLayout = () => {
           }
         }
       } catch (e) {
-        alert(e.message);
+        toast.error(e.message);
       }
     });
     return () => {
@@ -131,15 +132,15 @@ const PrivateContentPage: NextPageWithLayout = () => {
           <h1 className="text-2xl font-bold">コメント一覧</h1>
           {data?.map((user) => {
             return (
-              <div key={user.orderNo} className="">
+              <div key={user.orderNo}>
                 {user?.comments?.map((comment) => {
                   return (
-                    <div key={comment.commentOrderNo} className="mt-4 rounded-md border">
+                    <div key={comment.commentOrderNo} className="mt-4 bg-white rounded-md border">
                       <div className="flex py-4 ">
                         {comment?.comment_photURL?.length > 0 && (
                           <Image
                             src={comment?.comment_photURL}
-                            alt="ログイン画像"
+                            alt="アイコン"
                             width={24}
                             height={24}
                             className=" bg-center rounded-full"
@@ -147,7 +148,7 @@ const PrivateContentPage: NextPageWithLayout = () => {
                         )}
                         <span className="pl-2">{comment.comment_name}</span>
                       </div>
-                      <div className="overflow-y-scroll py-4 px-2 shadow-xl markdown-preview">
+                      <div className="overflow-y-scroll py-4 px-2">
                         <ReactMarkdown
                           className="markdown"
                           remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkBreaks]]}
@@ -168,7 +169,9 @@ const PrivateContentPage: NextPageWithLayout = () => {
           <div className="flex mt-4 mb-12 h-96">
             <MarkdownText flag={false} />
           </div>
-          <button className="mt-4 text-black bg-purple-400 border-r-2">コメントする</button>
+          <button className="py-2 px-4 mt-4 ml-2 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
+            コメントする
+          </button>
         </form>
       </div>
     </div>

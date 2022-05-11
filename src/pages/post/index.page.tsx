@@ -36,18 +36,18 @@ export default function PostPage() {
 
   return (
     <div className="xl:mx-32 2xl:mx-36 mt-8 font-hiragino">
-      <div className="flex justify-end items-center mt-4">
-        <button className="py-2 px-4 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
-          投稿内容を保存
-        </button>
-        <button className="py-2 px-4 ml-2 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
-          一覧ページに投稿
-        </button>
-        <button className="py-2 px-4 ml-2 font-medium text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-md transition-colors">
-          削除
-        </button>
-      </div>
       <form onSubmit={editHandle} className="max-w-[80rem]">
+        <div className="flex justify-end items-center mt-4">
+          <button type="button" className="py-2 px-4 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
+            投稿内容を保存
+          </button>
+          <button type="submit" className="py-2 px-4 ml-2 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
+            一覧ページに投稿
+          </button>
+          <button type="button" className="py-2 px-4 ml-2 font-medium text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-md transition-colors">
+            削除
+          </button>
+        </div>
         <input
           type="text"
           id="post-title"

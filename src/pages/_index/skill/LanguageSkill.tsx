@@ -27,7 +27,6 @@ export const Lan_skills: VFC = () => {
           <Image src="/icons/html.png" alt="html" width={55} height={45} />
         </div>
       </div>
-
       {/* css */}
       <div className="flex-col items-center py-3 px-7">
         <CircularProgressBar

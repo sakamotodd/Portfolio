@@ -9,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import React, { VFC } from 'react';
 import { useForm } from 'react-hook-form';
-import { Toaster } from 'react-hot-toast';
 import { SignUpFormDTO } from '../../interface/types';
 import { useErrorMessage } from '../../util/form/useErrorMessage';
 import { useLogin } from './useLogin';
@@ -124,7 +123,6 @@ export const MailFormSignUp: VFC = () => {
           Sign in
         </button>
       </div>
-      <Toaster position="top-center" reverseOrder={false} />
     </form>
   );
 };

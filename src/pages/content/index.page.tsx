@@ -63,7 +63,7 @@ export default function ContentPage() {
           <div className="fixed right-20 md:right-40 bottom-12">
             <button
               className="flex justify-center items-center w-32 maxLg:w-12 h-12 leading-7 bg-indigo-600 hover:bg-indigo-500 rounded-full maxLg:rounded-full cursor-pointer"
-              onClick={handleMovePage}
+              onClick={() => handleMovePage('/post')}
             >
               <PencilIcon className="w-4 h-4 text-white" />
               <span className="maxLg:hidden pl-2 text-sm text-center text-white">投稿する</span>
@@ -72,7 +72,7 @@ export default function ContentPage() {
           <div className="fixed right-4 bottom-12">
             <button
               className="flex justify-center items-center w-32 maxLg:w-12 h-12 leading-7 bg-indigo-600 hover:bg-indigo-500 rounded-full maxLg:rounded-full cursor-pointer"
-              onClick={handleMovePage}
+              onClick={() => handleMovePage('/search')}
             >
               <SearchIcon className="w-4 h-4 text-white" />
               <span className="maxLg:hidden pl-2 text-sm text-center text-white">検索する</span>

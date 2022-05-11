@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useMail = () => {
   const [name, setName] = useState('');
@@ -7,27 +7,21 @@ export const useMail = () => {
   const [message, setMessage] = useState('');
   const router = useRouter();
 
-  const send = useCallback(() => {
-    sendAPI();
-    setName('');
-    setMail('');
-    setMessage('');
-  }, []);
-
-  const sendAPI = async () => {
+  const sendAPI = useCallback(async () => {
     await fetch('/api/mail', {
       method: 'POST',
       body: `
-名前
-${name}
-
-お問い合わせ内容
-${message}
-`,
-    });
-    alert('送信しました。');
+        名前
+        ${name}
+        お問い合わせ内容
+        ${message}
+        `,
+    }).then((res) => res.json());
+    setName('');
+    setMail('');
+    setMessage('');
     router.push('/');
-  };
+  }, []);
 
   return {
     mail,
@@ -36,6 +30,6 @@ ${message}
     setName,
     message,
     setMessage,
-    send,
+    sendAPI,
   };
 };

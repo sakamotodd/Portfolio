@@ -3,7 +3,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 import { Auth, db } from './firebase.config';
 

@@ -1,14 +1,15 @@
 import { ExclamationIcon, LockOpenIcon } from '@heroicons/react/solid';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { VFC } from 'react';
+import React, { useCallback, VFC } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 import { ContactFormDTO } from '../../../interface/types';
 import { useErrorMessage } from '../../../util/form/useErrorMessage';
 import { useMail } from './useMail';
 
 const Contact: VFC = () => {
   const openFlag = false;
-  const { name, setName, message, mail, setMail, setMessage, send } = useMail();
+  const { name, setName, message, mail, setMail, setMessage, sendAPI } = useMail();
   const { contactValidationSchema } = useErrorMessage();
   const {
     register,
@@ -18,11 +19,19 @@ const Contact: VFC = () => {
     resolver: yupResolver(contactValidationSchema),
   });
 
+  const submitBtnOnclick = useCallback(() => {
+    toast.promise(sendAPI(), {
+      loading: 'Loading...',
+      success: '送信しました。',
+      error: '送信に失敗しました。再度やり直してください。',
+    });
+  }, []);
+
   return (
     <div id="Contact" className="flex flex-col justify-center items-center h-full lg:min-h-screen">
       <div className="mt-8">
         <form
-          onSubmit={handleSubmit(send)}
+          onSubmit={handleSubmit(sendAPI)}
           className="p-12 mx-auto w-96 lg:w-[36rem] md:max-w-md bg-white rounded-md border"
         >
           <div className="mb-8">
@@ -88,7 +97,9 @@ const Contact: VFC = () => {
               </div>
             )}
           </div>
-          <button className="w-full btnForm">送信</button>
+          <button onClick={submitBtnOnclick} className="w-full btnForm">
+            送信
+          </button>
         </form>
       </div>
     </div>

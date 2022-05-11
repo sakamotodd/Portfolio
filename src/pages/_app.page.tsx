@@ -6,6 +6,7 @@ import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
 import NextNprogress from 'nextjs-progressbar';
 import { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
@@ -43,6 +44,16 @@ function MyApp({ Component, pageProps }: Props) {
             stopDelayMs={200}
             height={3}
             showOnShallow={true}
+          />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 2000,
+              className: 'mt-16',
+              loading: {
+                duration: Infinity,
+              },
+            }}
           />
           <Component {...pageProps} />
         </Provider>

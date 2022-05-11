@@ -15,14 +15,20 @@ export const SideBar: VFC<SideBarDTO> = ({ children, listFlag, setListFlag, list
         !dropdownRef.current.contains(e.target) &&
         !listClickRef.current.contains(e.target)
       ) {
-        if (e.target?.className.indexOf('flex w-screen bg-white dark:bg-darkCard') > -1) {
-          setListFlag(false);
-        } else if (
-          e.target?.className.indexOf(
-            'maxLg:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 maxLg:overflow-hidden',
-          ) > -1
-        ) {
-          setListFlag(false);
+        if (typeof e.target?.className !== undefined && typeof e.target.className === 'string') {
+          if (e.target?.className.indexOf('flex w-screen bg-white dark:bg-darkCard') > -1) {
+            setListFlag(false);
+          } else if (
+            e.target?.className.indexOf(
+              'maxLg:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 maxLg:overflow-hidden',
+            ) > -1
+          ) {
+            setListFlag(false);
+          } else {
+            return;
+          }
+        } else {
+          return;
         }
       }
     },

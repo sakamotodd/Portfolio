@@ -1,8 +1,6 @@
 import request, { gql, GraphQLClient } from 'graphql-request';
-import { useEffect } from 'react';
-import { useQuery } from 'react-query';
 import Cookie from 'universal-cookie';
-import { GetCommentNewsDTO, NewsDTO, TasksDTO } from '../../interface/types';
+import { GetCommentNewsDTO, NewsDTO, TasksDTO, UserNewsDTO } from '../../interface/types';
 import {
   GetAllNewsDocument,
   GetAllNewsQuery,
@@ -14,13 +12,17 @@ import {
   GetTaskQuery,
   useGetAllNewsQuery,
   useGetCommentNewsQuery,
+  useGetLocalMyNewsQuery,
+  useGetOpenMyNewsQuery,
   useGetTaskQuery,
+
 } from '../GraphQL/generated/graphql';
-import { graphqlRequestClient } from '../lib/graphqlRequestClient';
+import { graphqlRequestClient } from '../GraphQL/graphqlRequestClient';
 
 const cookie = new Cookie();
-const endpoint = process.env.NEXT_PUBLIC_HASURA_ENDPOINT;
-let graphQLClient: GraphQLClient;
+const headers = {
+  authorization: `Bearer ${cookie.get('token')}`,
+};
 interface NewsRes {
   news: NewsDTO[];
 }
@@ -31,6 +33,10 @@ interface TasksRes {
 
 interface CommentNewsRes {
   comment: GetCommentNewsDTO;
+}
+
+interface UserNewsRes {
+  user: UserNewsDTO[];
 }
 // GraphQLの結果を返す(News取得)
 export const useAllNews = async () => {
@@ -63,7 +69,6 @@ export const allNews = async () => {
 };
 
 export const commentNewsPrefetch = async (id: any) => {
-
   const { comment: data } = await request<CommentNewsRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     GetCommentNewsDocument,
@@ -74,7 +79,7 @@ export const commentNewsPrefetch = async (id: any) => {
 
 // GraphQLの結果を返す(News取得)
 export const paginationNews = async (pageNumber: number) => {
-  const { news: data } = await request<NewsRes>(
+  const data = await request<NewsRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     GetPaginationNewsDocument,
     { pageNumber: pageNumber },
@@ -93,9 +98,6 @@ export const privateNews = async (id: number) => {
 };
 
 export const allTasks = async () => {
-  const headers = {
-    authorization: `Bearer ${cookie.get('token')}`,
-  };
   const { tasks: data } = await request<TasksRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
     GetTaskDocument,
@@ -105,32 +107,22 @@ export const allTasks = async () => {
   return data;
 };
 
-const fetchTasks = async () => {
-  const { tasks: data } = await graphQLClient.request<TasksRes>(gql`
-    query GetTask {
-      tasks {
-        created_at
-        id
-        mail
-        title
-        user_id
-      }
-    }
-  `);
+export const useLocalNews = () => {
+  const data = useGetLocalMyNewsQuery<UserNewsRes, Error>(
+    graphqlRequestClient,
+    {},
+    { queryKey: 'userNews', staleTime: 3 },
+    headers,
+  );
   return data;
 };
 
-export const useQueryTasks = () => {
-  useEffect(() => {
-    graphQLClient = new GraphQLClient(endpoint, {
-      headers: {
-        Authorization: `Bearer ${cookie.get('token')}`,
-      },
-    });
-  }, [cookie.get('token')]);
-  return useQuery<TasksDTO[], Error>({
-    queryKey: 'tasks',
-    queryFn: fetchTasks,
-    staleTime: 0,
-  });
+export const useOpenNews = () => {
+  const localData = useGetOpenMyNewsQuery<UserNewsRes, Error>(
+    graphqlRequestClient,
+    {},
+    { queryKey: 'userNews', staleTime: 3 },
+    headers,
+  );
+  return localData;
 };

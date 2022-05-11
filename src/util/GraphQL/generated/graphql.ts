@@ -21,6 +21,19 @@ export type Scalars = {
   uuid: any;
 };
 
+/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+export type Boolean_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['Boolean']>;
+  _gt?: InputMaybe<Scalars['Boolean']>;
+  _gte?: InputMaybe<Scalars['Boolean']>;
+  _in?: InputMaybe<Array<Scalars['Boolean']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['Boolean']>;
+  _lte?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<Scalars['Boolean']>;
+  _nin?: InputMaybe<Array<Scalars['Boolean']>>;
+};
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Int']>;
@@ -461,6 +474,9 @@ export type News = {
   orderNo: Scalars['Int'];
   photoURL?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+  token_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  user?: Maybe<User>;
 };
 
 
@@ -471,6 +487,33 @@ export type NewsCommentsArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Comment_Order_By>>;
   where?: InputMaybe<Comment_Bool_Exp>;
+};
+
+/** order by aggregate values of table "news" */
+export type News_Aggregate_Order_By = {
+  avg?: InputMaybe<News_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<News_Max_Order_By>;
+  min?: InputMaybe<News_Min_Order_By>;
+  stddev?: InputMaybe<News_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<News_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<News_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<News_Sum_Order_By>;
+  var_pop?: InputMaybe<News_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<News_Var_Samp_Order_By>;
+  variance?: InputMaybe<News_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "news" */
+export type News_Arr_Rel_Insert_Input = {
+  data: Array<News_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<News_On_Conflict>;
+};
+
+/** order by avg() on columns of table "news" */
+export type News_Avg_Order_By = {
+  orderNo?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "news". All fields are combined with a logical 'AND'. */
@@ -487,6 +530,8 @@ export type News_Bool_Exp = {
   orderNo?: InputMaybe<Int_Comparison_Exp>;
   photoURL?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
+  token_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "news" */
@@ -511,6 +556,34 @@ export type News_Insert_Input = {
   orderNo?: InputMaybe<Scalars['Int']>;
   photoURL?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  token_id?: InputMaybe<Scalars['uuid']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+};
+
+/** order by max() on columns of table "news" */
+export type News_Max_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  orderNo?: InputMaybe<Order_By>;
+  photoURL?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  token_id?: InputMaybe<Order_By>;
+};
+
+/** order by min() on columns of table "news" */
+export type News_Min_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  orderNo?: InputMaybe<Order_By>;
+  photoURL?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  token_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "news" */
@@ -547,6 +620,8 @@ export type News_Order_By = {
   orderNo?: InputMaybe<Order_By>;
   photoURL?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
+  token_id?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
 };
 
 /** primary key columns input for table: news */
@@ -571,7 +646,9 @@ export enum News_Select_Column {
   /** column name */
   PhotoUrl = 'photoURL',
   /** column name */
-  Title = 'title'
+  Title = 'title',
+  /** column name */
+  TokenId = 'token_id'
 }
 
 /** input type for updating data in table "news" */
@@ -584,6 +661,27 @@ export type News_Set_Input = {
   orderNo?: InputMaybe<Scalars['Int']>;
   photoURL?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  token_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** order by stddev() on columns of table "news" */
+export type News_Stddev_Order_By = {
+  orderNo?: InputMaybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "news" */
+export type News_Stddev_Pop_Order_By = {
+  orderNo?: InputMaybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "news" */
+export type News_Stddev_Samp_Order_By = {
+  orderNo?: InputMaybe<Order_By>;
+};
+
+/** order by sum() on columns of table "news" */
+export type News_Sum_Order_By = {
+  orderNo?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "news" */
@@ -603,8 +701,25 @@ export enum News_Update_Column {
   /** column name */
   PhotoUrl = 'photoURL',
   /** column name */
-  Title = 'title'
+  Title = 'title',
+  /** column name */
+  TokenId = 'token_id'
 }
+
+/** order by var_pop() on columns of table "news" */
+export type News_Var_Pop_Order_By = {
+  orderNo?: InputMaybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "news" */
+export type News_Var_Samp_Order_By = {
+  orderNo?: InputMaybe<Order_By>;
+};
+
+/** order by variance() on columns of table "news" */
+export type News_Variance_Order_By = {
+  orderNo?: InputMaybe<Order_By>;
+};
 
 /** column ordering options */
 export enum Order_By {
@@ -628,7 +743,7 @@ export type Query_Root = {
   comment: Array<Comment>;
   /** fetch data from the table: "comment" using primary key columns */
   comment_by_pk?: Maybe<Comment>;
-  /** fetch data from the table: "news" */
+  /** An array relationship */
   news: Array<News>;
   /** fetch data from the table: "news" using primary key columns */
   news_by_pk?: Maybe<News>;
@@ -686,7 +801,7 @@ export type Subscription_Root = {
   comment: Array<Comment>;
   /** fetch data from the table: "comment" using primary key columns */
   comment_by_pk?: Maybe<Comment>;
-  /** fetch data from the table: "news" */
+  /** An array relationship */
   news: Array<News>;
   /** fetch data from the table: "news" using primary key columns */
   news_by_pk?: Maybe<News>;
@@ -757,9 +872,22 @@ export type User = {
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
+  isFlag?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  news: Array<News>;
   photoURL: Scalars['String'];
   user_id: Scalars['String'];
+};
+
+
+/** columns and relationships of "user" */
+export type UserNewsArgs = {
+  distinct_on?: InputMaybe<Array<News_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<News_Order_By>>;
+  where?: InputMaybe<News_Bool_Exp>;
 };
 
 /** Boolean expression to filter rows from the table "user". All fields are combined with a logical 'AND'. */
@@ -770,7 +898,9 @@ export type User_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  isFlag?: InputMaybe<Boolean_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  news?: InputMaybe<News_Bool_Exp>;
   photoURL?: InputMaybe<String_Comparison_Exp>;
   user_id?: InputMaybe<String_Comparison_Exp>;
 };
@@ -786,7 +916,9 @@ export type User_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  isFlag?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+  news?: InputMaybe<News_Arr_Rel_Insert_Input>;
   photoURL?: InputMaybe<Scalars['String']>;
 };
 
@@ -797,6 +929,13 @@ export type User_Mutation_Response = {
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<User>;
+};
+
+/** input type for inserting object relation for remote table "user" */
+export type User_Obj_Rel_Insert_Input = {
+  data: User_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_On_Conflict>;
 };
 
 /** on_conflict condition type for table "user" */
@@ -811,7 +950,9 @@ export type User_Order_By = {
   created_at?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  isFlag?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  news_aggregate?: InputMaybe<News_Aggregate_Order_By>;
   photoURL?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -830,6 +971,8 @@ export enum User_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsFlag = 'isFlag',
+  /** column name */
   Name = 'name',
   /** column name */
   PhotoUrl = 'photoURL',
@@ -842,8 +985,10 @@ export type User_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  isFlag?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   photoURL?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['String']>;
 };
 
 /** update columns of table "user" */
@@ -855,9 +1000,13 @@ export enum User_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsFlag = 'isFlag',
+  /** column name */
   Name = 'name',
   /** column name */
-  PhotoUrl = 'photoURL'
+  PhotoUrl = 'photoURL',
+  /** column name */
+  UserId = 'user_id'
 }
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
@@ -882,6 +1031,16 @@ export type GetNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', content: string, created_at: any, email?: string | null, id: any, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null }> };
+
+export type GetLocalMyNewsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLocalMyNewsQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', created_at: any, email?: string | null, id: any, name?: string | null, isFlag?: boolean | null, photoURL: string, user_id: string, news: Array<{ __typename?: 'news', content: string, created_at: any, email?: string | null, id: any, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null, token_id?: any | null }> }> };
+
+export type GetOpenMyNewsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetOpenMyNewsQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', created_at: any, email?: string | null, id: any, name?: string | null, isFlag?: boolean | null, photoURL: string, user_id: string, news: Array<{ __typename?: 'news', content: string, created_at: any, email?: string | null, id: any, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null, token_id?: any | null }> }> };
 
 export type GetPrivateNewsQueryVariables = Exact<{
   orderNo: Scalars['Int'];
@@ -1001,6 +1160,82 @@ export const useGetNewsQuery = <
     useQuery<GetNewsQuery, TError, TData>(
       variables === undefined ? ['GetNews'] : ['GetNews', variables],
       fetcher<GetNewsQuery, GetNewsQueryVariables>(client, GetNewsDocument, variables, headers),
+      options
+    );
+export const GetLocalMyNewsDocument = `
+    query GetLocalMyNews {
+  user(where: {isFlag: {_eq: false}}) {
+    created_at
+    email
+    id
+    name
+    isFlag
+    photoURL
+    user_id
+    news {
+      content
+      created_at
+      email
+      id
+      name
+      orderNo
+      photoURL
+      title
+      token_id
+    }
+  }
+}
+    `;
+export const useGetLocalMyNewsQuery = <
+      TData = GetLocalMyNewsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetLocalMyNewsQueryVariables,
+      options?: UseQueryOptions<GetLocalMyNewsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetLocalMyNewsQuery, TError, TData>(
+      variables === undefined ? ['GetLocalMyNews'] : ['GetLocalMyNews', variables],
+      fetcher<GetLocalMyNewsQuery, GetLocalMyNewsQueryVariables>(client, GetLocalMyNewsDocument, variables, headers),
+      options
+    );
+export const GetOpenMyNewsDocument = `
+    query GetOpenMyNews {
+  user(where: {isFlag: {_eq: true}}) {
+    created_at
+    email
+    id
+    name
+    isFlag
+    photoURL
+    user_id
+    news {
+      content
+      created_at
+      email
+      id
+      name
+      orderNo
+      photoURL
+      title
+      token_id
+    }
+  }
+}
+    `;
+export const useGetOpenMyNewsQuery = <
+      TData = GetOpenMyNewsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetOpenMyNewsQueryVariables,
+      options?: UseQueryOptions<GetOpenMyNewsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetOpenMyNewsQuery, TError, TData>(
+      variables === undefined ? ['GetOpenMyNews'] : ['GetOpenMyNews', variables],
+      fetcher<GetOpenMyNewsQuery, GetOpenMyNewsQueryVariables>(client, GetOpenMyNewsDocument, variables, headers),
       options
     );
 export const GetPrivateNewsDocument = `

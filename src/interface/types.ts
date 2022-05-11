@@ -9,6 +9,18 @@ export interface NewsDTO {
   name: string;
   email: string;
   photoURL: string;
+  token_id: string;
+}
+
+export interface UserNewsDTO {
+  id: string;
+  created_at: string;
+  email: string;
+  name: string;
+  photoURL: string;
+  user_id: string;
+  isFlag: boolean;
+  news: NewsDTO[];
 }
 
 export interface PrivateNewsDTO {

@@ -7,15 +7,15 @@
 }
 
 .markdown h2 {
-  @apply text-2xl font-semibold;
+  @apply text-2xl font-semibold my-2;
 }
 
 .markdown h3 {
-  @apply text-xl font-medium;
+  @apply text-xl font-medium my-2;
 }
 
 .markdown p {
-  @apply whitespace-pre-wrap bg-white;
+  @apply whitespace-pre-wrap;
 }
 
 .markdown p a {

@@ -30,6 +30,56 @@ export const GET_NEWS = gql`
   }
 `;
 
+export const GET_LOCAL_MY_NEWS = gql`
+  query GetLocalMyNews {
+    user (where: {isFlag: {_eq: false}}) {
+      created_at
+      email
+      id
+      name
+      isFlag
+      photoURL
+      user_id
+      news {
+        content
+        created_at
+        email
+        id
+        name
+        orderNo
+        photoURL
+        title
+        token_id
+      }
+    }
+  }
+`;
+
+export const GET_OPEN_MY_NEWS = gql`
+  query GetOpenMyNews {
+    user (where: {isFlag: {_eq: true}}) {
+      created_at
+      email
+      id
+      name
+      isFlag
+      photoURL
+      user_id
+      news {
+        content
+        created_at
+        email
+        id
+        name
+        orderNo
+        photoURL
+        title
+        token_id
+      }
+    }
+  }
+`;
+
 export const GET_PRIVATE_NEWS = gql`
   query GetPrivateNews($orderNo: Int!) {
     news(where: { orderNo: { _eq: $orderNo } }) {
@@ -108,7 +158,6 @@ export const GET_INSERT_COMMENT = gql`
     }
   }
 `;
-
 
 export const CREATE_NEWS = gql`
   mutation CreateNews(
