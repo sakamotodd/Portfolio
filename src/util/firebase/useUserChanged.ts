@@ -13,9 +13,10 @@ export const useUserChanged = () => {
   const cookie = new Cookies();
   const router = useRouter();
   const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
-  const routerPath = ['/post', '/update', '/profile', '/setting', '/search', '/content/[id]'];
+  const routerPath = ['/post', '/profile', '/setting', '/search', '/update'];
 
   useEffect(() => {
+    if (router.pathname === '/') return;
     const unSubUser = onAuthStateChanged(Auth, async (user) => {
       try {
         if (user) {
@@ -32,12 +33,16 @@ export const useUserChanged = () => {
               router.pathname === '/login/signIn' ||
               router.pathname === '/content'
             ) {
-              router.push('/content');
+              return router.push('/content');
             } else {
-              let path = routerPath.find((name) => {
-                return router.pathname === name;
-              });
-              router.push(path);
+              if (router.pathname === '/content/[id]') {
+                return router.push(router.asPath);
+              }  else {
+                let path = routerPath.find((name) => {
+                  return router.pathname === name;
+                });
+                router.push(path);
+              }
             }
           } else {
             // firestoreのコレクションの書き込み対してモニタリングする処理

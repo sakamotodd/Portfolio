@@ -1,6 +1,7 @@
-import request, { gql, GraphQLClient } from 'graphql-request';
-import Cookie from 'universal-cookie';
-import { GetCommentNewsDTO, NewsDTO, TasksDTO, UserNewsDTO } from '../../interface/types';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { onAuthStateChanged } from 'firebase/auth';
+import request from 'graphql-request';
+import { GetCommentNewsDTO, NewsDTO, PrivateNewsDTO, UserNewsDTO } from '../../interface/types';
 import {
   GetAllNewsDocument,
   GetAllNewsQuery,
@@ -8,27 +9,17 @@ import {
   GetCommentNewsQuery,
   GetPaginationNewsDocument,
   GetPrivateNewsDocument,
-  GetTaskDocument,
-  GetTaskQuery,
+  GetPrivateUserQuery,
   useGetAllNewsQuery,
   useGetCommentNewsQuery,
   useGetLocalMyNewsQuery,
   useGetOpenMyNewsQuery,
-  useGetTaskQuery,
-
+  useGetPrivateUserQuery,
 } from '../GraphQL/generated/graphql';
 import { graphqlRequestClient } from '../GraphQL/graphqlRequestClient';
-
-const cookie = new Cookie();
-const headers = {
-  authorization: `Bearer ${cookie.get('token')}`,
-};
+import { Auth } from '../firebase/firebase.config';
 interface NewsRes {
   news: NewsDTO[];
-}
-
-interface TasksRes {
-  tasks: TasksDTO[];
 }
 
 interface CommentNewsRes {
@@ -38,8 +29,15 @@ interface CommentNewsRes {
 interface UserNewsRes {
   user: UserNewsDTO[];
 }
+
+interface privateNewsRes {
+  news: PrivateNewsDTO[];
+}
+
 // GraphQLの結果を返す(News取得)
 export const useAllNews = async () => {
+  const user = Auth.currentUser;
+  const uid = user?.uid;
   const { data, error, isLoading } = useGetAllNewsQuery<GetAllNewsQuery, Error>(
     graphqlRequestClient,
     {},
@@ -47,16 +45,12 @@ export const useAllNews = async () => {
   );
   return { data, error, isLoading };
 };
-export const useAllTask = async () => {
-  const { data, error, isLoading } = useGetTaskQuery<GetTaskQuery, Error>(graphqlRequestClient, {});
-  return { data, error, isLoading };
-};
 
 export const useCommentNews = async (id: any) => {
   const { data, error, isLoading } = useGetCommentNewsQuery<GetCommentNewsQuery, Error>(
     graphqlRequestClient,
     { id: id },
-    { queryKey: 'commentNews', staleTime: Infinity },
+    { queryKey: 'commentNews', staleTime: 3 },
   );
   return { data, error, isLoading };
 };
@@ -77,7 +71,6 @@ export const commentNewsPrefetch = async (id: any) => {
   return data;
 };
 
-// GraphQLの結果を返す(News取得)
 export const paginationNews = async (pageNumber: number) => {
   const data = await request<NewsRes>(
     process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
@@ -88,41 +81,43 @@ export const paginationNews = async (pageNumber: number) => {
 };
 
 export const privateNews = async (id: number) => {
+  let user_id = '';
+  onAuthStateChanged(Auth, (user) => {
+    user_id = user?.uid;
+  });
   const num = Number(id);
-  const { news: data } = await request<NewsRes>(
-    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GetPrivateNewsDocument,
-    { orderNo: num },
-  );
-  return data;
-};
-
-export const allTasks = async () => {
-  const { tasks: data } = await request<TasksRes>(
-    process.env.NEXT_PUBLIC_HASURA_ENDPOINT,
-    GetTaskDocument,
-    {},
-    headers,
-  );
+  const { news: data } = await graphqlRequestClient.request<privateNewsRes>(GetPrivateNewsDocument, {
+    orderNo: num,
+    uid: user_id,
+  });
   return data;
 };
 
 export const useLocalNews = () => {
-  const data = useGetLocalMyNewsQuery<UserNewsRes, Error>(
+  const localData = useGetLocalMyNewsQuery<UserNewsRes, Error>(
     graphqlRequestClient,
     {},
     { queryKey: 'userNews', staleTime: 3 },
-    headers,
   );
-  return data;
+  return localData;
 };
 
 export const useOpenNews = () => {
-  const localData = useGetOpenMyNewsQuery<UserNewsRes, Error>(
+  const openData = useGetOpenMyNewsQuery<UserNewsRes, Error>(
     graphqlRequestClient,
     {},
     { queryKey: 'userNews', staleTime: 3 },
-    headers,
   );
-  return localData;
+  return openData;
+};
+
+export const usePrivateUser = (id: number) => {
+  console.log('🚀 ~ file: useOrderNews.ts ~ line 105 ~ usePrivateUser ~ id', id);
+
+  const privateData = useGetPrivateUserQuery<GetPrivateUserQuery, Error>(
+    graphqlRequestClient,
+    { orderNo: id },
+    { queryKey: 'userNews', staleTime: 3 },
+  );
+  return privateData;
 };

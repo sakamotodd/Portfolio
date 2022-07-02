@@ -13,14 +13,15 @@ export interface NewsDTO {
 }
 
 export interface UserNewsDTO {
-  id: string;
   created_at: string;
   email: string;
+  id: string;
   name: string;
-  photoURL: string;
-  user_id: string;
   isFlag: boolean;
-  news: NewsDTO[];
+  photoURL: string;
+  title: string;
+  content: string;
+  orderNo: number;
 }
 
 export interface PrivateNewsDTO {
@@ -33,20 +34,17 @@ export interface PrivateNewsDTO {
   name: string;
   email: string;
   photoURL: string;
+  news_aggregate: {
+    aggregate: {
+      count: string;
+    };
+  };
 }
 export interface CreateCommentDTO {
   groupNewsId: string;
   commentText: string;
   commentPhotURL: string;
   commentName: string;
-}
-
-export interface TasksDTO {
-  created_at: string;
-  id: string;
-  mail: string;
-  title: string;
-  user_id: string;
 }
 
 export interface GetCommentNewsDTO {
@@ -64,6 +62,7 @@ export interface NewsVariableDTO {
   name: string;
   email: string;
   photoURL: string;
+  isFlag: boolean;
 }
 
 export interface EditNewsDTO {
@@ -73,12 +72,14 @@ export interface EditNewsDTO {
   name: string;
   email: string;
   photoURL: string;
+  isFlag: boolean;
 }
 
 export interface UpdateNewsDTO {
   id: string;
   content: string;
   title: string;
+  orderNo: number;
 }
 
 export interface UpdateNewDTO {
@@ -134,6 +135,10 @@ export interface HeaderDTO {
   listFlag: boolean;
   setListFlag: React.Dispatch<React.SetStateAction<boolean>>;
   listClickRef: React.MutableRefObject<HTMLButtonElement>;
+}
+
+export interface darkModeDTO {
+  darkMode: boolean;
 }
 
 export interface SignInFormDTO {

@@ -1,12 +1,11 @@
-import { LogoutIcon, PencilIcon, PlusSmIcon, SearchIcon } from '@heroicons/react/solid';
+import { PencilIcon, SearchIcon } from '@heroicons/react/solid';
 import { makeStyles } from '@material-ui/core/styles';
 import { Pagination } from '@mui/material';
 import { format } from 'date-fns';
 import ja from 'date-fns/locale/ja';
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
-import { PencilSquare, TrashFill } from 'react-bootstrap-icons';
+import React, { useRef, useState } from 'react';
 import { dehydrate, QueryClient } from 'react-query';
 import { Header } from '../../layout/Header';
 import { SideBar } from '../../layout/SideBar.tsx';
@@ -23,7 +22,6 @@ const useStyles = makeStyles(() => ({
 export default function ContentPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [listFlag, setListFlag] = useState(false);
-  // const [otherClick, setOtherClick] = useState(false);
   const listClickRef = useRef<HTMLButtonElement>(null!);
 
   const classes = useStyles();
@@ -36,9 +34,8 @@ export default function ContentPage() {
     handlePrivatePage,
     handlePageNation,
     handleMovePage,
-    updateNewsButtonClick,
-    deleteNewsButtonClick,
   } = useContent();
+
   return (
     <div
       className={`maxLg:relative w-screen h-full max-h-screen font-helvetica text-black dark:text-gray-200 ${

@@ -1,11 +1,12 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useRouter } from 'next/router';
-import { FormEvent, ReactNode, useCallback, useEffect } from 'react';
-import { ChevronDoubleLeft } from 'react-bootstrap-icons';
+import { ReactNode, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MarkdownText from '../../components/markdown';
+import { NewsVariableDTO } from '../../interface/types';
 import { Layout } from '../../layout/Layout';
-import { selectNews, setEditTitle } from '../../redux/uiSlice';
+import { RootState } from '../../redux/store';
+import { resetEditNews, setEditTitle } from '../../redux/uiSlice';
 import { Auth } from '../../util/firebase/firebase.config';
 import { useMutationApp } from '../../util/reactQuery/useMutationApp';
 
@@ -14,11 +15,26 @@ export default function PostPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { createNewsMutation } = useMutationApp();
-  const reduxCreateNews = useSelector(selectNews);
+  const reduxCreateNews = useSelector((state: RootState) => state.ui.selectNews);
 
-  const editHandle = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    createNewsMutation.mutate(reduxCreateNews);
+  const editHandle = useCallback((reduxCreateNew: NewsVariableDTO, flag: boolean) => {
+    if (!flag) {
+      dispatch(
+        setEditTitle({
+          ...reduxCreateNew,
+          isFlag: flag,
+          name: user?.displayName,
+          photoURL: user?.photoURL,
+          email: user?.email,
+        }),
+      );
+    }
+    createNewsMutation.mutate(reduxCreateNew);
+  }, []);
+
+  const deleteHandle = useCallback(() => {
+    dispatch(resetEditNews());
+    router.push('/content');
   }, []);
 
   useEffect(() => {
@@ -36,15 +52,27 @@ export default function PostPage() {
 
   return (
     <div className="xl:mx-32 2xl:mx-36 mt-8 font-hiragino">
-      <form onSubmit={editHandle} className="max-w-[80rem]">
+      <div className="max-w-[80rem]">
         <div className="flex justify-end items-center mt-4">
-          <button type="button" className="py-2 px-4 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
-            投稿内容を保存
+          <button
+            type="button"
+            className="py-2 px-4 ml-2 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors"
+            onClick={() => editHandle(reduxCreateNews, false)}
+          >
+            ローカルに保存
           </button>
-          <button type="submit" className="py-2 px-4 ml-2 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors">
+          <button
+            type="button"
+            className="py-2 px-4 ml-2 font-medium text-white bg-purple-700 hover:bg-purple-600 rounded-lg shadow-md transition-colors"
+            onClick={() => editHandle(reduxCreateNews, true)}
+          >
             一覧ページに投稿
           </button>
-          <button type="button" className="py-2 px-4 ml-2 font-medium text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-md transition-colors">
+          <button
+            type="button"
+            className="py-2 px-4 ml-2 font-medium text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-md transition-colors"
+            onClick={deleteHandle}
+          >
             削除
           </button>
         </div>
@@ -59,7 +87,7 @@ export default function PostPage() {
         <div className="flex justify-center max-w-[80rem] h-[35rem]">
           <MarkdownText flag={true} updateFlag={true} />
         </div>
-      </form>
+      </div>
     </div>
   );
 }

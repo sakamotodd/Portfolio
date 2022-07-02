@@ -26,7 +26,6 @@ let graphQLClient: GraphQLClient;
 export const useMutationApp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // キャッシュにアクセスし更新するため
   const reactQueryClient = useQueryClient();
 
   useEffect(() => {
@@ -45,10 +44,11 @@ export const useMutationApp = () => {
       }
       toast.success('成功しました。');
       dispatch(resetEditTitle());
+      router.push('/content');
     },
     onError: (error) => {
       // エラーメッセージ内容
-      toast.error(error.message);
+      toast.error('失敗しました。最初からやり直して下さい。');
       dispatch(resetEditNews());
     },
   });
@@ -61,7 +61,10 @@ export const useMutationApp = () => {
       }
       dispatch(resetCommentNewsReducer);
       toast.success('成功しました。');
-      router.push('/content');
+      router.reload();
+    },
+    onError: (res) => {
+      toast.error('失敗しました。最初からやり直して下さい。');
     },
   });
 
@@ -76,12 +79,12 @@ export const useMutationApp = () => {
           ),
         );
       }
-      toast.success('成功しました');
-      dispatch(resetUpdateNews());
+      router.reload();
+      //dispatch(resetUpdateNews());
     },
     onError: () => {
       dispatch(resetUpdateNews());
-      toast.success('失敗');
+      toast.error('失敗しました。最初からやり直して下さい。');
     },
   });
 
@@ -94,7 +97,14 @@ export const useMutationApp = () => {
           reactQueryTodo.filter((news) => news.id !== DeleteNewsMutationVariables.id),
         );
       }
+      toast.success('成功しました');
       dispatch(resetUpdateNews());
+      router.push('/content');
+      router.reload();
+    },
+    onError: () => {
+      toast.error('失敗しました。最初からやり直して下さい。');
+      router.reload();
     },
   });
   return {

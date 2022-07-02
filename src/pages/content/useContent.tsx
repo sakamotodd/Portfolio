@@ -66,8 +66,6 @@ export const useContent = () => {
   const deleteNewsButtonClick = useCallback(({ id }) => {
     deleteId.id = id;
     deleteNewsMutation.mutate(deleteId);
-    //router.reload();
-    //alert('削除しました。');
   }, []);
 
   // ログアウトボタン(onClick)

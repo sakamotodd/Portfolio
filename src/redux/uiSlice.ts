@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  NewsVariableDTO,
+  CreateCommentDTO,
   EditNewsDTO,
   EditTaskDTO,
+  NewsVariableDTO,
   UpdateNewsDTO,
-  CreateCommentDTO,
 } from '../interface/types';
 import { RootState } from './store';
 
@@ -29,6 +29,7 @@ const initialState: uiState = {
     name: '',
     email: '',
     photoURL: '',
+    isFlag: true,
   },
 
   selectNews: {
@@ -37,12 +38,14 @@ const initialState: uiState = {
     name: '',
     email: '',
     photoURL: '',
+    isFlag: true,
   },
 
   updateNews: {
     id: '',
     content: '',
     title: '',
+    orderNo: null,
   },
   editComment: {
     groupNewsId: '',

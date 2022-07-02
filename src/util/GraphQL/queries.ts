@@ -1,8 +1,24 @@
 import { gql } from 'graphql-request';
 
+export const GET_LOCAL_ALL_NEWS = gql`
+  query GetLocalAllNews($user_id: String!) {
+    news(order_by: { orderNo: desc }, where: { user_id: { _eq: $user_id } }) {
+      content
+      created_at
+      email
+      id
+      name
+      orderNo
+      photoURL
+      title
+      isFlag
+    }
+  }
+`;
+
 export const GET_ALL_NEWS = gql`
   query GetAllNews {
-    news(order_by: { orderNo: desc }) {
+    news(order_by: { orderNo: desc }, where: { isFlag: { _eq: true } }) {
       content
       created_at
       email
@@ -32,56 +48,60 @@ export const GET_NEWS = gql`
 
 export const GET_LOCAL_MY_NEWS = gql`
   query GetLocalMyNews {
-    user (where: {isFlag: {_eq: false}}) {
+    user(where: { isFlag: { _eq: false } }) {
       created_at
       email
       id
       name
       isFlag
       photoURL
-      user_id
-      news {
-        content
-        created_at
-        email
-        id
-        name
-        orderNo
-        photoURL
-        title
-        token_id
-      }
+      title
+      content
+      orderNo
     }
   }
 `;
 
 export const GET_OPEN_MY_NEWS = gql`
   query GetOpenMyNews {
-    user (where: {isFlag: {_eq: true}}) {
+    user(where: { isFlag: { _eq: true } }) {
       created_at
       email
       id
       name
       isFlag
       photoURL
-      user_id
-      news {
-        content
-        created_at
-        email
-        id
-        name
-        orderNo
-        photoURL
-        title
-        token_id
-      }
+      title
+      content
+      orderNo
+    }
+  }
+`;
+
+export const GET_USER_INFO = gql`
+  query GetUserInfo {
+    user(limit: 1) {
+      photoURL
+      email
+      name
+      introduce
+    }
+  }
+`;
+
+export const GET_USER_PRIVITE_INFO = gql`
+  query GetPrivateUser($orderNo: Int!) {
+    user(where: { orderNo: { _eq: $orderNo } }) {
+      id
+      orderNo
+      title
+      content
     }
   }
 `;
 
 export const GET_PRIVATE_NEWS = gql`
-  query GetPrivateNews($orderNo: Int!) {
+  query GetPrivateNews($orderNo: Int!, $uid: String!) {
     news(where: { orderNo: { _eq: $orderNo } }) {
       content
       created_at
@@ -99,6 +119,11 @@ export const GET_PRIVATE_NEWS = gql`
         comment_create_at
         comment_name
         comment_photURL
+      }
+    }
+    news_aggregate(where: { user_id: { _eq: $uid }, orderNo: { _eq: $orderNo } }) {
+      aggregate {
+        count
       }
     }
   }
@@ -166,9 +191,17 @@ export const CREATE_NEWS = gql`
     $name: String!
     $email: String!
     $photoURL: String!
+    $isFlag: Boolean!
   ) {
     insert_news_one(
-      object: { content: $content, title: $title, name: $name, email: $email, photoURL: $photoURL }
+      object: {
+        content: $content
+        title: $title
+        name: $name
+        email: $email
+        photoURL: $photoURL
+        isFlag: $isFlag
+      }
     ) {
       id
       content
@@ -179,6 +212,26 @@ export const CREATE_NEWS = gql`
       email
       photoURL
     }
+    insert_user_one(
+      object: {
+        content: $content
+        title: $title
+        name: $name
+        email: $email
+        photoURL: $photoURL
+        isFlag: $isFlag
+      }
+    ) {
+      id
+      orderNo
+      name
+      content
+      title
+      photoURL
+      email
+      isFlag
+      user_id
+    }
   }
 `;
 
@@ -188,6 +241,11 @@ export const UPDATE_NEWS = gql`
       title
       content
       id
+    }
+    update_user_by_pk(pk_columns: { id: $id }, _set: { content: $content, title: $title }) {
+      id
+      title
+      content
     }
   }
 `;
@@ -204,18 +262,15 @@ export const DELETE_NEWS = gql`
       photoURL
       title
     }
-  }
-`;
-
-export const GET_TASK = gql`
-  query GetTask {
-    user {
-      created_at
-      photoURL
+    delete_user_by_pk(id: $id) {
       id
+      content
+      created_at
       email
       name
-      user_id
+      orderNo
+      photoURL
+      title
     }
   }
 `;

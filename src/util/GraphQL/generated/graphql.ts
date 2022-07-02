@@ -94,6 +94,36 @@ export type Comment = {
   news?: Maybe<News>;
 };
 
+/** aggregated selection of "comment" */
+export type Comment_Aggregate = {
+  __typename?: 'comment_aggregate';
+  aggregate?: Maybe<Comment_Aggregate_Fields>;
+  nodes: Array<Comment>;
+};
+
+/** aggregate fields of "comment" */
+export type Comment_Aggregate_Fields = {
+  __typename?: 'comment_aggregate_fields';
+  avg?: Maybe<Comment_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Comment_Max_Fields>;
+  min?: Maybe<Comment_Min_Fields>;
+  stddev?: Maybe<Comment_Stddev_Fields>;
+  stddev_pop?: Maybe<Comment_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Comment_Stddev_Samp_Fields>;
+  sum?: Maybe<Comment_Sum_Fields>;
+  var_pop?: Maybe<Comment_Var_Pop_Fields>;
+  var_samp?: Maybe<Comment_Var_Samp_Fields>;
+  variance?: Maybe<Comment_Variance_Fields>;
+};
+
+
+/** aggregate fields of "comment" */
+export type Comment_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Comment_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
 /** order by aggregate values of table "comment" */
 export type Comment_Aggregate_Order_By = {
   avg?: InputMaybe<Comment_Avg_Order_By>;
@@ -114,6 +144,12 @@ export type Comment_Arr_Rel_Insert_Input = {
   data: Array<Comment_Insert_Input>;
   /** upsert condition */
   on_conflict?: InputMaybe<Comment_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Comment_Avg_Fields = {
+  __typename?: 'comment_avg_fields';
+  commentOrderNo?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "comment" */
@@ -159,6 +195,18 @@ export type Comment_Insert_Input = {
   news?: InputMaybe<News_Obj_Rel_Insert_Input>;
 };
 
+/** aggregate max on columns */
+export type Comment_Max_Fields = {
+  __typename?: 'comment_max_fields';
+  commentId?: Maybe<Scalars['uuid']>;
+  commentOrderNo?: Maybe<Scalars['Int']>;
+  commentText?: Maybe<Scalars['String']>;
+  comment_create_at?: Maybe<Scalars['timestamptz']>;
+  comment_name?: Maybe<Scalars['String']>;
+  comment_photURL?: Maybe<Scalars['String']>;
+  group_news_id?: Maybe<Scalars['uuid']>;
+};
+
 /** order by max() on columns of table "comment" */
 export type Comment_Max_Order_By = {
   commentId?: InputMaybe<Order_By>;
@@ -168,6 +216,18 @@ export type Comment_Max_Order_By = {
   comment_name?: InputMaybe<Order_By>;
   comment_photURL?: InputMaybe<Order_By>;
   group_news_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Comment_Min_Fields = {
+  __typename?: 'comment_min_fields';
+  commentId?: Maybe<Scalars['uuid']>;
+  commentOrderNo?: Maybe<Scalars['Int']>;
+  commentText?: Maybe<Scalars['String']>;
+  comment_create_at?: Maybe<Scalars['timestamptz']>;
+  comment_name?: Maybe<Scalars['String']>;
+  comment_photURL?: Maybe<Scalars['String']>;
+  group_news_id?: Maybe<Scalars['uuid']>;
 };
 
 /** order by min() on columns of table "comment" */
@@ -243,9 +303,21 @@ export type Comment_Set_Input = {
   group_news_id?: InputMaybe<Scalars['uuid']>;
 };
 
+/** aggregate stddev on columns */
+export type Comment_Stddev_Fields = {
+  __typename?: 'comment_stddev_fields';
+  commentOrderNo?: Maybe<Scalars['Float']>;
+};
+
 /** order by stddev() on columns of table "comment" */
 export type Comment_Stddev_Order_By = {
   commentOrderNo?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Comment_Stddev_Pop_Fields = {
+  __typename?: 'comment_stddev_pop_fields';
+  commentOrderNo?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "comment" */
@@ -253,9 +325,21 @@ export type Comment_Stddev_Pop_Order_By = {
   commentOrderNo?: InputMaybe<Order_By>;
 };
 
+/** aggregate stddev_samp on columns */
+export type Comment_Stddev_Samp_Fields = {
+  __typename?: 'comment_stddev_samp_fields';
+  commentOrderNo?: Maybe<Scalars['Float']>;
+};
+
 /** order by stddev_samp() on columns of table "comment" */
 export type Comment_Stddev_Samp_Order_By = {
   commentOrderNo?: InputMaybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Comment_Sum_Fields = {
+  __typename?: 'comment_sum_fields';
+  commentOrderNo?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "comment" */
@@ -281,14 +365,32 @@ export enum Comment_Update_Column {
   GroupNewsId = 'group_news_id'
 }
 
+/** aggregate var_pop on columns */
+export type Comment_Var_Pop_Fields = {
+  __typename?: 'comment_var_pop_fields';
+  commentOrderNo?: Maybe<Scalars['Float']>;
+};
+
 /** order by var_pop() on columns of table "comment" */
 export type Comment_Var_Pop_Order_By = {
   commentOrderNo?: InputMaybe<Order_By>;
 };
 
+/** aggregate var_samp on columns */
+export type Comment_Var_Samp_Fields = {
+  __typename?: 'comment_var_samp_fields';
+  commentOrderNo?: Maybe<Scalars['Float']>;
+};
+
 /** order by var_samp() on columns of table "comment" */
 export type Comment_Var_Samp_Order_By = {
   commentOrderNo?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Comment_Variance_Fields = {
+  __typename?: 'comment_variance_fields';
+  commentOrderNo?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "comment" */
@@ -450,6 +552,7 @@ export type Mutation_RootUpdate_News_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_UserArgs = {
+  _inc?: InputMaybe<User_Inc_Input>;
   _set?: InputMaybe<User_Set_Input>;
   where: User_Bool_Exp;
 };
@@ -457,6 +560,7 @@ export type Mutation_RootUpdate_UserArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_User_By_PkArgs = {
+  _inc?: InputMaybe<User_Inc_Input>;
   _set?: InputMaybe<User_Set_Input>;
   pk_columns: User_Pk_Columns_Input;
 };
@@ -466,17 +570,18 @@ export type News = {
   __typename?: 'news';
   /** An array relationship */
   comments: Array<Comment>;
+  /** An aggregate relationship */
+  comments_aggregate: Comment_Aggregate;
   content: Scalars['String'];
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
+  isFlag?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   orderNo: Scalars['Int'];
   photoURL?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
-  token_id?: Maybe<Scalars['uuid']>;
-  /** An object relationship */
-  user?: Maybe<User>;
+  user_id?: Maybe<Scalars['String']>;
 };
 
 
@@ -489,31 +594,50 @@ export type NewsCommentsArgs = {
   where?: InputMaybe<Comment_Bool_Exp>;
 };
 
-/** order by aggregate values of table "news" */
-export type News_Aggregate_Order_By = {
-  avg?: InputMaybe<News_Avg_Order_By>;
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<News_Max_Order_By>;
-  min?: InputMaybe<News_Min_Order_By>;
-  stddev?: InputMaybe<News_Stddev_Order_By>;
-  stddev_pop?: InputMaybe<News_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<News_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<News_Sum_Order_By>;
-  var_pop?: InputMaybe<News_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<News_Var_Samp_Order_By>;
-  variance?: InputMaybe<News_Variance_Order_By>;
+
+/** columns and relationships of "news" */
+export type NewsComments_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Comment_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Comment_Order_By>>;
+  where?: InputMaybe<Comment_Bool_Exp>;
 };
 
-/** input type for inserting array relation for remote table "news" */
-export type News_Arr_Rel_Insert_Input = {
-  data: Array<News_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<News_On_Conflict>;
+/** aggregated selection of "news" */
+export type News_Aggregate = {
+  __typename?: 'news_aggregate';
+  aggregate?: Maybe<News_Aggregate_Fields>;
+  nodes: Array<News>;
 };
 
-/** order by avg() on columns of table "news" */
-export type News_Avg_Order_By = {
-  orderNo?: InputMaybe<Order_By>;
+/** aggregate fields of "news" */
+export type News_Aggregate_Fields = {
+  __typename?: 'news_aggregate_fields';
+  avg?: Maybe<News_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<News_Max_Fields>;
+  min?: Maybe<News_Min_Fields>;
+  stddev?: Maybe<News_Stddev_Fields>;
+  stddev_pop?: Maybe<News_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<News_Stddev_Samp_Fields>;
+  sum?: Maybe<News_Sum_Fields>;
+  var_pop?: Maybe<News_Var_Pop_Fields>;
+  var_samp?: Maybe<News_Var_Samp_Fields>;
+  variance?: Maybe<News_Variance_Fields>;
+};
+
+
+/** aggregate fields of "news" */
+export type News_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<News_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type News_Avg_Fields = {
+  __typename?: 'news_avg_fields';
+  orderNo?: Maybe<Scalars['Float']>;
 };
 
 /** Boolean expression to filter rows from the table "news". All fields are combined with a logical 'AND'. */
@@ -526,12 +650,12 @@ export type News_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  isFlag?: InputMaybe<Boolean_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   orderNo?: InputMaybe<Int_Comparison_Exp>;
   photoURL?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
-  token_id?: InputMaybe<Uuid_Comparison_Exp>;
-  user?: InputMaybe<User_Bool_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "news" */
@@ -552,38 +676,40 @@ export type News_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  isFlag?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   orderNo?: InputMaybe<Scalars['Int']>;
   photoURL?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
-  token_id?: InputMaybe<Scalars['uuid']>;
-  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['String']>;
 };
 
-/** order by max() on columns of table "news" */
-export type News_Max_Order_By = {
-  content?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  email?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  name?: InputMaybe<Order_By>;
-  orderNo?: InputMaybe<Order_By>;
-  photoURL?: InputMaybe<Order_By>;
-  title?: InputMaybe<Order_By>;
-  token_id?: InputMaybe<Order_By>;
+/** aggregate max on columns */
+export type News_Max_Fields = {
+  __typename?: 'news_max_fields';
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  orderNo?: Maybe<Scalars['Int']>;
+  photoURL?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
 };
 
-/** order by min() on columns of table "news" */
-export type News_Min_Order_By = {
-  content?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  email?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  name?: InputMaybe<Order_By>;
-  orderNo?: InputMaybe<Order_By>;
-  photoURL?: InputMaybe<Order_By>;
-  title?: InputMaybe<Order_By>;
-  token_id?: InputMaybe<Order_By>;
+/** aggregate min on columns */
+export type News_Min_Fields = {
+  __typename?: 'news_min_fields';
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  orderNo?: Maybe<Scalars['Int']>;
+  photoURL?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
 };
 
 /** response of any mutation on the table "news" */
@@ -616,12 +742,12 @@ export type News_Order_By = {
   created_at?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  isFlag?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   orderNo?: InputMaybe<Order_By>;
   photoURL?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  token_id?: InputMaybe<Order_By>;
-  user?: InputMaybe<User_Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: news */
@@ -640,6 +766,8 @@ export enum News_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsFlag = 'isFlag',
+  /** column name */
   Name = 'name',
   /** column name */
   OrderNo = 'orderNo',
@@ -648,7 +776,7 @@ export enum News_Select_Column {
   /** column name */
   Title = 'title',
   /** column name */
-  TokenId = 'token_id'
+  UserId = 'user_id'
 }
 
 /** input type for updating data in table "news" */
@@ -657,31 +785,36 @@ export type News_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  isFlag?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   orderNo?: InputMaybe<Scalars['Int']>;
   photoURL?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
-  token_id?: InputMaybe<Scalars['uuid']>;
+  user_id?: InputMaybe<Scalars['String']>;
 };
 
-/** order by stddev() on columns of table "news" */
-export type News_Stddev_Order_By = {
-  orderNo?: InputMaybe<Order_By>;
+/** aggregate stddev on columns */
+export type News_Stddev_Fields = {
+  __typename?: 'news_stddev_fields';
+  orderNo?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev_pop() on columns of table "news" */
-export type News_Stddev_Pop_Order_By = {
-  orderNo?: InputMaybe<Order_By>;
+/** aggregate stddev_pop on columns */
+export type News_Stddev_Pop_Fields = {
+  __typename?: 'news_stddev_pop_fields';
+  orderNo?: Maybe<Scalars['Float']>;
 };
 
-/** order by stddev_samp() on columns of table "news" */
-export type News_Stddev_Samp_Order_By = {
-  orderNo?: InputMaybe<Order_By>;
+/** aggregate stddev_samp on columns */
+export type News_Stddev_Samp_Fields = {
+  __typename?: 'news_stddev_samp_fields';
+  orderNo?: Maybe<Scalars['Float']>;
 };
 
-/** order by sum() on columns of table "news" */
-export type News_Sum_Order_By = {
-  orderNo?: InputMaybe<Order_By>;
+/** aggregate sum on columns */
+export type News_Sum_Fields = {
+  __typename?: 'news_sum_fields';
+  orderNo?: Maybe<Scalars['Int']>;
 };
 
 /** update columns of table "news" */
@@ -695,6 +828,8 @@ export enum News_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsFlag = 'isFlag',
+  /** column name */
   Name = 'name',
   /** column name */
   OrderNo = 'orderNo',
@@ -703,22 +838,25 @@ export enum News_Update_Column {
   /** column name */
   Title = 'title',
   /** column name */
-  TokenId = 'token_id'
+  UserId = 'user_id'
 }
 
-/** order by var_pop() on columns of table "news" */
-export type News_Var_Pop_Order_By = {
-  orderNo?: InputMaybe<Order_By>;
+/** aggregate var_pop on columns */
+export type News_Var_Pop_Fields = {
+  __typename?: 'news_var_pop_fields';
+  orderNo?: Maybe<Scalars['Float']>;
 };
 
-/** order by var_samp() on columns of table "news" */
-export type News_Var_Samp_Order_By = {
-  orderNo?: InputMaybe<Order_By>;
+/** aggregate var_samp on columns */
+export type News_Var_Samp_Fields = {
+  __typename?: 'news_var_samp_fields';
+  orderNo?: Maybe<Scalars['Float']>;
 };
 
-/** order by variance() on columns of table "news" */
-export type News_Variance_Order_By = {
-  orderNo?: InputMaybe<Order_By>;
+/** aggregate variance on columns */
+export type News_Variance_Fields = {
+  __typename?: 'news_variance_fields';
+  orderNo?: Maybe<Scalars['Float']>;
 };
 
 /** column ordering options */
@@ -741,20 +879,35 @@ export type Query_Root = {
   __typename?: 'query_root';
   /** fetch data from the table: "comment" */
   comment: Array<Comment>;
+  /** fetch aggregated fields from the table: "comment" */
+  comment_aggregate: Comment_Aggregate;
   /** fetch data from the table: "comment" using primary key columns */
   comment_by_pk?: Maybe<Comment>;
-  /** An array relationship */
+  /** fetch data from the table: "news" */
   news: Array<News>;
+  /** fetch aggregated fields from the table: "news" */
+  news_aggregate: News_Aggregate;
   /** fetch data from the table: "news" using primary key columns */
   news_by_pk?: Maybe<News>;
   /** fetch data from the table: "user" */
   user: Array<User>;
+  /** fetch aggregated fields from the table: "user" */
+  user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
 };
 
 
 export type Query_RootCommentArgs = {
+  distinct_on?: InputMaybe<Array<Comment_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Comment_Order_By>>;
+  where?: InputMaybe<Comment_Bool_Exp>;
+};
+
+
+export type Query_RootComment_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Comment_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -777,12 +930,30 @@ export type Query_RootNewsArgs = {
 };
 
 
+export type Query_RootNews_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<News_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<News_Order_By>>;
+  where?: InputMaybe<News_Bool_Exp>;
+};
+
+
 export type Query_RootNews_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 export type Query_RootUserArgs = {
+  distinct_on?: InputMaybe<Array<User_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Order_By>>;
+  where?: InputMaybe<User_Bool_Exp>;
+};
+
+
+export type Query_RootUser_AggregateArgs = {
   distinct_on?: InputMaybe<Array<User_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -799,20 +970,35 @@ export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** fetch data from the table: "comment" */
   comment: Array<Comment>;
+  /** fetch aggregated fields from the table: "comment" */
+  comment_aggregate: Comment_Aggregate;
   /** fetch data from the table: "comment" using primary key columns */
   comment_by_pk?: Maybe<Comment>;
-  /** An array relationship */
+  /** fetch data from the table: "news" */
   news: Array<News>;
+  /** fetch aggregated fields from the table: "news" */
+  news_aggregate: News_Aggregate;
   /** fetch data from the table: "news" using primary key columns */
   news_by_pk?: Maybe<News>;
   /** fetch data from the table: "user" */
   user: Array<User>;
+  /** fetch aggregated fields from the table: "user" */
+  user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
 };
 
 
 export type Subscription_RootCommentArgs = {
+  distinct_on?: InputMaybe<Array<Comment_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Comment_Order_By>>;
+  where?: InputMaybe<Comment_Bool_Exp>;
+};
+
+
+export type Subscription_RootComment_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Comment_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -835,12 +1021,30 @@ export type Subscription_RootNewsArgs = {
 };
 
 
+export type Subscription_RootNews_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<News_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<News_Order_By>>;
+  where?: InputMaybe<News_Bool_Exp>;
+};
+
+
 export type Subscription_RootNews_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
 
 export type Subscription_RootUserArgs = {
+  distinct_on?: InputMaybe<Array<User_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Order_By>>;
+  where?: InputMaybe<User_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_AggregateArgs = {
   distinct_on?: InputMaybe<Array<User_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -869,25 +1073,53 @@ export type Timestamptz_Comparison_Exp = {
 /** columns and relationships of "user" */
 export type User = {
   __typename?: 'user';
+  content?: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
+  introduce?: Maybe<Scalars['String']>;
   isFlag?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
-  /** An array relationship */
-  news: Array<News>;
+  orderNo: Scalars['Int'];
   photoURL: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
   user_id: Scalars['String'];
 };
 
+/** aggregated selection of "user" */
+export type User_Aggregate = {
+  __typename?: 'user_aggregate';
+  aggregate?: Maybe<User_Aggregate_Fields>;
+  nodes: Array<User>;
+};
 
-/** columns and relationships of "user" */
-export type UserNewsArgs = {
-  distinct_on?: InputMaybe<Array<News_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<News_Order_By>>;
-  where?: InputMaybe<News_Bool_Exp>;
+/** aggregate fields of "user" */
+export type User_Aggregate_Fields = {
+  __typename?: 'user_aggregate_fields';
+  avg?: Maybe<User_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<User_Max_Fields>;
+  min?: Maybe<User_Min_Fields>;
+  stddev?: Maybe<User_Stddev_Fields>;
+  stddev_pop?: Maybe<User_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<User_Stddev_Samp_Fields>;
+  sum?: Maybe<User_Sum_Fields>;
+  var_pop?: Maybe<User_Var_Pop_Fields>;
+  var_samp?: Maybe<User_Var_Samp_Fields>;
+  variance?: Maybe<User_Variance_Fields>;
+};
+
+
+/** aggregate fields of "user" */
+export type User_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type User_Avg_Fields = {
+  __typename?: 'user_avg_fields';
+  orderNo?: Maybe<Scalars['Float']>;
 };
 
 /** Boolean expression to filter rows from the table "user". All fields are combined with a logical 'AND'. */
@@ -895,13 +1127,16 @@ export type User_Bool_Exp = {
   _and?: InputMaybe<Array<User_Bool_Exp>>;
   _not?: InputMaybe<User_Bool_Exp>;
   _or?: InputMaybe<Array<User_Bool_Exp>>;
+  content?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  introduce?: InputMaybe<String_Comparison_Exp>;
   isFlag?: InputMaybe<Boolean_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
-  news?: InputMaybe<News_Bool_Exp>;
+  orderNo?: InputMaybe<Int_Comparison_Exp>;
   photoURL?: InputMaybe<String_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
   user_id?: InputMaybe<String_Comparison_Exp>;
 };
 
@@ -911,15 +1146,54 @@ export enum User_Constraint {
   TasksPkey = 'tasks_pkey'
 }
 
+/** input type for incrementing numeric columns in table "user" */
+export type User_Inc_Input = {
+  orderNo?: InputMaybe<Scalars['Int']>;
+};
+
 /** input type for inserting data into table "user" */
 export type User_Insert_Input = {
+  content?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  introduce?: InputMaybe<Scalars['String']>;
   isFlag?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
-  news?: InputMaybe<News_Arr_Rel_Insert_Input>;
+  orderNo?: InputMaybe<Scalars['Int']>;
   photoURL?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type User_Max_Fields = {
+  __typename?: 'user_max_fields';
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  introduce?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  orderNo?: Maybe<Scalars['Int']>;
+  photoURL?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type User_Min_Fields = {
+  __typename?: 'user_min_fields';
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  introduce?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  orderNo?: Maybe<Scalars['Int']>;
+  photoURL?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
 };
 
 /** response of any mutation on the table "user" */
@@ -931,13 +1205,6 @@ export type User_Mutation_Response = {
   returning: Array<User>;
 };
 
-/** input type for inserting object relation for remote table "user" */
-export type User_Obj_Rel_Insert_Input = {
-  data: User_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<User_On_Conflict>;
-};
-
 /** on_conflict condition type for table "user" */
 export type User_On_Conflict = {
   constraint: User_Constraint;
@@ -947,13 +1214,16 @@ export type User_On_Conflict = {
 
 /** Ordering options when selecting data from "user". */
 export type User_Order_By = {
+  content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  introduce?: InputMaybe<Order_By>;
   isFlag?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
-  news_aggregate?: InputMaybe<News_Aggregate_Order_By>;
+  orderNo?: InputMaybe<Order_By>;
   photoURL?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -965,34 +1235,72 @@ export type User_Pk_Columns_Input = {
 /** select columns of table "user" */
 export enum User_Select_Column {
   /** column name */
+  Content = 'content',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Email = 'email',
   /** column name */
   Id = 'id',
   /** column name */
+  Introduce = 'introduce',
+  /** column name */
   IsFlag = 'isFlag',
   /** column name */
   Name = 'name',
   /** column name */
+  OrderNo = 'orderNo',
+  /** column name */
   PhotoUrl = 'photoURL',
+  /** column name */
+  Title = 'title',
   /** column name */
   UserId = 'user_id'
 }
 
 /** input type for updating data in table "user" */
 export type User_Set_Input = {
+  content?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
+  introduce?: InputMaybe<Scalars['String']>;
   isFlag?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+  orderNo?: InputMaybe<Scalars['Int']>;
   photoURL?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
   user_id?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type User_Stddev_Fields = {
+  __typename?: 'user_stddev_fields';
+  orderNo?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type User_Stddev_Pop_Fields = {
+  __typename?: 'user_stddev_pop_fields';
+  orderNo?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type User_Stddev_Samp_Fields = {
+  __typename?: 'user_stddev_samp_fields';
+  orderNo?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type User_Sum_Fields = {
+  __typename?: 'user_sum_fields';
+  orderNo?: Maybe<Scalars['Int']>;
 };
 
 /** update columns of table "user" */
 export enum User_Update_Column {
+  /** column name */
+  Content = 'content',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -1000,14 +1308,38 @@ export enum User_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Introduce = 'introduce',
+  /** column name */
   IsFlag = 'isFlag',
   /** column name */
   Name = 'name',
   /** column name */
+  OrderNo = 'orderNo',
+  /** column name */
   PhotoUrl = 'photoURL',
+  /** column name */
+  Title = 'title',
   /** column name */
   UserId = 'user_id'
 }
+
+/** aggregate var_pop on columns */
+export type User_Var_Pop_Fields = {
+  __typename?: 'user_var_pop_fields';
+  orderNo?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type User_Var_Samp_Fields = {
+  __typename?: 'user_var_samp_fields';
+  orderNo?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type User_Variance_Fields = {
+  __typename?: 'user_variance_fields';
+  orderNo?: Maybe<Scalars['Float']>;
+};
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
@@ -1022,6 +1354,13 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
+export type GetLocalAllNewsQueryVariables = Exact<{
+  user_id: Scalars['String'];
+}>;
+
+
+export type GetLocalAllNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', content: string, created_at: any, email?: string | null, id: any, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null, isFlag?: boolean | null }> };
+
 export type GetAllNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1035,19 +1374,32 @@ export type GetNewsQuery = { __typename?: 'query_root', news: Array<{ __typename
 export type GetLocalMyNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLocalMyNewsQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', created_at: any, email?: string | null, id: any, name?: string | null, isFlag?: boolean | null, photoURL: string, user_id: string, news: Array<{ __typename?: 'news', content: string, created_at: any, email?: string | null, id: any, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null, token_id?: any | null }> }> };
+export type GetLocalMyNewsQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', created_at: any, email?: string | null, id: any, name?: string | null, isFlag?: boolean | null, photoURL: string, title?: string | null, content?: string | null, orderNo: number }> };
 
 export type GetOpenMyNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetOpenMyNewsQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', created_at: any, email?: string | null, id: any, name?: string | null, isFlag?: boolean | null, photoURL: string, user_id: string, news: Array<{ __typename?: 'news', content: string, created_at: any, email?: string | null, id: any, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null, token_id?: any | null }> }> };
+export type GetOpenMyNewsQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', created_at: any, email?: string | null, id: any, name?: string | null, isFlag?: boolean | null, photoURL: string, title?: string | null, content?: string | null, orderNo: number }> };
 
-export type GetPrivateNewsQueryVariables = Exact<{
+export type GetUserInfoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserInfoQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', photoURL: string, email?: string | null, name?: string | null, introduce?: string | null }> };
+
+export type GetPrivateUserQueryVariables = Exact<{
   orderNo: Scalars['Int'];
 }>;
 
 
-export type GetPrivateNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', content: string, created_at: any, email?: string | null, id: any, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null, comments: Array<{ __typename?: 'comment', group_news_id?: any | null, commentId: any, commentOrderNo: number, commentText: string, comment_create_at: any, comment_name: string, comment_photURL: string }> }> };
+export type GetPrivateUserQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', id: any, orderNo: number, title?: string | null, content?: string | null }> };
+
+export type GetPrivateNewsQueryVariables = Exact<{
+  orderNo: Scalars['Int'];
+  uid: Scalars['String'];
+}>;
+
+
+export type GetPrivateNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', content: string, created_at: any, email?: string | null, id: any, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null, comments: Array<{ __typename?: 'comment', group_news_id?: any | null, commentId: any, commentOrderNo: number, commentText: string, comment_create_at: any, comment_name: string, comment_photURL: string }> }>, news_aggregate: { __typename?: 'news_aggregate', aggregate?: { __typename?: 'news_aggregate_fields', count: number } | null } };
 
 export type GetPaginationNewsQueryVariables = Exact<{
   pageNumber: Scalars['Int'];
@@ -1079,10 +1431,11 @@ export type CreateNewsMutationVariables = Exact<{
   name: Scalars['String'];
   email: Scalars['String'];
   photoURL: Scalars['String'];
+  isFlag: Scalars['Boolean'];
 }>;
 
 
-export type CreateNewsMutation = { __typename?: 'mutation_root', insert_news_one?: { __typename?: 'news', id: any, content: string, created_at: any, orderNo: number, title?: string | null, name?: string | null, email?: string | null, photoURL?: string | null } | null };
+export type CreateNewsMutation = { __typename?: 'mutation_root', insert_news_one?: { __typename?: 'news', id: any, content: string, created_at: any, orderNo: number, title?: string | null, name?: string | null, email?: string | null, photoURL?: string | null } | null, insert_user_one?: { __typename?: 'user', id: any, orderNo: number, name?: string | null, content?: string | null, title?: string | null, photoURL: string, email?: string | null, isFlag?: boolean | null, user_id: string } | null };
 
 export type UpdateNewsMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -1091,24 +1444,48 @@ export type UpdateNewsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateNewsMutation = { __typename?: 'mutation_root', update_news_by_pk?: { __typename?: 'news', title?: string | null, content: string, id: any } | null };
+export type UpdateNewsMutation = { __typename?: 'mutation_root', update_news_by_pk?: { __typename?: 'news', title?: string | null, content: string, id: any } | null, update_user_by_pk?: { __typename?: 'user', id: any, title?: string | null, content?: string | null } | null };
 
 export type DeleteNewsMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteNewsMutation = { __typename?: 'mutation_root', delete_news_by_pk?: { __typename?: 'news', id: any, content: string, created_at: any, email?: string | null, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null } | null };
-
-export type GetTaskQueryVariables = Exact<{ [key: string]: never; }>;
+export type DeleteNewsMutation = { __typename?: 'mutation_root', delete_news_by_pk?: { __typename?: 'news', id: any, content: string, created_at: any, email?: string | null, name?: string | null, orderNo: number, photoURL?: string | null, title?: string | null } | null, delete_user_by_pk?: { __typename?: 'user', id: any, content?: string | null, created_at: any, email?: string | null, name?: string | null, orderNo: number, photoURL: string, title?: string | null } | null };
 
 
-export type GetTaskQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', created_at: any, photoURL: string, id: any, email?: string | null, name?: string | null, user_id: string }> };
-
-
+export const GetLocalAllNewsDocument = `
+    query GetLocalAllNews($user_id: String!) {
+  news(order_by: {orderNo: desc}, where: {user_id: {_eq: $user_id}}) {
+    content
+    created_at
+    email
+    id
+    name
+    orderNo
+    photoURL
+    title
+    isFlag
+  }
+}
+    `;
+export const useGetLocalAllNewsQuery = <
+      TData = GetLocalAllNewsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetLocalAllNewsQueryVariables,
+      options?: UseQueryOptions<GetLocalAllNewsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetLocalAllNewsQuery, TError, TData>(
+      ['GetLocalAllNews', variables],
+      fetcher<GetLocalAllNewsQuery, GetLocalAllNewsQueryVariables>(client, GetLocalAllNewsDocument, variables, headers),
+      options
+    );
 export const GetAllNewsDocument = `
     query GetAllNews {
-  news(order_by: {orderNo: desc}) {
+  news(order_by: {orderNo: desc}, where: {isFlag: {_eq: true}}) {
     content
     created_at
     email
@@ -1171,18 +1548,9 @@ export const GetLocalMyNewsDocument = `
     name
     isFlag
     photoURL
-    user_id
-    news {
-      content
-      created_at
-      email
-      id
-      name
-      orderNo
-      photoURL
-      title
-      token_id
-    }
+    title
+    content
+    orderNo
   }
 }
     `;
@@ -1209,18 +1577,9 @@ export const GetOpenMyNewsDocument = `
     name
     isFlag
     photoURL
-    user_id
-    news {
-      content
-      created_at
-      email
-      id
-      name
-      orderNo
-      photoURL
-      title
-      token_id
-    }
+    title
+    content
+    orderNo
   }
 }
     `;
@@ -1238,8 +1597,56 @@ export const useGetOpenMyNewsQuery = <
       fetcher<GetOpenMyNewsQuery, GetOpenMyNewsQueryVariables>(client, GetOpenMyNewsDocument, variables, headers),
       options
     );
+export const GetUserInfoDocument = `
+    query GetUserInfo {
+  user(limit: 1) {
+    photoURL
+    email
+    name
+    introduce
+  }
+}
+    `;
+export const useGetUserInfoQuery = <
+      TData = GetUserInfoQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetUserInfoQueryVariables,
+      options?: UseQueryOptions<GetUserInfoQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetUserInfoQuery, TError, TData>(
+      variables === undefined ? ['GetUserInfo'] : ['GetUserInfo', variables],
+      fetcher<GetUserInfoQuery, GetUserInfoQueryVariables>(client, GetUserInfoDocument, variables, headers),
+      options
+    );
+export const GetPrivateUserDocument = `
+    query GetPrivateUser($orderNo: Int!) {
+  user(where: {orderNo: {_eq: $orderNo}}) {
+    id
+    orderNo
+    title
+    content
+  }
+}
+    `;
+export const useGetPrivateUserQuery = <
+      TData = GetPrivateUserQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPrivateUserQueryVariables,
+      options?: UseQueryOptions<GetPrivateUserQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPrivateUserQuery, TError, TData>(
+      ['GetPrivateUser', variables],
+      fetcher<GetPrivateUserQuery, GetPrivateUserQueryVariables>(client, GetPrivateUserDocument, variables, headers),
+      options
+    );
 export const GetPrivateNewsDocument = `
-    query GetPrivateNews($orderNo: Int!) {
+    query GetPrivateNews($orderNo: Int!, $uid: String!) {
   news(where: {orderNo: {_eq: $orderNo}}) {
     content
     created_at
@@ -1257,6 +1664,11 @@ export const GetPrivateNewsDocument = `
       comment_create_at
       comment_name
       comment_photURL
+    }
+  }
+  news_aggregate(where: {user_id: {_eq: $uid}, orderNo: {_eq: $orderNo}}) {
+    aggregate {
+      count
     }
   }
 }
@@ -1359,9 +1771,9 @@ export const useCreateCommentMutation = <
       options
     );
 export const CreateNewsDocument = `
-    mutation CreateNews($content: String!, $title: String!, $name: String!, $email: String!, $photoURL: String!) {
+    mutation CreateNews($content: String!, $title: String!, $name: String!, $email: String!, $photoURL: String!, $isFlag: Boolean!) {
   insert_news_one(
-    object: {content: $content, title: $title, name: $name, email: $email, photoURL: $photoURL}
+    object: {content: $content, title: $title, name: $name, email: $email, photoURL: $photoURL, isFlag: $isFlag}
   ) {
     id
     content
@@ -1371,6 +1783,19 @@ export const CreateNewsDocument = `
     name
     email
     photoURL
+  }
+  insert_user_one(
+    object: {content: $content, title: $title, name: $name, email: $email, photoURL: $photoURL, isFlag: $isFlag}
+  ) {
+    id
+    orderNo
+    name
+    content
+    title
+    photoURL
+    email
+    isFlag
+    user_id
   }
 }
     `;
@@ -1396,6 +1821,14 @@ export const UpdateNewsDocument = `
     title
     content
     id
+  }
+  update_user_by_pk(
+    pk_columns: {id: $id}
+    _set: {content: $content, title: $title}
+  ) {
+    id
+    title
+    content
   }
 }
     `;
@@ -1424,6 +1857,16 @@ export const DeleteNewsDocument = `
     photoURL
     title
   }
+  delete_user_by_pk(id: $id) {
+    id
+    content
+    created_at
+    email
+    name
+    orderNo
+    photoURL
+    title
+  }
 }
     `;
 export const useDeleteNewsMutation = <
@@ -1437,31 +1880,5 @@ export const useDeleteNewsMutation = <
     useMutation<DeleteNewsMutation, TError, DeleteNewsMutationVariables, TContext>(
       ['DeleteNews'],
       (variables?: DeleteNewsMutationVariables) => fetcher<DeleteNewsMutation, DeleteNewsMutationVariables>(client, DeleteNewsDocument, variables, headers)(),
-      options
-    );
-export const GetTaskDocument = `
-    query GetTask {
-  user {
-    created_at
-    photoURL
-    id
-    email
-    name
-    user_id
-  }
-}
-    `;
-export const useGetTaskQuery = <
-      TData = GetTaskQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables?: GetTaskQueryVariables,
-      options?: UseQueryOptions<GetTaskQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetTaskQuery, TError, TData>(
-      variables === undefined ? ['GetTask'] : ['GetTask', variables],
-      fetcher<GetTaskQuery, GetTaskQueryVariables>(client, GetTaskDocument, variables, headers),
       options
     );
